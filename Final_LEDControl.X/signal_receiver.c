@@ -13,7 +13,11 @@
  * 6 - RA2                  COL0   - RB11 
  * 7 - RA3                  COL1   - RB13 
  * 8 - RB4                  COL2   - RB14
- * 
+ *----------
+ * joy0_x - RA0
+ * joy0_y - RA1
+ * joy1_x - RB0
+ * joy1_y - RB1
  * Maybe we do not need this module
  */
 #include "signal_receiver.h"
@@ -41,5 +45,22 @@ void getSignals(){
 
 void getRows(){
     
+}
+
+// output signals to hardware decoders
+void outputToDec() {
+	PORTA |= levels[0] << 4;
+	PORTB |= levels[1] << 5;
+	PORTB |= levels[2] << 7;
+	PORTB |= rows[0] << 8;
+	PORTB |= rows[1] << 9;
+	PORTB |= rows[2] << 10;
+	PORTB |= cols[0] << 11;
+	PORTB |= cols[1] << 13;
+	PORTB |= cols[2] << 14;
+}
+
+void getBtnJoy() {
+	
 }
 

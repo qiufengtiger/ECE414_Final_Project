@@ -36,13 +36,12 @@ void testDecode(){
 //    while(1){
 //        char c = test[i];
 //        decode(c, i);
-//        i++;
-//        
+//        i++;    
 //    }
 //    int j = 0;
 //    for(; j < 32; j++){
 //        sprintf(buffer, "%d\r\n", displayArray[j]);
-//        uart_write_string(buffer);
+        sprintf(buffer, "test\r\n");
+        uart_write_string(buffer);
 //    }
-    uart_write('t');
 }
