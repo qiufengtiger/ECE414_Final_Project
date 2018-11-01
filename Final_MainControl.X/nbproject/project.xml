@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>Final_LEDControl</name>
-            <creation-uuid>c91e3297-1702-4923-9f63-762815652309</creation-uuid>
+            <name>Final_MainControl</name>
+            <creation-uuid>9ede7a79-f425-4fca-b75e-262400b8f44f</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
