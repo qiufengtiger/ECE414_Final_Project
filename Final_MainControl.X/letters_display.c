@@ -39,7 +39,7 @@ void decode(char c){
     }
 }
 
-void writeToLED(){
+void setLED(){
     uint32_t delay = (40000000 * SCROLL_SEC) / 256;
     scrollIndex = 0;
     while(TMR1 < delay){
@@ -55,18 +55,18 @@ void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
     for(; index < LEV_NUM; index++){
         if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
-            writeToArray(00000000, 2, index);
-            writeToArray(00000000, 3, index);
-            writeToArray(00000000, 4, index);
-            writeToArray(00000000, 5, index);
+            setArray(00000000, 2, index);
+            setArray(00000000, 3, index);
+            setArray(00000000, 4, index);
+            setArray(00000000, 5, index);
         }
         else{
             uint8_t thisRow = displayArray[index + scrollIndex];
 //            uint8_t thisRow = 0;
-            writeToArray(thisRow, 2, index);
-            writeToArray(thisRow, 3, index);
-            writeToArray(thisRow, 4, index);
-            writeToArray(thisRow, 5, index);
+            setArray(thisRow, 2, index);
+            setArray(thisRow, 3, index);
+            setArray(thisRow, 4, index);
+            setArray(thisRow, 5, index);
         }
     }
 }
