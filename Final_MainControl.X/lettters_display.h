@@ -13,9 +13,12 @@
 
 void decode(char c, uint8_t charNum);
 void testDecode();
+void displayInit();
 
 //uint8_t ledArray [8][8];
-uint8_t displayArray[32]; //32 rows
+static uint8_t displayArrayLength = 6;
+uint8_t displayArray[6 * 6]; //36 rows
+
 
 #endif	/* LETTTERS_DISPLAY_H */
 

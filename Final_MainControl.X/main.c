@@ -21,10 +21,4 @@
  */
 void main(){
     testDecode();
-//    uart_init();
-//    uart_write('t');
-//    uart_init();
-//    uint8_t buffer[64];
-//    sprintf(buffer, "test\r\n");
-//        uart_write_string(buffer);
 }

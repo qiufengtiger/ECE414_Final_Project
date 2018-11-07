@@ -1,5 +1,12 @@
 #include "lettters_display.h"
 
+void displayInit(){
+    int i = 0;
+    for(; i < displayArrayLength; i ++){
+        displayArray[i] = 0;
+    }
+}
+
 void decode(char c, uint8_t charNum){
     uint8_t line = charNum * 6;
     switch(c){
@@ -33,15 +40,20 @@ void testDecode(){
     uint8_t buffer[64];
     
     uart_init();
-//    while(1){
-//        char c = test[i];
-//        decode(c, i);
-//        i++;    
-//    }
-//    int j = 0;
-//    for(; j < 32; j++){
-//        sprintf(buffer, "%d\r\n", displayArray[j]);
-        sprintf(buffer, "test\r\n");
+    displayInit();
+    while(1){
+        char c = test[i];
+        
+        if(c == 0) break;
+        sprintf(buffer, "%c\r\n", c);
         uart_write_string(buffer);
-//    }
+        decode(c, i);
+        i++;    
+    }
+    int j = 0;
+    for(; j < displayArrayLength * 6; j++){
+        sprintf(buffer, "%d\r\n", displayArray[j]);
+//        sprintf(buffer, "test\r\n");
+        uart_write_string(buffer);
+    }
 }
