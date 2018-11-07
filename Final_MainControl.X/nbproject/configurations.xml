@@ -4,8 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>lettters_display.h</itemPath>
       <itemPath>led_control.h</itemPath>
+      <itemPath>letters_display.h</itemPath>
+      <itemPath>utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

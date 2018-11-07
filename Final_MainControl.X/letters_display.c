@@ -3,10 +3,12 @@
 
 void lettersDisplayInit(){
     int i = 0;
-    for(; i < DISPLAY_ARRAY_SIZE * 6; i ++){
+    for(; i < DISPLAY_ARRAY_ROW_NUM; i ++){
         displayArray[i] = 0;
     }
     arrayCharIndex = 0;
+    T1CON = 0x8030;
+    TMR1 = 0;
 }
 
 void decode(char c){
@@ -38,20 +40,34 @@ void decode(char c){
 }
 
 void writeToLED(){
+    uint32_t delay = (40000000 * SCROLL_SEC) / 256;
     scrollIndex = 0;
-    while(1){
-        
+    while(TMR1 < delay){
+        ledMapping(scrollIndex);
+        if(scrollIndex == DISPLAY_ARRAY_ROW_NUM) 
+            scrollIndex = 0;
+        else
+            scrollIndex ++;
     }
 }
 
 void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
     for(; index < LEV_NUM; index++){
-        uint8_t thisRow = displayArray[index + scrollIndex];
-        writeToArray(thisRow, 2, index);
-        writeToArray(thisRow, 3, index);
-        writeToArray(thisRow, 4, index);
-        writeToArray(thisRow, 5, index);
+        if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
+            writeToArray(00000000, 2, index);
+            writeToArray(00000000, 3, index);
+            writeToArray(00000000, 4, index);
+            writeToArray(00000000, 5, index);
+        }
+        else{
+            uint8_t thisRow = displayArray[index + scrollIndex];
+//            uint8_t thisRow = 0;
+            writeToArray(thisRow, 2, index);
+            writeToArray(thisRow, 3, index);
+            writeToArray(thisRow, 4, index);
+            writeToArray(thisRow, 5, index);
+        }
     }
 }
 
@@ -72,7 +88,7 @@ void testDecode(){
         i++;    
     }
     int j = 0;
-    for(; j < DISPLAY_ARRAY_SIZE * 6; j++){
+    for(; j < DISPLAY_ARRAY_ROW_NUM; j++){
         sprintf(buffer, "%d\r\n", displayArray[j]);
 //        sprintf(buffer, "test\r\n");
         uart_write_string(buffer);
