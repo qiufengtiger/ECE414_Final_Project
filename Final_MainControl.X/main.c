@@ -1,4 +1,4 @@
-#include "lettters_display.h"
+#include "letters_display.h"
 
 // Configure clocks
 #pragma config FNOSC = FRCPLL, POSCMOD = OFF
