@@ -312,7 +312,12 @@ void decode(char c){
 }
 
 void setLED(){
-    uint32_t delay = (40000000 * SCROLL_SEC) / 256;
+    ledInit();
+    if(SCROLL_SEC == 0){
+        ledMapping(0);
+    }
+    else{
+        uint32_t delay = (40000000 * SCROLL_SEC) / 256;
     scrollIndex = 0;
     while(TMR1 < delay){
         ledMapping(scrollIndex);
@@ -320,12 +325,13 @@ void setLED(){
             scrollIndex = 0;
         else
             scrollIndex ++;
-    }
+        }
+    }  
 }
 
 void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
-    for(; index < LEV_NUM; index++){
+    for(index = 0; index < LEV_NUM; index++){
         if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
             setArray(00000000, 2, index);
             setArray(00000000, 3, index);
@@ -365,4 +371,11 @@ void testDecode(){
 //        sprintf(buffer, "test\r\n");
         uart_write_string(buffer);
     }
+}
+
+void runLettersDisplayTests(){
+    lettersDisplayInit();
+    decode('A');
+    setLED();
+    testPrintLedStatus();
 }

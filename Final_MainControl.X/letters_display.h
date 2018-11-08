@@ -12,10 +12,9 @@
 #include "led_control.h"
 
 #define DISPLAY_ARRAY_ROW_NUM 36
-#define SCROLL_SEC 1
+#define SCROLL_SEC 0
 
 void decode(char c);
-void testDecode();
 void lettersDisplayInit();
 void writeToLED();
 void ledMapping(uint8_t rollingIndex);
@@ -25,7 +24,9 @@ uint8_t arrayCharIndex;
 uint8_t scrollIndex;
 uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; //#char = row num / 6
 
-
+/*test methods*/
+void testDecode();
+void runLettersDisplayTests();
 
 #endif	/* LETTERS_DISPLAY_H */
 

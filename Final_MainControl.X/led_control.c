@@ -159,10 +159,7 @@ void testPinOutputs(){
 	}
 }
 
-void runTests(){
-    uint8_t buffer[64];
-    sprintf(buffer, "test starts\r\n");
-	uart_write_string(buffer);
+void runLedTests(){
 	ledInit();
 	refresh();
 }

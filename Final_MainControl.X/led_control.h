@@ -37,7 +37,7 @@ uint8_t getArray(uint8_t rowIndex, uint8_t levIndex);
 /*test methods*/
 void testPrintLedStatus();
 void testPinOutputs(); 
-void runTests();
+void runLedTests();
 
 #endif	/* LED_CONTROL_H */
 

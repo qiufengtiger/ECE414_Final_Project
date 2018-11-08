@@ -23,5 +23,6 @@
 void main(){
 	uart_init();
     // testDecode();
-    runTests();
+    // runLedTests();
+    runLettersDisplayTests();
 }
