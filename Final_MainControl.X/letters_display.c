@@ -36,6 +36,278 @@ void decode(char c){
             displayArray[++line] = 0b01111100;
             displayArray[++line] = 0b00000000;
             break;
+		case 'C':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'D':
+			displayArray[line]   = 0b00111000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'E':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'F':
+			displayArray[line]   = 0b01000000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'G':
+			displayArray[line]   = 0b01011100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'H':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'I':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'J':
+			displayArray[line]   = 0b01000000;
+            displayArray[++line] = 0b01111000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'K':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b00101000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'L':
+			displayArray[line]   = 0b00000100;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'M':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'N':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b00001000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'O':
+			displayArray[line]   = 0b00111000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'P':
+			displayArray[line]   = 0b00100000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'Q':
+			displayArray[line]   = 0b00110100;
+            displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'R':
+			displayArray[line]   = 0b00101100;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'S':
+			displayArray[line]   = 0b01001000;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b00100100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'T':
+			displayArray[line]   = 0b01000000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'U':
+			displayArray[line]   = 0b01111000;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b01111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'V':
+			displayArray[line]   = 0b01110000;
+            displayArray[++line] = 0b00001000;
+            displayArray[++line] = 0b00000100;
+            displayArray[++line] = 0b00001000;
+            displayArray[++line] = 0b01110000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'W':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b00001000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00001000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'X':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b00101000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00101000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'Y':
+			displayArray[line]   = 0b01000000;
+            displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b00011100;
+            displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'Z':
+			displayArray[line]   = 0b01000100;
+            displayArray[++line] = 0b01100100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '0':
+			displayArray[line]   = 0b00111000;
+			displayArray[++line] = 0b01100100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '1':
+			displayArray[line]   = 0b00000000;
+			displayArray[++line] = 0b00000100;
+			displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '2':
+			displayArray[line]   = 0b00100100;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '3':
+			displayArray[line]   = 0b00101000;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '4':
+			displayArray[line]   = 0b00001000;
+			displayArray[++line] = 0b01111100;
+			displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b00101000;
+            displayArray[++line] = 0b00011000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '5':
+			displayArray[line]   = 0b01001000;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01110100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '6':
+			displayArray[line]   = 0b01001000;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '7':
+			displayArray[line]   = 0b01100000;
+			displayArray[++line] = 0b01010000;
+			displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '8':
+			displayArray[line]   = 0b00101000;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b00101000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case '9':
+			displayArray[line]   = 0b00111000;
+			displayArray[++line] = 0b01010100;
+			displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b00100100;
+            displayArray[++line] = 0b00000000;
+			break;
     }
 }
 
