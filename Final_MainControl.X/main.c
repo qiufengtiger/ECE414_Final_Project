@@ -1,3 +1,4 @@
+#include "led_control.h"
 #include "letters_display.h"
 
 // Configure clocks
@@ -20,5 +21,7 @@
  * COL2 - RA4
  */
 void main(){
-    testDecode();
+	uart_init();
+    // testDecode();
+    runTests();
 }
