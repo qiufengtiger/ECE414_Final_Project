@@ -366,7 +366,7 @@ void testDecode(){
         i++;    
     }
     int j = 0;
-    for(; j < DISPLAY_ARRAY_ROW_NUM; j++){
+    for(j = 0; j < DISPLAY_ARRAY_ROW_NUM; j++){
         sprintf(buffer, "%d\r\n", displayArray[j]);
 //        sprintf(buffer, "test\r\n");
         uart_write_string(buffer);
@@ -374,8 +374,19 @@ void testDecode(){
 }
 
 void runLettersDisplayTests(){
-    lettersDisplayInit();
+	// test case 1: decode one character
+    /* lettersDisplayInit();
     decode('A');
+    setLED();
+    testPrintLedStatus(); */
+	
+	// test case 2: decode several characters
+	lettersDisplayInit();
+	char test[] = "ABCA8";
+	int i = 0;
+    for (i = 0; i < sizeof(test) / sizeof(test[0]) - 1; i++) {
+		decode(test[i]);
+	}
     setLED();
     testPrintLedStatus();
 }
