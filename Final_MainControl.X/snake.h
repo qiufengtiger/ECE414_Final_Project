@@ -26,10 +26,13 @@ uint8_t snakeGameArray[LEV_NUM][ROW_NUM][COL_NUM];
 //stores only the snake
 //index 0 is head
 pt snakeArray[MAX_LENGTH];
+pt fruit;
 
 void snakeInit();
 void generateFood();
 void snakeMove(uint8_t dir); //2=>back 8=>forward 4=>left 6=>right 1=>down 7=>up   
+void snakeMoveHead(uint8_t dir);
+void snakeMoveBody();
 void eat();
 void refreshSnake();
 uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
