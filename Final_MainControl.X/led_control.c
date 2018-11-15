@@ -27,11 +27,11 @@ void ledInit(){
     isOn = 0;
 }
 
-void setArray(uint8_t thisRow, uint8_t rowIndex, uint8_t levIndex){
+void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex){
     cuboidArray[levIndex][rowIndex] = thisRow;
 }
 
-uint8_t getArray(uint8_t rowIndex, uint8_t levIndex){
+uint8_t getArray(uint8_t levIndex, uint8_t rowIndex){
     return cuboidArray[levIndex][rowIndex];
 }
 
@@ -85,7 +85,7 @@ void refreshLedStatus(){
 	uint8_t colIndex = ledIndex % 8;
 	uint8_t levIndex = ledIndex / 64;
 	uint8_t rowIndex = (ledIndex / 8) % 8;
-	uint8_t thisRow = getArray(colIndex, levIndex);
+	uint8_t thisRow = getArray(levIndex, rowIndex);
 	uint8_t mask = 1 << rowIndex;
 	isOn = !!(mask & thisRow);
 }
@@ -108,7 +108,7 @@ void testPrintLedStatus(){
 	uart_write_string(buffer);
 	for(i = LEV_NUM; i > 0; i--){
 		for(j = ROW_NUM; j > 0 ; j--){
-			uint8_t thisRow = getArray(j - 1, i - 1);
+			uint8_t thisRow = getArray(i - 1, j - 1);
 			for(k = COL_NUM; k > 0; k--){
 				mask = 1 << (k - 1);
 				uint8_t thisBit = !!(mask & thisRow);

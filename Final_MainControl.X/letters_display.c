@@ -363,17 +363,17 @@ void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
     for(index = 0; index < LEV_NUM; index++){
         if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
-            setArray(00000000, 2, index);
-            setArray(00000000, 3, index);
-            setArray(00000000, 4, index);
-            setArray(00000000, 5, index);
+            setArray(00000000, index, 2);
+            setArray(00000000, index, 3);
+            setArray(00000000, index, 4);
+            setArray(00000000, index, 5);
         }
         else{
             uint8_t thisRow = displayArray[index + scrollIndex];
-            setArray(thisRow, 2, index);
-            setArray(thisRow, 3, index);
-            setArray(thisRow, 4, index);
-            setArray(thisRow, 5, index);
+            setArray(thisRow, index, 2);
+            setArray(thisRow, index, 3);
+            setArray(thisRow, index, 4);
+            setArray(thisRow, index, 5);
         }
     }
 }

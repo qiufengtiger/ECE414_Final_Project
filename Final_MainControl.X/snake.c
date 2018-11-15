@@ -78,7 +78,7 @@ void snakeSetLED(){
 				thisRow <<= 1;
 				thisRow += !!(getSnakeGameArray(i, j, k - 1));			
 			}
-			setArray(thisRow, j, i);
+			setArray(thisRow, i, j);
 		}
 	}
 }
