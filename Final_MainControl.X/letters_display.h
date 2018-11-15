@@ -12,9 +12,10 @@
 #include <p32xxxx.h>
 #include "led_control.h"
 
-#define DISPLAY_ROW_NUM 24
+#define DISPLAY_CHAR_NUM 4
+#define DISPLAY_ROW_NUM (DISPLAY_CHAR_NUM * 6)
 #define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
-#define SCROLL_MSEC 1000
+#define SCROLL_MSEC 3000
 
 void decode(char c);
 void decodeArray(char c[]);
