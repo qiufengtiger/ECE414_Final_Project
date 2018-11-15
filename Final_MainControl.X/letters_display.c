@@ -1,18 +1,33 @@
 #include "letters_display.h"
 
 
+volatile uint32_t timer_ms_count;
+void __ISR(0, ipl1auto) InterruptHandler (void){
+    timer_ms_count++;
+    mT1ClearIntFlag();
+}
+
+
 void lettersDisplayInit(){
     int i = 0;
-    for(; i < DISPLAY_ARRAY_ROW_NUM; i ++){
+    for(; i < DISPLAY_ARRAY_ROW_NUM; i++){
         displayArray[i] = 0;
     }
     arrayCharIndex = 0;
-    T1CON = 0x8030;
+    scrollIndex = 0;
+    // T1CON = 0x8030;
+    T1CON = 0x8010; // interrupt
     TMR1 = 0;
+    // uint8_t oneMs = (40000 * 1) / 1;
+    PR1 = 0x1000;
+    mT1SetIntPriority(1);
+    INTEnableSystemSingleVectoredInt();
+    mT1IntEnable(1);
+    timer_ms_count = 0;
 }
 
 void decode(char c){
-    uint8_t line = arrayCharIndex * 6;
+    uint8_t line = arrayCharIndex * 6 + LEV_NUM;
     arrayCharIndex ++;
     switch(c){
         case 'A':
@@ -26,54 +41,54 @@ void decode(char c){
             displayArray[++line] = 0b01001000;
             displayArray[++line] = 0b00101000;
             displayArray[++line] = 0b00011100;
-            displayArray[++line] = 0b00000000;//space
+            displayArray[++line] = 0b00000000;
             break;
         case 'B':
-            displayArray[line]   = 0b00101000;
+            displayArray[line]   = 0b01111100;
             displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00101000;
             displayArray[++line] = 0b00000000;
             break;
 		case 'C':
-			displayArray[line]   = 0b01000100;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b00111000;
-            displayArray[++line] = 0b00000000;
-			break;
-		case 'D':
 			displayArray[line]   = 0b00111000;
             displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01111100;
-            displayArray[++line] = 0b00000000;
-			break;
-		case 'E':
-			displayArray[line]   = 0b01000100;
             displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01111100;
             displayArray[++line] = 0b00000000;
 			break;
-		case 'F':
-			displayArray[line]   = 0b01000000;
-            displayArray[++line] = 0b01000000;
-            displayArray[++line] = 0b01010000;
-            displayArray[++line] = 0b01010000;
-            displayArray[++line] = 0b01111100;
-            displayArray[++line] = 0b00000000;
-			break;
-		case 'G':
-			displayArray[line]   = 0b01011100;
-            displayArray[++line] = 0b01010100;
+		case 'D':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'E':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'F':
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b00000000;
+			break;
+		case 'G':
+			displayArray[line]   = 0b00111000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01011100;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'H':
@@ -93,27 +108,27 @@ void decode(char c){
             displayArray[++line] = 0b00000000;
 			break;
 		case 'J':
-			displayArray[line]   = 0b01000000;
+			displayArray[line]   = 0b01001000;
+            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b01111000;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b01000000;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'K':
-			displayArray[line]   = 0b01000100;
+			displayArray[line]   = 0b01111100;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00010000;
             displayArray[++line] = 0b00101000;
-            displayArray[++line] = 0b00010000;
-            displayArray[++line] = 0b00010000;
-            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'L':
-			displayArray[line]   = 0b00000100;
+			displayArray[line]   = 0b01111100;
             displayArray[++line] = 0b00000100;
             displayArray[++line] = 0b00000100;
             displayArray[++line] = 0b00000100;
-            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00000100;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'M':
@@ -126,9 +141,9 @@ void decode(char c){
 			break;
 		case 'N':
 			displayArray[line]   = 0b01111100;
-            displayArray[++line] = 0b00001000;
-            displayArray[++line] = 0b00010000;
             displayArray[++line] = 0b00100000;
+            displayArray[++line] = 0b00010000;
+            displayArray[++line] = 0b00001000;
             displayArray[++line] = 0b01111100;
             displayArray[++line] = 0b00000000;
 			break;
@@ -141,35 +156,35 @@ void decode(char c){
             displayArray[++line] = 0b00000000;
 			break;
 		case 'P':
-			displayArray[line]   = 0b00100000;
+			displayArray[line]   = 0b01111100;
             displayArray[++line] = 0b01010000;
             displayArray[++line] = 0b01010000;
             displayArray[++line] = 0b01010000;
-            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00100000;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'Q':
-			displayArray[line]   = 0b00110100;
-            displayArray[++line] = 0b01001000;
-            displayArray[++line] = 0b01010100;
+			displayArray[line]   = 0b00111000;
             displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01001000;
+            displayArray[++line] = 0b00110100;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'R':
-			displayArray[line]   = 0b00101100;
+			displayArray[line]   = 0b01111100;
             displayArray[++line] = 0b01010000;
             displayArray[++line] = 0b01010000;
             displayArray[++line] = 0b01010000;
-            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00101100;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'S':
-			displayArray[line]   = 0b01001000;
+			displayArray[line]   = 0b00100100;
             displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b00100100;
+            displayArray[++line] = 0b01001000;
             displayArray[++line] = 0b00000000;
 			break;
 		case 'T':
@@ -222,74 +237,74 @@ void decode(char c){
 			break;
 		case 'Z':
 			displayArray[line]   = 0b01000100;
-            displayArray[++line] = 0b01100100;
-            displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b01100100;
             displayArray[++line] = 0b01000100;
             displayArray[++line] = 0b00000000;
 			break;
 		case '0':
 			displayArray[line]   = 0b00111000;
-			displayArray[++line] = 0b01100100;
+			displayArray[++line] = 0b01001100;
 			displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b01100100;
             displayArray[++line] = 0b00111000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '1':
 			displayArray[line]   = 0b00000000;
-			displayArray[++line] = 0b00000100;
+			displayArray[++line] = 0b01000100;
 			displayArray[++line] = 0b01111100;
-            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b00000100;
             displayArray[++line] = 0b00000000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '2':
-			displayArray[line]   = 0b00100100;
+			displayArray[line]   = 0b01001100;
 			displayArray[++line] = 0b01010100;
 			displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01001100;
+            displayArray[++line] = 0b00100100;
             displayArray[++line] = 0b00000000;
 			break;
 		case '3':
-			displayArray[line]   = 0b00101000;
+			displayArray[line]   = 0b01000100;
+			displayArray[++line] = 0b01000100;
 			displayArray[++line] = 0b01010100;
-			displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01000100;
+            displayArray[++line] = 0b01010100;
+            displayArray[++line] = 0b00101000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '4':
-			displayArray[line]   = 0b00001000;
-			displayArray[++line] = 0b01111100;
+			displayArray[line]   = 0b00011000;
+			displayArray[++line] = 0b00101000;
 			displayArray[++line] = 0b01001000;
-            displayArray[++line] = 0b00101000;
-            displayArray[++line] = 0b00011000;
+            displayArray[++line] = 0b01111100;
+            displayArray[++line] = 0b00001000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '5':
-			displayArray[line]   = 0b01001000;
+			displayArray[line]   = 0b01110100;
 			displayArray[++line] = 0b01010100;
 			displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b01110100;
+            displayArray[++line] = 0b01001000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '6':
-			displayArray[line]   = 0b01001000;
+			displayArray[line]   = 0b00111000;
 			displayArray[++line] = 0b01010100;
 			displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b00111000;
+            displayArray[++line] = 0b01001000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '7':
-			displayArray[line]   = 0b01100000;
-			displayArray[++line] = 0b01010000;
+			displayArray[line]   = 0b01000000;
+			displayArray[++line] = 0b01000100;
 			displayArray[++line] = 0b01001000;
-            displayArray[++line] = 0b01000100;
-            displayArray[++line] = 0b01000000;
+            displayArray[++line] = 0b01010000;
+            displayArray[++line] = 0b01100000;
             displayArray[++line] = 0b00000000;
 			break;
 		case '8':
@@ -301,32 +316,47 @@ void decode(char c){
             displayArray[++line] = 0b00000000;
 			break;
 		case '9':
-			displayArray[line]   = 0b00111000;
+			displayArray[line]   = 0b00100100;
 			displayArray[++line] = 0b01010100;
 			displayArray[++line] = 0b01010100;
             displayArray[++line] = 0b01010100;
-            displayArray[++line] = 0b00100100;
+            displayArray[++line] = 0b00111000;
             displayArray[++line] = 0b00000000;
 			break;
     }
 }
 
+void decodeArray(char c[]){
+    int i = 0;
+    uint8_t numOfChar = sizeof(c) / sizeof(c[0]);
+    for(i = 0; i < numOfChar; i++){
+        decode(c[i]);
+    }
+}
+
 void setLED(){
     ledInit();
-    if(SCROLL_SEC == 0){
+    if(SCROLL_MSEC == 0){
         ledMapping(0);
     }
     else{
-        uint32_t delay = (40000000 * SCROLL_SEC) / 256;
-    scrollIndex = 0;
-    while(TMR1 < delay){
+        // uint32_t delay = (40000 * SCROLL_MSEC) / 256;
+        // uint32_t delay = (40000 * 500) / 256;
+        // while(TMR1 < delay){
+        // //wait
+        // }
+        while(timer_ms_count < SCROLL_MSEC){
+
+        }
+        timer_ms_count = 0;
         ledMapping(scrollIndex);
         if(scrollIndex == DISPLAY_ARRAY_ROW_NUM) 
             scrollIndex = 0;
         else
             scrollIndex ++;
-        }
-    }  
+        // ledMapping(2);
+        // TMR1 = 0;
+    }
 }
 
 void ledMapping(uint8_t scrollIndex){
@@ -340,7 +370,6 @@ void ledMapping(uint8_t scrollIndex){
         }
         else{
             uint8_t thisRow = displayArray[index + scrollIndex];
-//            uint8_t thisRow = 0;
             setArray(thisRow, 2, index);
             setArray(thisRow, 3, index);
             setArray(thisRow, 4, index);
@@ -375,18 +404,21 @@ void testDecode(){
 
 void runLettersDisplayTests(){
 	// test case 1: decode one character
-    /* lettersDisplayInit();
-    decode('A');
-    setLED();
-    testPrintLedStatus(); */
-	
+    lettersDisplayInit();
+    // decode('A');
+    decodeArray("TEST");
+    while(1){
+        setLED();
+        testPrintLedStatus();     
+    }
+    
 	// test case 2: decode several characters
-	lettersDisplayInit();
-	char test[] = "ABCA8";
-	int i = 0;
-    for (i = 0; i < sizeof(test) / sizeof(test[0]) - 1; i++) {
-		decode(test[i]);
-	}
-    setLED();
-    testPrintLedStatus();
+	// lettersDisplayInit();
+	// char test[] = "ABCA8";
+	// int i = 0;
+ //    for (i = 0; i < sizeof(test) / sizeof(test[0]) - 1; i++) {
+	// 	decode(test[i]);
+	// }
+ //    setLED();
+ //    testPrintLedStatus();
 }

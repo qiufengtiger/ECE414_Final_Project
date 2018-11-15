@@ -8,13 +8,16 @@
 #define	LETTERS_DISPLAY_H
 #include <stdio.h>
 #include <stdlib.h>
-//#include <plib.h>
+#include <plib.h>
+#include <p32xxxx.h>
 #include "led_control.h"
 
-#define DISPLAY_ARRAY_ROW_NUM 36
-#define SCROLL_SEC 0
+#define DISPLAY_ROW_NUM 24
+#define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
+#define SCROLL_MSEC 1000
 
 void decode(char c);
+void decodeArray(char c[]);
 void lettersDisplayInit();
 void writeToLED();
 void ledMapping(uint8_t rollingIndex);
@@ -23,6 +26,7 @@ void ledMapping(uint8_t rollingIndex);
 uint8_t arrayCharIndex;
 uint8_t scrollIndex;
 uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; //#char = row num / 6
+													   //add additional LEV_NUM for display effect
 
 /*test methods*/
 void testDecode();

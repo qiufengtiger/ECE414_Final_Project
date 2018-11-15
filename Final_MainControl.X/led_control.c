@@ -44,10 +44,9 @@ void refresh(){
 		refreshLev();
 		refreshLedStatus();
 //		writeToPort();
-		// testPinOutputs();		
+		testPinOutputs();		
 		ledIndex++;	
 	}
-	testPrintLedStatus();
 }
 
 void refreshRow(){
@@ -105,7 +104,7 @@ void testPrintLedStatus(){
 	uint8_t j = 0;
 	uint8_t k = 0;
 	uint8_t mask = 0;
-	sprintf(buffer, "Col 7  Col 0\r\n|      |\r\n");
+	sprintf(buffer, "\r\nCol 7  Col 0\r\n|      |\r\n");
 	uart_write_string(buffer);
 	for(i = LEV_NUM; i > 0; i--){
 		for(j = ROW_NUM; j > 0 ; j--){
