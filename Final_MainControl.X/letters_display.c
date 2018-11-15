@@ -2,7 +2,7 @@
 
 
 volatile uint32_t timer_ms_count;
-void __ISR(0, ipl1auto) InterruptHandler (void){
+void __ISR(0, ipl1auto) InterruptHandler(void){
     timer_ms_count++;
     mT1ClearIntFlag();
 }

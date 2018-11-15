@@ -17,17 +17,18 @@
 #define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
 #define SCROLL_MSEC 3000
 
+//uint8_t ledArray [8][8];
+uint8_t arrayCharIndex;
+uint8_t scrollIndex;
+//#char = row num / 6
+//add additional LEV_NUM for display effect
+uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; 
+
 void decode(char c);
 void decodeArray(char c[]);
 void lettersDisplayInit();
 void writeToLED();
 void ledMapping(uint8_t rollingIndex);
-
-//uint8_t ledArray [8][8];
-uint8_t arrayCharIndex;
-uint8_t scrollIndex;
-uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; //#char = row num / 6
-											 //add additional LEV_NUM for display effect
 
 /*test methods*/
 void testDecode();

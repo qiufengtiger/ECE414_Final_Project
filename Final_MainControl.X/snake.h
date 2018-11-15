@@ -9,30 +9,42 @@
 #define HEAD 1
 #define BODY 2
 #define FOOD 3
+#define MAX_LENGTH 20
 
-struct point{
+typedef struct point{
 	uint8_t lev;
 	uint8_t row;
 	uint8_t col;
 	uint8_t type;
 } pt;
 
+uint8_t snakeLength;
+//Array that stores all the point info
+//Reflects what's shown on LEDs
+//0 => empty, 1 => snake head, 2 => body, 3 => food
+uint8_t snakeGameArray[LEV_NUM][ROW_NUM][COL_NUM]; 
+//stores only the snake
+//index 0 is head
+pt snakeArray[MAX_LENGTH];
+
 void snakeInit();
 void generateFood();
-void move(uint8_t dir); //2=>back 8=>forward 4=>left 6=>right 1=>down 7=>up   
+void snakeMove(uint8_t dir); //2=>back 8=>forward 4=>left 6=>right 1=>down 7=>up   
 void eat();
-void refresh();
+void refreshSnake();
 uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
 uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
-void setSnakeArray(uint8_t type, uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex);
+void setSnakeGameArray(uint8_t type, uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex);
+uint8_t getSnakeGameArray(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex);
+void pushBackSnakeArray(pt body);
 uint8_t getHeadLev();
 uint8_t getHeadRow();
 uint8_t getHeadCol();
 uint8_t random();
+void snakeSetLED();
 
-uint8_t snakeLength;
-uint8_t snakeArray[LEV_NUM][ROW_NUM][COL_NUM]; //0 => empty, 1 => snake head, 2 => body, 3 => food
-
+/*test methods*/
+void runSnakeTests();
 
 #endif	/* SNAKE_H */
 

@@ -1,5 +1,6 @@
 #include "led_control.h"
 #include "letters_display.h"
+#include "snake.h"
 
 // Configure clocks
 #pragma config FNOSC = FRCPLL, POSCMOD = OFF
@@ -24,5 +25,6 @@ void main(){
 	uart_init();
     // testDecode();
     // runLedTests();
-    runLettersDisplayTests();
+    // runLettersDisplayTests();
+	runSnakeTests();
 }
