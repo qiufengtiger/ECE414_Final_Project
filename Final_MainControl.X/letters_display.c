@@ -346,7 +346,7 @@ void setLED(){
         // //wait
         // }
         while(timer_ms_count < SCROLL_MSEC){
-
+            //wait
         }
         timer_ms_count = 0;
         ledMapping(scrollIndex);

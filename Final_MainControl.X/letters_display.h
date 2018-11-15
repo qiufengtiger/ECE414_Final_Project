@@ -27,7 +27,7 @@ void ledMapping(uint8_t rollingIndex);
 uint8_t arrayCharIndex;
 uint8_t scrollIndex;
 uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; //#char = row num / 6
-													   //add additional LEV_NUM for display effect
+											 //add additional LEV_NUM for display effect
 
 /*test methods*/
 void testDecode();
