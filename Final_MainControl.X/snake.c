@@ -1,9 +1,8 @@
 #include "snake.h"
 
 void snakeInit(){
-	// setSnakeGameArray(BODY, 0, 0, 0);
-	// setSnakeGameArray(BODY, 0, 1, 0);
-	// setSnakeGameArray(HEAD, 0, 2, 0);
+	T1CON = 0x8030;
+	TMR1 = 0;
 
 	//initialize array
 	int i = 0;
@@ -24,24 +23,59 @@ void snakeInit(){
 	pushBackSnakeArray(b1);
 	pushBackSnakeArray(b2);
 	refreshSnake();
+	generateFood();
 }
 
 void generateFood(){
-	8
+	int i = 0;
+	int isEmpty = 0;
+	uint8_t foodLev = 0;
+	uint8_t foodRow = 0;
+	uint8_t foodCol = 0;
+	
+	//check if this pos is occupied by the snake
+	while(!isEmpty){
+		foodLev = TMR1 % LEV_NUM;
+		foodRow = (TMR1 >> 1) % ROW_NUM;
+		foodCol = (TMR1 >> 2) % COL_NUM;
+		isEmpty = 1;
+		// for(i = 0; i < snakeLength; i++){
+		// 	if(snakeArray[i].lev == foodLev && snakeArray[i].row == foodRow && snakeArray[i].col == foodCol){
+		// 		isEmpty = 0;
+		// 	}
+		// }
+		if(getSnakeGameArray(foodLev, foodRow, foodCol) == 1 || getSnakeGameArray(foodLev, foodRow, foodCol) == 2)
+			isEmpty = 0;
+	}
+	setSnakeGameArray(FOOD, foodLev, foodRow, foodCol);	
 }
 
 
 
 void snakeMove(uint8_t dir){
-	if(!isBorder(getHeadLev(), getHeadRow(), getHeadCol(), dir) 
-		&& !isBody(getHeadLev(), getHeadRow(), getHeadCol(), dir)){
-		snakeMoveBody();
-		snakeMoveHead(dir);
-	}
-	else{
+	uint8_t lastLev = 0;
+	uint8_t lastRow = 0;
+	uint8_t lastCol = 0;
+	if(isBorder(getHeadLev(), getHeadRow(), getHeadCol(), dir) 
+		|| isBody(getHeadLev(), getHeadRow(), getHeadCol(), dir)){
 
 	}
-	refreshSnake();
+	else if(isFood(getHeadLev(), getHeadRow(), getHeadCol(), dir)){
+		lastLev = snakeArray[snakeLength].lev;
+		lastRow = snakeArray[snakeLength].row;
+		lastCol = snakeArray[snakeLength].col;
+		snakeMoveBody();
+		eat(getHeadLev(), getHeadRow(), getHeadCol(), dir, lastLev, lastRow, lastCol);
+		snakeMoveHead(dir);
+		refreshSnake();
+		generateFood();
+	}
+	else{
+		snakeMoveBody();
+		snakeMoveHead(dir);
+		refreshSnake();
+	}
+	
 }
 
 void snakeMoveHead(uint8_t dir){
@@ -80,6 +114,35 @@ void snakeMoveBody(){
 		snakeArray[i - 1].row = snakeArray[i - 2].row;
 		snakeArray[i - 1].col = snakeArray[i - 2].col;
 	}
+}
+
+void eat(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir, uint8_t lastLev, uint8_t lastRow, uint8_t lastCol){
+	uint8_t targetLev = levIndex;
+	uint8_t targetRow = rowIndex;
+	uint8_t targetCol = colIndex;
+	switch(dir){
+		case 2: 
+			targetRow -= 1;
+			break;
+		case 8:
+			targetRow += 1;
+			break;
+		case 4:
+			targetCol += 1;
+			break;
+		case 6:
+			targetCol -= 1;
+			break;
+		case 1:
+			targetLev -= 1;
+			break;
+		case 7:
+			targetLev += 1;
+			break;
+	}
+	setSnakeGameArray(0, targetLev, targetRow, targetCol);
+	pt new = {.lev = lastLev, .row = lastRow, .col = lastCol, .type = BODY};
+	pushBackSnakeArray(new);
 }
 
 uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
@@ -131,11 +194,40 @@ uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir
 			targetLev += 1;
 			break;
 	}
-	for(i = 1; i < snakeLength; i++){
-		if(snakeArray[i].lev == targetLev && snakeArray[i].row == targetRow && snakeArray[i].col == targetCol){
-			return 1;
-		}
+	// for(i = 1; i < snakeLength; i++){
+	// 	if(snakeArray[i].lev == targetLev && snakeArray[i].row == targetRow && snakeArray[i].col == targetCol){
+	// 		return 1;
+	// 	}
+	// }
+	if(getSnakeGameArray(targetLev, targetRow, targetCol) == 2) return 1;
+	return 0;
+}
+
+uint8_t isFood(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
+	uint8_t targetLev = levIndex;
+	uint8_t targetRow = rowIndex;
+	uint8_t targetCol = colIndex;
+	switch(dir){
+		case 2: 
+			targetRow -= 1;
+			break;
+		case 8:
+			targetRow += 1;
+			break;
+		case 4:
+			targetCol += 1;
+			break;
+		case 6:
+			targetCol -= 1;
+			break;
+		case 1:
+			targetLev -= 1;
+			break;
+		case 7:
+			targetLev += 1;
+			break;
 	}
+	if(getSnakeGameArray(targetLev, targetRow, targetCol) == 3) return 1;
 	return 0;
 }
 
@@ -149,7 +241,8 @@ void refreshSnake(){
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			for(k = 0; k < COL_NUM; k++){
-				setSnakeGameArray(0, i, j, k);
+				if(getSnakeGameArray(i, j, k) == 1 || getSnakeGameArray(i, j, k) == 2)
+					setSnakeGameArray(0, i, j, k);
 			}
 		}
 	}
@@ -225,7 +318,7 @@ void runSnakeTests(){
 	while(1){
 		char input = uart_read();
 		uint8_t dir = input - 48;
-		if(dir > 0 && dir < 9){
+		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
 			snakeMove(dir);
 			snakeSetLED();
 			testPrintLedStatus();
