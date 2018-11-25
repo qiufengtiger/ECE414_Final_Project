@@ -5,10 +5,12 @@
 #include <plib.h>
 #include <p32xxxx.h>
 #include "led_control.h"
+#include "utilities.h"
 
-#define HEAD 1
-#define BODY 2
-#define FOOD 3
+#define EMPTY 0
+#define HEAD  1
+#define BODY  2
+#define FOOD  3
 #define MAX_LENGTH 20
 
 uint8_t snakeLength;
@@ -29,7 +31,7 @@ void snakeMoveHead(uint8_t dir);
 void snakeMoveBody();
 void eat(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir, uint8_t lastLev, uint8_t lastRow, uint8_t lastCol);
 void refreshSnake();
-uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
+// uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
 uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
 uint8_t isFood(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir);
 void setSnakeGameArray(uint8_t type, uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex);

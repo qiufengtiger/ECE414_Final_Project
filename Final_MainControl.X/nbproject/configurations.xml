@@ -6,9 +6,9 @@
                    projectFiles="true">
       <itemPath>led_control.h</itemPath>
       <itemPath>letters_display.h</itemPath>
-      <itemPath>utilities.h</itemPath>
       <itemPath>snake.h</itemPath>
       <itemPath>robot.h</itemPath>
+      <itemPath>utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

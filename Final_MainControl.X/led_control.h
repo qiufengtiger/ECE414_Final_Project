@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <plib.h>
-// #include "utilities.h"
 
 #define ROW_NUM 8
 #define COL_NUM 8
@@ -14,13 +13,6 @@
 #define LEV_PIN_NUM 3
 
 #define ON_TEST 1
-
-typedef struct point{
-	uint8_t lev;
-	uint8_t row;
-	uint8_t col;
-	uint8_t type;
-} pt;
 
 uint8_t cuboidArray[LEV_NUM][ROW_NUM];
 uint8_t rowOut[ROW_PIN_NUM];

@@ -12,7 +12,8 @@ int uart_write_ready(){
 }
 
 int uart_read_ready(){
-    if((U1STA & 1) == 0)
+    if((U1STA & 0x1))
+    // if(U1STAbits.URXDA == 1)
         return 0;
     else
         return 1;
@@ -42,9 +43,11 @@ void uart_write_nb(char input){
 
 char uart_read_nb(){
     char data = 0;
-    if(uart_read_ready){
+    // if(uart_read_ready){
+    if(U1STAbits.URXDA == 1){
         data = U1RXREG;
         return data;
+        // return U1RXREG;
     }
     else
         return 0;

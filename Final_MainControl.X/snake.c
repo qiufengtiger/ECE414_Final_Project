@@ -30,7 +30,7 @@ void snakeInit(){
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			for(k = 0; k < COL_NUM; k++){
-				setSnakeGameArray(0, i, j, k);
+				setSnakeGameArray(EMPTY, i, j, k);
 			}
 		}
 	}
@@ -63,7 +63,7 @@ void generateFood(){
 		// 		isEmpty = 0;
 		// 	}
 		// }
-		if(getSnakeGameArray(foodLev, foodRow, foodCol) == 1 || getSnakeGameArray(foodLev, foodRow, foodCol) == 2)
+		if(getSnakeGameArray(foodLev, foodRow, foodCol) == HEAD || getSnakeGameArray(foodLev, foodRow, foodCol) == BODY)
 			isEmpty = 0;
 	}
 	setSnakeGameArray(FOOD, foodLev, foodRow, foodCol);	
@@ -164,35 +164,34 @@ void eat(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir, uint
 	pushBackSnakeArray(new);
 }
 
-uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
-	switch(dir){
-		case 2: 
-			if(rowIndex == 0) return 1; 
-			else return 0;
-		case 8:
-			if(rowIndex == ROW_NUM - 1) return 1;
-			else return 0;
-		case 4:
-			if(colIndex == COL_NUM - 1) return 1;
-			else return 0;
-		case 6:
-			if(colIndex == 0) return 1;
-			else return 0;
-		case 1:
-			if(levIndex == 0) return 1;
-			else return 0;
-		case 7:
-			if(levIndex == LEV_NUM - 1) return 1;
-			else return 0;
-	}
-	return 0;
-}
+// uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
+// 	switch(dir){
+// 		case 2: 
+// 			if(rowIndex == 0) return 1; 
+// 			else return 0;
+// 		case 8:
+// 			if(rowIndex == ROW_NUM - 1) return 1;
+// 			else return 0;
+// 		case 4:
+// 			if(colIndex == COL_NUM - 1) return 1;
+// 			else return 0;
+// 		case 6:
+// 			if(colIndex == 0) return 1;
+// 			else return 0;
+// 		case 1:
+// 			if(levIndex == 0) return 1;
+// 			else return 0;
+// 		case 7:
+// 			if(levIndex == LEV_NUM - 1) return 1;
+// 			else return 0;
+// 	}
+// 	return 0;
+// }
 
 uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
 	uint8_t targetLev = levIndex;
 	uint8_t targetRow = rowIndex;
 	uint8_t targetCol = colIndex;
-	int i = 0;
 	switch(dir){
 		case 2: 
 			targetRow -= 1;
@@ -218,7 +217,7 @@ uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir
 	// 		return 1;
 	// 	}
 	// }
-	if(getSnakeGameArray(targetLev, targetRow, targetCol) == 2) return 1;
+	if(getSnakeGameArray(targetLev, targetRow, targetCol) == BODY) return 1;
 	return 0;
 }
 
@@ -246,7 +245,7 @@ uint8_t isFood(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir
 			targetLev += 1;
 			break;
 	}
-	if(getSnakeGameArray(targetLev, targetRow, targetCol) == 3) return 1;
+	if(getSnakeGameArray(targetLev, targetRow, targetCol) == FOOD) return 1;
 	return 0;
 }
 
@@ -260,8 +259,8 @@ void refreshSnake(){
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			for(k = 0; k < COL_NUM; k++){
-				if(getSnakeGameArray(i, j, k) == 1 || getSnakeGameArray(i, j, k) == 2)
-					setSnakeGameArray(0, i, j, k);
+				if(getSnakeGameArray(i, j, k) == HEAD || getSnakeGameArray(i, j, k) == BODY)
+					setSnakeGameArray(EMPTY, i, j, k);
 			}
 		}
 	}
