@@ -11,13 +11,6 @@
 #define FOOD 3
 #define MAX_LENGTH 20
 
-typedef struct point{
-	uint8_t lev;
-	uint8_t row;
-	uint8_t col;
-	uint8_t type;
-} pt;
-
 uint8_t snakeLength;
 uint8_t started;
 //Array that stores all the point info

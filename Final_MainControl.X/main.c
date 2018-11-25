@@ -1,6 +1,7 @@
 #include "led_control.h"
 #include "letters_display.h"
 #include "snake.h"
+#include "robot.h"
 
 // Configure clocks
 #pragma config FNOSC = FRCPLL, POSCMOD = OFF
@@ -12,5 +13,6 @@ void main(){
     // testDecode();
     // runLedTests();
     // runLettersDisplayTests();
-	runSnakeTests();
+	// runSnakeTests();
+	runRobotTests();
 }

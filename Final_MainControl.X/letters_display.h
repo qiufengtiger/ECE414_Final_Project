@@ -24,10 +24,12 @@ uint8_t scrollIndex;
 //add additional LEV_NUM for display effect
 uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; 
 
+void runLettersDisplay();
 void decode(char c);
 void decodeArray(char c[]);
 void lettersDisplayInit();
 void writeToLED();
+void setLED();
 void ledMapping(uint8_t rollingIndex);
 
 /*test methods*/

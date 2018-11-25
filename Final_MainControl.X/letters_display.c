@@ -8,6 +8,15 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
 }
 
 
+void runLettersDisplay(){
+    lettersDisplayInit();
+    decodeArray("TEST");
+    while(1){
+        setLED();
+        refresh();
+    }
+}
+
 void lettersDisplayInit(){
     int i = 0;
     for(; i < DISPLAY_ARRAY_ROW_NUM; i++){

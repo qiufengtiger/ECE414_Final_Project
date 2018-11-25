@@ -1,13 +1,16 @@
 #include "snake.h"
 
 void runSnakeGame(){
-	ledInit();
 	snakeInit();
 	snakeSetLED();
-	testPrintLedStatus();
+	refresh();
 	while(1){
-		char input = uart_read();
-		uint8_t dir = input - 48;
+
+		//INPUT
+		// uint8_t dir = input - 48;
+		uint8_t dir  = 0;
+
+
 		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
 			snakeMove(dir);
 			snakeSetLED();
@@ -277,12 +280,7 @@ void snakeSetLED(){
 	int j = 0;
 	int k = 0;
 	uint8_t thisRow = 0;
-	ledInit();
-
-	// setSnakeGameArray(HEAD, 0, 2, 0);
-
-
-
+	ledInit(); //clear cuboidArray first
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			thisRow = 0;

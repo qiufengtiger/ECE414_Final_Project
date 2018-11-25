@@ -60,8 +60,8 @@ void refresh(){
 		refreshRow();
 		refreshCol();
 		refreshLev();
-		#ifdef ON_TEST
 		refreshLedStatus();
+		#ifdef ON_TEST
 		testPinOutputs();		
 		#else
 		writeToPort();

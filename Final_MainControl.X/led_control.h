@@ -15,6 +15,13 @@
 
 #define ON_TEST 1
 
+typedef struct point{
+	uint8_t lev;
+	uint8_t row;
+	uint8_t col;
+	uint8_t type;
+} pt;
+
 uint8_t cuboidArray[LEV_NUM][ROW_NUM];
 uint8_t rowOut[ROW_PIN_NUM];
 uint8_t colOut[COL_PIN_NUM];
@@ -29,7 +36,6 @@ void refreshCol();
 void refreshLev();
 void refreshLedStatus();
 void writeToPort();
-
 void setArray(uint8_t thisRow, uint8_t colIndex, uint8_t levIndex);
 uint8_t getArray(uint8_t rowIndex, uint8_t levIndex);
 
