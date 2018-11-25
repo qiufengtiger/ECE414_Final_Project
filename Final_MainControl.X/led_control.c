@@ -1,12 +1,28 @@
 /**
  * If a certain LED is on:
  * ROW = 1, COL = 1, LEV = 1
- * 
+ * LEV0 - RA0 - PIN2
+ * LEV1 - RA1 - PIN3
+ * LEV2 - RB0 - PIN4
+ * LEV3 - RB1 - PIN5 - reserved
+ * ROW0 - RB2 - PIN6
+ * ROW1 - RB3 - PIN7
+ * ROW2 - RA2 - PIN9
+ * COL0 - RA3 - PIN10
+ * COL1 - RB4 - PIN11
+ * COL2 - RA4 - PIN12
+ * isOn - RB5 - PIN14
  */
 
 #include "led_control.h"
 
 void ledInit(){
+	#ifndef ON_TEST
+	ANSELA = 0;
+    ANSELB = 0;
+    TRISA = TRISA & 0b00000; 
+    TRISB  = TRISB & 0b000000;
+    #endif
     int i = 0;
     int j = 0;
     for(i = 0; i < LEV_NUM; i++){
@@ -25,6 +41,8 @@ void ledInit(){
     }
     ledIndex = 0;
     isOn = 0;
+
+
 }
 
 void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex){
@@ -42,9 +60,12 @@ void refresh(){
 		refreshRow();
 		refreshCol();
 		refreshLev();
+		#ifdef ON_TEST
 		refreshLedStatus();
-//		writeToPort();
 		testPinOutputs();		
+		#else
+		writeToPort();
+		#endif
 		ledIndex++;	
 	}
 }
@@ -91,7 +112,33 @@ void refreshLedStatus(){
 }
 
 void writeToPort(){
-    
+    //assuming it is 8*8*8
+    uint8_t portaOut = 0;
+    uint8_t portbOut = 0;
+    /*PORTA*/
+    portaOut += colOut[2];
+    portaOut <<= 1;
+    portaOut += colOut[0];
+    portaOut <<= 1;
+    portaOut += rowOut[2];
+    portaOut <<= 1;
+    portaOut += levOut[1];
+    portaOut <<= 1;
+    portaOut += levOut[0];
+    /*PORTB*/
+    portbOut += isOn;
+    portbOut <<= 1;
+    portbOut += colOut[1];
+    portbOut <<= 1;
+    portbOut += rowOut[1];
+    portbOut <<= 1;
+    portbOut += rowOut[0];
+    portbOut <<= 1;
+    portbOut += 0; //reserved for LEV3
+    portbOut <<= 1;
+    portbOut += levOut[2];
+   	PORTA = (PORTA & 0b00000) | portaOut;
+   	PORTB = (PORTB & 0b000000) | portbOut;
 }
 
 /**
@@ -159,6 +206,7 @@ void testPinOutputs(){
 }
 
 void runLedTests(){
+	uart_init();
 	ledInit();
 	refresh();
 }

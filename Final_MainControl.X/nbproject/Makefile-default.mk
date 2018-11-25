@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c letters_display.c led_control.c uart.c snake.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c letters_display.c led_control.c uart.c snake.c robot.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/letters_display.o.d ${OBJECTDIR}/led_control.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/snake.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/letters_display.o.d ${OBJECTDIR}/led_control.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/snake.o.d ${OBJECTDIR}/robot.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o
 
 # Source Files
-SOURCEFILES=main.c letters_display.c led_control.c uart.c snake.c
+SOURCEFILES=main.c letters_display.c led_control.c uart.c snake.c robot.c
 
 
 CFLAGS=
@@ -136,6 +136,12 @@ ${OBJECTDIR}/snake.o: snake.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/snake.o 
 	@${FIXDEPS} "${OBJECTDIR}/snake.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPKOBSKDEPlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/snake.o.d" -o ${OBJECTDIR}/snake.o snake.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/robot.o: robot.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/robot.o.d 
+	@${RM} ${OBJECTDIR}/robot.o 
+	@${FIXDEPS} "${OBJECTDIR}/robot.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPKOBSKDEPlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/robot.o.d" -o ${OBJECTDIR}/robot.o robot.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -166,6 +172,12 @@ ${OBJECTDIR}/snake.o: snake.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/snake.o.d 
 	@${RM} ${OBJECTDIR}/snake.o 
 	@${FIXDEPS} "${OBJECTDIR}/snake.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/snake.o.d" -o ${OBJECTDIR}/snake.o snake.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/robot.o: robot.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/robot.o.d 
+	@${RM} ${OBJECTDIR}/robot.o 
+	@${FIXDEPS} "${OBJECTDIR}/robot.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/robot.o.d" -o ${OBJECTDIR}/robot.o robot.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 endif
 

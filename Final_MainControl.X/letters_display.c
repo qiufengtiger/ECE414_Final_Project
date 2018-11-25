@@ -403,6 +403,7 @@ void testDecode(){
 }
 
 void runLettersDisplayTests(){
+    uart_init();
 	// test case 1: decode one character
     lettersDisplayInit();
     // decode('A');

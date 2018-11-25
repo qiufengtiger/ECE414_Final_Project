@@ -1,9 +1,25 @@
 #include "snake.h"
 
-void snakeInit(){
-	T1CON = 0x8030;
-	TMR1 = 0;
+void runSnakeGame(){
+	ledInit();
+	snakeInit();
+	snakeSetLED();
+	testPrintLedStatus();
+	while(1){
+		char input = uart_read();
+		uint8_t dir = input - 48;
+		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
+			snakeMove(dir);
+			snakeSetLED();
+			refresh();
+		} 
+	}
+}
 
+void snakeInit(){
+	//initialize timer for random number
+	T1CON = 0x8010;
+	TMR1 = 0;
 	//initialize array
 	int i = 0;
 	int j = 0;
@@ -304,14 +320,13 @@ void pushBackSnakeArray(pt body){
 }
 
 void runSnakeTests(){
-	// lettersDisplayInit();
+	uart_init();
 	// snakeInit();
 	// snakeMove(8);
 	// snakeMove(4);
 	// snakeMove(7);
 	// snakeSetLED();
 	// testPrintLedStatus();
-	lettersDisplayInit();
 	snakeInit();
 	snakeSetLED();
 	testPrintLedStatus();

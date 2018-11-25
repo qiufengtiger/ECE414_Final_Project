@@ -9,10 +9,11 @@
 #define COL_NUM 8
 #define LEV_NUM 8
 #define TOTAL_LED_NUM (ROW_NUM * COL_NUM * LEV_NUM)
-
 #define ROW_PIN_NUM 3 //log2(ROW_NUM)
 #define COL_PIN_NUM 3
 #define LEV_PIN_NUM 3
+
+#define ON_TEST 1
 
 uint8_t cuboidArray[LEV_NUM][ROW_NUM];
 uint8_t rowOut[ROW_PIN_NUM];
