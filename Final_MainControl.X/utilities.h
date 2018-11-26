@@ -41,5 +41,9 @@ static uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, ui
 	return 0;
 }
 
+static uint8_t absolute(uint8_t input){
+	return (input >= 0 ? input : (input * -1));
+}
+
 #endif	/* UTILITIES_H */
 

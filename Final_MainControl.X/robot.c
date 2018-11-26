@@ -65,8 +65,43 @@ void playerMove(uint8_t dir){
 	}
 }
 
-void enemiesMove(){
+uint8_t enemiesMove(){
+	uint8_t i = 0;
+	uint8_t j = 0;
+	uint8_t k = 0;
+	uint8_t newEnemyLev = 0;
+	uint8_t newEnemyRow = 0;
+	uint8_t newEnemyCol = 0;
+	uint8_t
+	for(i = 0; i < LEV_NUM; i++){
+		for(j = 0; j < ROW_NUM; j++){
+			for(k = 0; k < COL_NUM; k++){
+				if(getRobotGameArray(i, j, k) == ENEMY){
+					newEnemyLev = i;
+					newEnemyRow = j;
+					newEnemyCol = k;
+					levDistance = absolute(i = newEnemyLev);
 
+					setRobotGameArray(EMPTY, i, j, k);
+
+					if(player.lev > i) newEnemyLev++;
+					else if(player.lev < i) newEnemyLev--;
+					if(player.row > j) newEnemyCol++;
+					else if(player.row < j) newEnemyCol--;
+					if(player.col > k) newEnemyCol++;
+					else if(player.col < k) newEnemyCol--;
+					if(player.lev == newEnemyLev && player.row == newEnemyRow && player.col == newEnemyCol){
+						return 1; //gameover
+					}
+					else{
+						setRobotGameArray(ENEMY, newEnemyLev, newEnemyRow, newEnemyCol);
+					}
+				}
+				
+			}
+		}
+	}
+	return 0;
 }
 
 uint8_t isEnemy(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
@@ -149,31 +184,39 @@ uint8_t getRobotGameArray(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex){
 	return robotGameArray[levIndex][rowIndex][colIndex];
 }
 
-// char input = uart_read();
-// 	uint8_t dir = input - 48;
-// 	if(dir == 0){
-// 		generateEnemies();
-// 		robotSetLED();
-// 		testPrintLedStatus();
-// 	}
+void gameover(){
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	for(i = 0; i < LEV_NUM; i++){
+		for(j = 0; j < ROW_NUM; j++){
+			for(k = 0; k < COL_NUM; k++){
+				setRobotGameArray(PLAYER, i, j, k);
+			}
+		}
+	}
+}
 
 void runRobotTests(){
 	uint8_t changed = 0;
+	uint8_t lose = 0;
 	uart_init();
 	robotInit();
 	generateEnemies();
 	robotSetLED();
 	testPrintLedStatus();
 	while(1){
-		if(timer_ms_count == FLASH_MSEC){
+		if(PLAYER_FLASH_ON && timer_ms_count == PLAYER_FLASH_MSEC){
 			playerIsOn = !playerIsOn;
 			changed = 1;	
 		}
 		char input = uart_read_nb();
 		uint8_t dir = input - 48;
-		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
+		if(dir > 0 && dir < 9 && dir != 3 && dir != 5 && lose == 0){
+			// gameover();
 			playerIsOn = 1;
 			playerMove(dir);
+			lose = enemiesMove();
 			changed = 1;
 		}
 		if(changed){
