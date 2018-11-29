@@ -14,5 +14,7 @@ void main(){
     // runLedTests();
     // runLettersDisplayTests();
 	// runSnakeTests();
-	runRobotTests();
+	// runRobotTests();
+	// runLettersDisplay();
+	runLedTests();
 }

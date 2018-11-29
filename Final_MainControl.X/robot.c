@@ -72,7 +72,9 @@ uint8_t enemiesMove(){
 	uint8_t newEnemyLev = 0;
 	uint8_t newEnemyRow = 0;
 	uint8_t newEnemyCol = 0;
-	uint8_t
+	uint8_t levDistance = 0;
+	uint8_t rowDistance = 0;
+	uint8_t colDistance = 0;
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			for(k = 0; k < COL_NUM; k++){
@@ -80,16 +82,22 @@ uint8_t enemiesMove(){
 					newEnemyLev = i;
 					newEnemyRow = j;
 					newEnemyCol = k;
-					levDistance = absolute(i = newEnemyLev);
-
+					levDistance = absolute(i - newEnemyLev);
+					rowDistance = absolute(j - newEnemyRow);
+					colDistance = absolute(k - newEnemyCol);
 					setRobotGameArray(EMPTY, i, j, k);
-
-					if(player.lev > i) newEnemyLev++;
-					else if(player.lev < i) newEnemyLev--;
-					if(player.row > j) newEnemyCol++;
-					else if(player.row < j) newEnemyCol--;
-					if(player.col > k) newEnemyCol++;
-					else if(player.col < k) newEnemyCol--;
+					if(levDistance >= rowDistance && levDistance >= colDistance){
+						if(player.lev > i) newEnemyLev++;
+						else if(player.lev < i) newEnemyLev--;
+					}
+					else if(rowDistance >= levDistance && rowDistance >= colDistance){
+						if(player.row > j) newEnemyRow++;
+						else if(player.row < j) newEnemyRow--;
+					}
+					else{
+						if(player.col > k) newEnemyCol++;
+						else if(player.col < k) newEnemyCol--;
+					}
 					if(player.lev == newEnemyLev && player.row == newEnemyRow && player.col == newEnemyCol){
 						return 1; //gameover
 					}
@@ -220,6 +228,7 @@ void runRobotTests(){
 			changed = 1;
 		}
 		if(changed){
+			if(lose) gameover();
 			robotSetLED();
 			testPrintLedStatus();
 			timer_ms_count = 0;

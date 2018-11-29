@@ -17,12 +17,12 @@
 #include "led_control.h"
 
 void ledInit(){
-	#ifndef ON_TEST
-	ANSELA = 0;
-    ANSELB = 0;
-    TRISA = TRISA & 0b00000; 
-    TRISB  = TRISB & 0b000000;
-    #endif
+	if(ON_TEST == 0){
+		ANSELA = 0;
+	    ANSELB = 0;
+	    TRISA = TRISA & 0b00000; 
+	    TRISB  = TRISB & 0b000000;
+    }
     int i = 0;
     int j = 0;
     for(i = 0; i < LEV_NUM; i++){
@@ -56,16 +56,15 @@ uint8_t getArray(uint8_t levIndex, uint8_t rowIndex){
 void refresh(){
 	int i = 0;
 	ledIndex = 0;
-	for(i = 0; i < TOTAL_LED_NUM; i++){
+	for(i = 0; i < 2; i++){
 		refreshRow();
 		refreshCol();
 		refreshLev();
-		refreshLedStatus();
-		#ifdef ON_TEST
-		testPinOutputs();		
-		#else
-		writeToPort();
-		#endif
+		// refreshLedStatus();
+		// if(ON_TEST == 1)
+		// 	testPinOutputs();			
+		// else
+			writeToPort();
 		ledIndex++;	
 	}
 }
@@ -137,8 +136,8 @@ void writeToPort(){
     portbOut += 0; //reserved for LEV3
     portbOut <<= 1;
     portbOut += levOut[2];
-   	PORTA = (PORTA & 0b00000) | portaOut;
-   	PORTB = (PORTB & 0b000000) | portbOut;
+   	PORTA = /*(PORTA & 0b00000) |*/ portaOut;
+   	PORTB = /*(PORTB & 0b000000) |*/ portbOut;
 }
 
 /**
@@ -206,9 +205,54 @@ void testPinOutputs(){
 }
 
 void runLedTests(){
-	uart_init();
+	// uart_init();
 	ledInit();
-	refresh();
+	// isOn = 1;
+	// int i = 0;
+ //    int j = 0;
+ //    for(i = 0; i < LEV_NUM; i++){
+ //        for(j = 0; j < COL_NUM; j++){
+ //            setArray(0xFF, i, j)
+ //        }
+ //    }
+	// refresh();
+	
+	while(1){
+		rowOut[0] = 0;
+		rowOut[1] = 0;
+		rowOut[2] = 0;
+		colOut[0] = 0;
+		colOut[1] = 0;
+		colOut[2] = 0;
+		levOut[0] = 0;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		isOn = 1;
+		writeToPort();
+		rowOut[0] = 1;
+		rowOut[1] = 0;
+		rowOut[2] = 0;
+		colOut[0] = 1;
+		colOut[1] = 0;
+		colOut[2] = 0;
+		levOut[0] = 1;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		isOn = 1;
+		writeToPort();
+		rowOut[0] = 1;
+		rowOut[1] = 1;
+		rowOut[2] = 1;
+		colOut[0] = 0;
+		colOut[1] = 0;
+		colOut[2] = 0;
+		levOut[0] = 1;
+		levOut[1] = 1;
+		levOut[2] = 1;
+		isOn = 1;
+		writeToPort();
+
+	}
 }
 
 
