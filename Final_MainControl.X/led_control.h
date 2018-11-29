@@ -12,6 +12,8 @@
 #define COL_PIN_NUM 3
 #define LEV_PIN_NUM 3
 
+#define PAUSE_TIME_MSEC 1
+
 #define ON_TEST 0
 
 uint8_t cuboidArray[LEV_NUM][ROW_NUM];
@@ -19,6 +21,9 @@ uint8_t rowOut[ROW_PIN_NUM];
 uint8_t colOut[COL_PIN_NUM];
 uint8_t levOut[LEV_PIN_NUM];
 uint32_t ledIndex;
+uint8_t levIndex;
+uint8_t rowIndex;
+uint8_t colIndex;
 uint8_t isOn;
 
 void ledInit();
@@ -30,6 +35,7 @@ void refreshLedStatus();
 void writeToPort();
 void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex);
 uint8_t getArray(uint8_t levIndex, uint8_t rowIndex);
+void delay_us(uint16_t input);
 
 //uint8_t logTwo(uint8_t input);
 
