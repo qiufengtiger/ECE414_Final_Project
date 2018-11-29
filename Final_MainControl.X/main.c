@@ -10,6 +10,7 @@
 #pragma config FWDTEN = OFF,  FSOSCEN = OFF, JTAGEN = OFF
 
 void main(){
+	
     // testDecode();
     // runLedTests();
     // runLettersDisplayTests();

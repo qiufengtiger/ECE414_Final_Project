@@ -9,10 +9,44 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
 
 
 void runLettersDisplay(){
-    lettersDisplayInit();
-    decodeArray("TEST");
+    ledInit();
+    // lettersDisplayInit();
+
+    // decodeArray("TEST");
+    // decode('T');
+    // ledMapping(0);
+    // uint8_t index = 0;
+
+    // uint8_t line = arrayCharIndex * 6 + LEV_NUM;
+    // arrayCharIndex ++;
+    // uint8_t line = 0;
+    // displayArray[line]   = 0b00011100;
+            // displayArray[++line] = 0b00101000;
+            // displayArray[++line] = 0b01001000;
+            // displayArray[++line] = 0b00101000;
+            // displayArray[++line] = 0b00011100;
+            // displayArray[++line] = 0b00000000;
+    //  for(index = 0; index < LEV_NUM; index++){
+    //         uint8_t thisRow = displayArray[index];
+    //         setArray(thisRow, index, 2);
+    //         setArray(thisRow, index, 3);
+    //         setArray(thisRow, index, 4);
+    //         setArray(thisRow, index, 5);
+    // }
+    // int i = 0;
+    // int j = 0;
+    // for(i = 0; i < LEV_NUM; i++){
+    //     for(j = 0; j < ROW_NUM; j++){
+    //         setArray(displayArray[0], i, j);
+    //     }
+    // }
+            setArray(0b00011100, 1, 0);
+            // setArray(displayArray[1], 2, 0);
+            // setArray(displayArray[2], 3, 0);
+            // setArray(displayArray[3], 4, 0); 
     while(1){
-        setLED();
+        // setLED();
+
         refresh();
     }
 }
