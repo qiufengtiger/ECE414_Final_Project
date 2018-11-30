@@ -123,33 +123,11 @@ void writeToPort(){
     uint8_t portaOut = 0;
     uint8_t portbOut = 0;
     /*PORTA*/
-    // portaOut += colOut[2];
-    // portaOut <<= 1;
-    // portaOut += colOut[0];
-    // portaOut <<= 1;
-    // portaOut += rowOut[2];
-    // portaOut <<= 1;
-    // portaOut += levOut[1];
-    // portaOut <<= 1;
-    // portaOut += levOut[0];
-    // /*PORTB*/
-    // portbOut += isOn;
-    // portbOut <<= 1;
-    // portbOut += colOut[1];
-    // portbOut <<= 1;
-    // portbOut += rowOut[1];
-    // portbOut <<= 1;
-    // portbOut += rowOut[0];
-    // portbOut <<= 1;
-    // portbOut += 0; //reserved for LEV3
-    // portbOut <<= 1;
-    // portbOut += levOut[2];
-
-    portaOut += rowOut[2];
-    portaOut <<= 1;
-    portaOut += rowOut[0];
-    portaOut <<= 1;
     portaOut += colOut[2];
+    portaOut <<= 1;
+    portaOut += colOut[0];
+    portaOut <<= 1;
+    portaOut += rowOut[2];
     portaOut <<= 1;
     portaOut += levOut[1];
     portaOut <<= 1;
@@ -157,15 +135,37 @@ void writeToPort(){
     /*PORTB*/
     portbOut += isOn;
     portbOut <<= 1;
-    portbOut += rowOut[1];
-    portbOut <<= 1;
     portbOut += colOut[1];
     portbOut <<= 1;
-    portbOut += colOut[0];
+    portbOut += rowOut[1];
+    portbOut <<= 1;
+    portbOut += rowOut[0];
     portbOut <<= 1;
     portbOut += 0; //reserved for LEV3
     portbOut <<= 1;
     portbOut += levOut[2];
+
+    // portaOut += rowOut[2];
+    // portaOut <<= 1;
+    // portaOut += rowOut[0];
+    // portaOut <<= 1;
+    // portaOut += colOut[2];
+    // portaOut <<= 1;
+    // portaOut += levOut[1];
+    // portaOut <<= 1;
+    // portaOut += levOut[0];
+    // /*PORTB*/
+    // portbOut += isOn;
+    // portbOut <<= 1;
+    // portbOut += rowOut[1];
+    // portbOut <<= 1;
+    // portbOut += colOut[1];
+    // portbOut <<= 1;
+    // portbOut += colOut[0];
+    // portbOut <<= 1;
+    // portbOut += 0; //reserved for LEV3
+    // portbOut <<= 1;
+    // portbOut += levOut[2];
    	PORTA = (PORTA & 0b00000) | portaOut;
    	PORTB = (PORTB & 0b000000) | portbOut;
 }
@@ -237,29 +237,30 @@ void testPinOutputs(){
 void runLedTests(){
 	// uart_init();
 	ledInit();
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
+	// 	rowOut[0] = 0;
+	// 	rowOut[1] = 0;
+	// 	rowOut[2] = 0;
+	// 	colOut[0] = 0;
+	// 	colOut[1] = 0;
+	// 	colOut[2] = 0;
+	// 	levOut[0] = 0;
+	// 	levOut[1] = 0;
+	// 	levOut[2] = 0;
 	// isOn = 1;
 	int i = 0;
 	int j = 0;
     for(i = 0; i < LEV_NUM; i++){
         for(j = 0; j < ROW_NUM; j++){
-            setArray(0b11111111, i, j);
+            setArray(0xFE, i, j);
         }
     }
 	// isOn = 1;
 	// setArray(0b11111111, 0, 0);
 	// setArray(0b11111111, 0, 1);
-	// // int i = 0;
-	// while(1){
+	// // int i = 0; 
+	while(1){
 	// 	 refresh();
+	// 	// writeToPort();
 	// }
 	
 	
@@ -273,20 +274,20 @@ void runLedTests(){
 	// writeToPort();
 	// refresh();
 	// int n = 0;
-	while(1){
+	// while(1){
 		// while(n < 8){
-			refreshRow();
-		refreshCol();
-		refreshLev();
-		refreshLedStatus();
-		writeToPort();
-			// n++;
+		// 	refreshRow();
+		// refreshCol();
+		// refreshLev();
+		// refreshLedStatus();
+		// writeToPort();
+		// 	// n++;
+		// // }
+		// // n = 0;
+		// if(ledIndex == TOTAL_LED_NUM){
+		// 	ledIndex = 0;
 		// }
-		// n = 0;
-		if(ledIndex == TOTAL_LED_NUM){
-			ledIndex = 0;
-		}
-		else ledIndex ++;
+		// else ledIndex ++;
 		// rowOut[0] = 1;
 		// rowOut[1] = 0;
 		// rowOut[2] = 1;
@@ -321,50 +322,56 @@ void runLedTests(){
 		// isOn = 1;
 		// writeToPort();
 
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 1;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 1;
-		// colOut[1] = 0;
-		// colOut[2] = 0;
-		// levOut[0] = 1;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 0;
-		// rowOut[1] = 1;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 1;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 1;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 1;
-		// rowOut[1] = 1;
-		// rowOut[2] = 0;
-		// colOut[0] = 1;
-		// colOut[1] = 1;
-		// colOut[2] = 0;
-		// levOut[0] = 1;
-		// levOut[1] = 1;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
+		
+		rowOut[0] = 0;
+		rowOut[1] = 0;
+		rowOut[2] = 0;
+		colOut[0] = 0;
+		colOut[1] = 0;
+		colOut[2] = 0;
+		levOut[0] = 0;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		// refresh();
+
+		refreshLedStatus();
+		writeToPort();
+
+		rowOut[0] = 1;
+		rowOut[1] = 0;
+		rowOut[2] = 0;
+		colOut[0] = 1;
+		colOut[1] = 0;
+		colOut[2] = 0;
+		levOut[0] = 0;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		refreshLedStatus();
+		writeToPort();
+		rowOut[0] = 0;
+		rowOut[1] = 1;
+		rowOut[2] = 0;
+		colOut[0] = 0;
+		colOut[1] = 1;
+		colOut[2] = 0;
+		levOut[0] = 0;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		refreshLedStatus();
+		writeToPort();
+
+
+		rowOut[0] = 1;
+		rowOut[1] = 1;
+		rowOut[2] = 0;
+		colOut[0] = 1;
+		colOut[1] = 1;
+		colOut[2] = 0;
+		levOut[0] = 0;
+		levOut[1] = 0;
+		levOut[2] = 0;
+		refreshLedStatus();
+		writeToPort();
 		// rowOut[0] = 0;
 		// rowOut[1] = 0;
 		// rowOut[2] = 1;
