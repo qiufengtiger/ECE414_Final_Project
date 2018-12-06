@@ -28,6 +28,7 @@ uint8_t isOn;
 uint8_t isMsg;
 
 void ledInit();
+void resetLed();
 void refresh();
 void newRefresh();
 void refreshRow();

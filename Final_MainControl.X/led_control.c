@@ -57,6 +57,30 @@ void ledInit(){
     isMsg = 0;
 }
 
+void resetLed(){
+	int i = 0;
+    int j = 0;
+    for(i = 0; i < LEV_NUM; i++){
+        for(j = 0; j < COL_NUM; j++){
+            cuboidArray[i][j] = 0;
+        }
+    }
+    for(i = 0; i < ROW_PIN_NUM; i++){
+        rowOut[i] = 0;
+    }
+    for(i = 0; i < COL_PIN_NUM; i++){
+        colOut[i] = 0;
+    }
+    for(i = 0; i < LEV_PIN_NUM; i++){
+        levOut[i] = 0;
+    }
+    ledIndex = 0;
+    levIndex = 0;
+    rowIndex = 0;
+    colIndex = 0;
+    isOn = 0;
+}
+
 void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex){
     cuboidArray[levIndex][rowIndex] = thisRow;
 }
@@ -85,9 +109,10 @@ void refresh(){
 void newRefresh(){
 	uint8_t on = 0;
 	uint32_t i = 0;
+	ledIndex = 0;
 	if(isMsg){
-		for(i = 0; i < TOTAL_LED_NUM / 2; i++){
-		// if(isMsg && (i > TOTAL_LED_NUM >> 1)) continue;
+		for(i = 0; i < TOTAL_LED_NUM; i++){
+		if(isMsg && i % 64 < 39) continue;
 			ledIndex = i;
 			rowIndex = (ledIndex / 8) % 8;
 			colIndex = ledIndex % 8;
@@ -101,6 +126,7 @@ void newRefresh(){
 				refreshLev();
 				writeToPort();
 			}
+			on = 0;
 		}
 	}
 	else{
@@ -119,6 +145,7 @@ void newRefresh(){
 				refreshLev();
 				writeToPort();
 			}
+			on = 0;
 		}
 	}
 	
