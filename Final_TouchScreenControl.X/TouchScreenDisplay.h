@@ -40,6 +40,9 @@ void runMsgContent();
 void runSnakeContent();
 void runRobotContent();
 void runModelContent();
+uint8_t detectTouch();
+void runButtons(uint8_t button);
+void checkGameover();
 
 
 /*test methods*/
