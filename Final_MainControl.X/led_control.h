@@ -25,9 +25,11 @@ uint8_t levIndex;
 uint8_t rowIndex;
 uint8_t colIndex;
 uint8_t isOn;
+uint8_t isMsg;
 
 void ledInit();
 void refresh();
+void newRefresh();
 void refreshRow();
 void refreshCol();
 void refreshLev();

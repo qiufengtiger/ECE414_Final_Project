@@ -10,10 +10,10 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
 
 void runLettersDisplay(){
     ledInit();
-    // lettersDisplayInit();
+    lettersDisplayInit();
 
-    // decodeArray("TEST");
-    // decode('T');
+    decodeArray("TEST");
+    // decode('A');
     // ledMapping(0);
     // uint8_t index = 0;
 
@@ -21,11 +21,12 @@ void runLettersDisplay(){
     // arrayCharIndex ++;
     // uint8_t line = 0;
     // displayArray[line]   = 0b00011100;
-            // displayArray[++line] = 0b00101000;
-            // displayArray[++line] = 0b01001000;
-            // displayArray[++line] = 0b00101000;
-            // displayArray[++line] = 0b00011100;
-            // displayArray[++line] = 0b00000000;
+    
+    //         displayArray[++line] = 0b00101000;
+    //         displayArray[++line] = 0b01001000;
+    //         displayArray[++line] = 0b00101000;
+    //         displayArray[++line] = 0b00011100;
+    //         displayArray[++line] = 0b00000000;
     //  for(index = 0; index < LEV_NUM; index++){
     //         uint8_t thisRow = displayArray[index];
     //         setArray(thisRow, index, 2);
@@ -40,21 +41,23 @@ void runLettersDisplay(){
     //         setArray(displayArray[0], i, j);
     //     }
     // }
-            setArray(0b00011100, 1, 0);
+            // setArray(0b00011100, 1, 0);
             // setArray(displayArray[1], 2, 0);
             // setArray(displayArray[2], 3, 0);
             // setArray(displayArray[3], 4, 0); 
+    ledMapping(0);
+    // setLED();
     while(1){
         // setLED();
 
-        refresh();
+        newRefresh();
     }
 }
 
 void lettersDisplayInit(){
     int i = 0;
-    for(; i < DISPLAY_ARRAY_ROW_NUM; i++){
-        displayArray[i] = 0;
+    for(i = 0; i < DISPLAY_ARRAY_ROW_NUM; i++){
+        displayArray[i] = 0b00000000;
     }
     arrayCharIndex = 0;
     scrollIndex = 0;
@@ -67,10 +70,11 @@ void lettersDisplayInit(){
     INTEnableSystemSingleVectoredInt();
     mT1IntEnable(1);
     timer_ms_count = 0;
+    isMsg = 1;
 }
 
 void decode(char c){
-    uint8_t line = arrayCharIndex * 6 + LEV_NUM;
+    uint8_t line = arrayCharIndex * 6/* + LEV_NUM*/;
     arrayCharIndex ++;
     switch(c){
         case 'A':
@@ -405,19 +409,32 @@ void setLED(){
 void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
     for(index = 0; index < LEV_NUM; index++){
-        if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
-            setArray(00000000, index, 2);
-            setArray(00000000, index, 3);
-            setArray(00000000, index, 4);
-            setArray(00000000, index, 5);
-        }
-        else{
+        // if(index + scrollIndex > DISPLAY_ARRAY_ROW_NUM){
+        //     // setArray(00000, index);
+        //     setArray(0b00000000, 0, index);
+        //     setArray(0b00000000, 1, index);
+        //     setArray(0b00000000, 2, index);
+        //     setArray(0b00000000, 3, index);
+        //     setArray(0b00000000, 4, index);
+        //     setArray(0b00000000, 5, index);
+        //     setArray(0b00000000, 6, index);
+        //     setArray(0b00000000, 7, index);
+        // }
+        // else{
             uint8_t thisRow = displayArray[index + scrollIndex];
-            setArray(thisRow, index, 2);
-            setArray(thisRow, index, 3);
-            setArray(thisRow, index, 4);
-            setArray(thisRow, index, 5);
-        }
+            setArray(thisRow, 0, index);
+            setArray(thisRow, 1, index);
+            setArray(thisRow, 2, index);
+            setArray(thisRow, 3, index);
+            // setArray(thisRow, 4, index);
+            // setArray(thisRow, 5, index);
+            // setArray(thisRow, 6, index);
+            // setArray(thisRow, 7, index);
+            // setArray(thisRow, index, 2);
+            // setArray(thisRow, index, 3);
+            // setArray(thisRow, index, 4);
+            // setArray(thisRow, index, 5);
+        // }
     }
 }
 

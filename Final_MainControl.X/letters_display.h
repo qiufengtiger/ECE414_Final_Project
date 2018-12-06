@@ -30,7 +30,7 @@ void decodeArray(char c[]);
 void lettersDisplayInit();
 void writeToLED();
 void setLED();
-void ledMapping(uint8_t rollingIndex);
+void ledMapping(uint8_t scrollIndex);
 
 /*test methods*/
 void testDecode();

@@ -16,6 +16,6 @@ void main(){
     // runLettersDisplayTests();
 	// runSnakeTests();
 	// runRobotTests();
-	// runLettersDisplay();
-	runLedTests();
+	runLettersDisplay();
+	// runLedTests();
 }
