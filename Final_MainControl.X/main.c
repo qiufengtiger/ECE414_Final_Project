@@ -2,6 +2,7 @@
 #include "letters_display.h"
 #include "snake.h"
 #include "robot.h"
+#include "utilities.h"
 
 // Configure clocks
 #pragma config FNOSC = FRCPLL, POSCMOD = OFF
@@ -10,12 +11,30 @@
 #pragma config FWDTEN = OFF,  FSOSCEN = OFF, JTAGEN = OFF
 
 void main(){
-	
+	tabSelected = 1;
+	ANSELB = /*ANSELB & 0x13FF;*/0;
+	TRISB = TRISB | 0xEC00;// for decodeFromInputControl
+	loop:
+	switch(tabSelected){
+		case 1:
+			runLettersDisplay();
+			break;
+		case 2:
+			runSnakeGame();
+			// runLettersDisplay();
+			break;
+		case 3:
+			// runRobotGame();
+			break;
+		case 4:
+			break;
+	}
+	goto loop;
     // testDecode();
     // runLedTests();
     // runLettersDisplayTests();
 	// runSnakeTests();
 	// runRobotTests();
-	runLettersDisplay();
+	// runLettersDisplay();
 	// runLedTests();
 }

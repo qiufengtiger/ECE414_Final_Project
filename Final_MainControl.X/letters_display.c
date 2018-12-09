@@ -12,7 +12,6 @@ void runLettersDisplay(){
     ledInit();
     newRefresh();
     lettersDisplayInit();
-
     decodeArray("TEST");
     // decode('A');
     // ledMapping(0);
@@ -49,6 +48,9 @@ void runLettersDisplay(){
     // ledMapping(27);
     // setLED();
     while(1){
+        uint8_t input = decodeFromInputControl();
+        if(input == 7)
+            break;
         setLED();
         // ledMapping(0);
         newRefresh();

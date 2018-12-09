@@ -11,6 +11,7 @@
 #include <plib.h>
 #include <p32xxxx.h>
 #include "led_control.h"
+#include "utilities.h"
 
 #define DISPLAY_CHAR_NUM 4
 #define DISPLAY_ROW_NUM (DISPLAY_CHAR_NUM * 6)

@@ -20,9 +20,17 @@
 // #define GREEN       0b0000011111100000
 // #define BLUE        0b0000000000011111
 // #define YELLOW      0b1111111111100000
-#define BLACK       0b0000000000000000
-#define WHITE       0b1111111111111111
-#define GRAY        0b0111101111101111
+#define BLACK         0b0000000000000000
+#define WHITE         0b1111111111111111
+#define GRAY          0b0111101111101111
+#define NOT_AVAILABLE 0
+#define FORWARD       1
+#define BACKWARD      2
+#define LEFT 	      3
+#define RIGHT 		  4
+#define UP 			  5
+#define DOWN 		  6
+#define DEFAULT 	  7
 
 uint16_t tabMsgColor;
 uint16_t tabSnakeColor;
@@ -30,6 +38,16 @@ uint16_t tabRobotColor;
 uint16_t tabModelColor;
 uint8_t tabSelected;
 uint16_t tabTextColor;
+
+uint8_t joystickDirY;
+uint8_t joystickDirX;
+uint8_t outputDir;
+uint8_t outputDirLock;
+uint8_t levelToPulse;
+
+uint8_t upButtonState;
+uint8_t downButtonState;
+uint8_t buttonPressed;
 
 void runTouchScreenDisplay();
 uint16_t touchMappingX(uint16_t y);
@@ -43,6 +61,10 @@ void runModelContent();
 uint8_t detectTouch();
 void runButtons(uint8_t button);
 void checkGameover();
+void checkJoystickDir();
+void checkButtonsDir();
+void checkDir();
+void sendToMainControl(uint8_t dir, uint8_t isRestart, uint8_t tabSelected);
 
 
 /*test methods*/

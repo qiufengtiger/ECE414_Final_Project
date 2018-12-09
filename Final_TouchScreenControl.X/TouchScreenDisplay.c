@@ -26,8 +26,12 @@ void touchScreenParamInit(){
     CM1CON = 0; 
     CM2CON = 0;
 
-    TRISB = (TRISB | 0x0001); 
-    
+    // TRISB = (TRISB | 0x0001); 
+    // TRISB = (TRISB | 0x300); //RB8 & RB9 for joystick
+    TRISB = (TRISB | 0x300); // up & down buttons
+    TRISB = (TRISB & 0x7BCF); // output code
+    TRISA = (TRISA & 0xB);
+
     // Initialize display
     tft_init_hw();
     tft_begin();
@@ -46,12 +50,24 @@ void touchScreenParamInit(){
     INTEnableSystemSingleVectoredInt();
     mINT4IntEnable(1);
 
+    joystickDirY = DEFAULT;
+    joystickDirX = DEFAULT;
+    upButtonState = 0;
+    downButtonState = 0;
+    buttonPressed = DEFAULT;
+    outputDir = DEFAULT;
+    outputDirLock = 0;
+    levelToPulse = 0;
+
     tabMsgColor = GRAY;
     tabSnakeColor = GRAY;
     tabRobotColor = GRAY;
     tabModelColor = GRAY;
     tabSelected = 1;
     selectTab(tabSelected);
+
+    T1CON = 0x8030;
+    TMR1 = 0;
 }
 
 void TabsRefresh(){
@@ -87,6 +103,7 @@ void selectTab(uint8_t index){
 			tabRobotColor = GRAY;
 			tabModelColor = GRAY;
 			runMsgContent();
+			sendToMainControl(NOT_AVAILABLE, 0, 1);
 			break;
 		case 2:
 			tabMsgColor = GRAY;
@@ -94,6 +111,7 @@ void selectTab(uint8_t index){
 			tabRobotColor = GRAY;
 			tabModelColor = GRAY;
 			runSnakeContent();
+			sendToMainControl(NOT_AVAILABLE, 0, 2);
 			break;
 		case 3:
 			tabMsgColor = GRAY;
@@ -101,6 +119,7 @@ void selectTab(uint8_t index){
 			tabRobotColor = WHITE;
 			tabModelColor = GRAY;
 			runRobotContent();
+			sendToMainControl(NOT_AVAILABLE, 0, 3);
 			break;
 		case 4:
 			tabMsgColor = GRAY;
@@ -108,6 +127,7 @@ void selectTab(uint8_t index){
 			tabRobotColor = GRAY;
 			tabModelColor = WHITE;
 			runModelContent();
+			sendToMainControl(NOT_AVAILABLE, 0, 4);
 			break;
 		default:
 			break;
@@ -125,7 +145,7 @@ uint8_t detectTouch(){
     uint16_t oldY = p.y;     
     p.y = touchMappingY(oldX);
     p.x = touchMappingX(oldY);
-    if(p.z > 20){
+    if(p.z > 300){
     	if(p.x > 0 && p.x < 80){
     		if(p.y > 0 && p.y < 60){
     			// selectTab(1);
@@ -179,6 +199,7 @@ void runButtons(uint8_t button) {
 	else if(button == 5){
 		gameover = 0;
 		selectTab(tabSelected);
+		sendToMainControl(NOT_AVAILABLE, 1, 0);
 		// TabsRefresh();
 	}
 }
@@ -216,13 +237,191 @@ void runModelContent(){
 void checkGameover(){
 	uint8_t buffer[64];
 	if(gameover && (tabSelected == 2 | tabSelected == 3)){
-		tft_setCursor(150, 30);
+		tft_fillRect(110, 20, 210, 15, WHITE); //refresh
+		tft_setCursor(150, 20);
 		sprintf(buffer, "Gameover");
 		tft_writeString(buffer);
-		tft_setCursor(110, 60);
+		tft_fillRect(110, 50, 210, 15, WHITE);
+		tft_setCursor(110, 50);
 		sprintf(buffer, "Rst => restart");
 		tft_writeString(buffer);
+		tft_fillRect(110, 80, 210, 15, WHITE);
 	}
+}
+
+void checkDir(){
+	if(!gameover){
+		checkJoystickDir();
+		checkButtonsDir();	
+	}
+	if(outputDirLock == 0){
+		levelToPulse = 0;
+	}
+	else if(outputDirLock == 1 && levelToPulse == 0){
+		sendToMainControl(outputDir, 0, 0);
+		outputDir = DEFAULT;
+		outputDirLock = 0;
+		levelToPulse = 1;
+	}
+}
+
+void checkJoystickDir(){
+	uint8_t buffer[64];
+	uint8_t inputDirY = NOT_AVAILABLE;
+	uint8_t inputDirX = NOT_AVAILABLE;
+	uint16_t inputY = analog_in_read(5); //AN5, PIN7
+	uint16_t inputX = analog_in_read(11); //AN11, PIN24
+	if(inputY > 700)
+		inputDirY = FORWARD;
+	else if(inputY < 340)
+		inputDirY = BACKWARD;
+	else
+		inputDirY = NOT_AVAILABLE;
+
+	if(inputX > 700)
+		inputDirX = RIGHT;
+	else if(inputX < 340)
+		inputDirX = LEFT;
+	else
+		inputDirX = NOT_AVAILABLE;
+	if(/*!gameover && (*/tabSelected == 2 | tabSelected == 3/*)*/){
+		// if(inputDirY != joystickDirY)
+		// {
+			// joystickDirY = inputDirY;
+			tft_fillRect(110, 20, 210, 15, WHITE);
+			tft_setCursor(110, 20);
+			if(inputDirY == FORWARD)
+				sprintf(buffer, "Y axis: FORWARD");
+			else if(inputDirY == BACKWARD)
+				sprintf(buffer, "Y axis: BACKWARD");
+			else
+				sprintf(buffer, "Y axis: N/A");
+			tft_writeString(buffer);
+			if(outputDirLock == 0 && inputDirY != NOT_AVAILABLE){
+				outputDir = inputDirY;
+				outputDirLock = 1;
+			}
+		// }	
+		// if(inputDirX != joystickDirX)
+		// {
+			// joystickDirX = inputDirX;
+			tft_fillRect(110, 50, 210, 15, WHITE);
+			tft_setCursor(110, 50);
+			if(inputDirX == RIGHT)
+				sprintf(buffer, "X axis: RIGHT");
+			else if(inputDirX == LEFT)
+				sprintf(buffer, "X axis: LEFT");
+			else
+				sprintf(buffer, "X axis: N/A");
+			tft_writeString(buffer);
+			if(outputDirLock == 0 && inputDirX != NOT_AVAILABLE){
+				outputDir = inputDirX;
+				outputDirLock = 1;
+			}
+		// }	
+	}
+}
+
+void checkButtonsDir(){
+	uint8_t buffer[64];
+	uint16_t upInput = !!(PORTB & 0x200);
+	uint16_t downInput = !!(PORTB & 0x100);
+	if(upInput == 1)
+		buttonPressed = UP;
+	else if(downInput == 1)
+		buttonPressed = DOWN;
+	else
+		buttonPressed = NOT_AVAILABLE;
+	// if(upInput != upButtonState && buttonPressed == DEFAULT &&  (tabSelected == 2 | tabSelected == 3)){
+	// 	buttonPressed = UP;
+	// 	TMR1 = 0;
+	// }
+	// else if(downInput != downButtonState && buttonPressed == DEFAULT &&  (tabSelected == 2 | tabSelected == 3)){
+	// 	buttonPressed = DOWN;
+	// 	TMR1 = 0;
+	// }
+	if(/*TMR1 > 5000*//*!gameover && (*/tabSelected == 2 | tabSelected == 3/*)*/){
+		tft_fillRect(110, 80, 210, 15, WHITE);
+		tft_setCursor(110, 80);
+		if(buttonPressed == UP){
+			sprintf(buffer, "Z axis: UP");
+			upButtonState = 1;
+		}
+		else if(buttonPressed == DOWN){
+			sprintf(buffer, "Z axis: DOWN");
+			downButtonState = 1;
+		}
+		else{
+			sprintf(buffer, "Z axis: N/A");
+			upButtonState = 0;
+			downButtonState = 0;
+		}
+		tft_writeString(buffer);
+	}
+	if(outputDirLock == 0 && buttonPressed != NOT_AVAILABLE){
+		outputDir = buttonPressed;
+		outputDirLock = 1;
+	}
+}
+
+
+/**
+ * output: 5 bit code
+ * 00000: default
+ * 00001: FORWARD
+ * 00010: BACKWARD
+ * 00011: LEFT
+ * 00100: RIGHT
+ * 00101: UP
+ * 00110: DOWN
+ * 01000: RESTART
+ * 01001: Msg (TAB 1)
+ * 01010: Snake (TAB 2)
+ * 01011: Robot (TAB 3)
+ * 01100: Model (TAB 4)
+ */
+void sendToMainControl(uint8_t dir, uint8_t isRestart, uint8_t tabSelected){
+	uint8_t outputCode = 0;
+	uint16_t portaOut = 0;
+	uint16_t portbOut = 0;
+	uint8_t outputArray [5] = {0, 0, 0, 0, 0};
+	if(tabSelected != 0){
+		if(tabSelected == 1)
+			outputCode = 0b01001;
+		else if(tabSelected == 2)
+			outputCode = 0b01010;
+		else if(tabSelected == 3)
+			outputCode = 0b01011;
+		else if(tabSelected == 4)
+			outputCode = 0b01100;
+		else
+			outputCode = 0b00000;
+	}
+	else if(isRestart != 0){
+		outputCode = 0b10000;
+	}
+	else{
+		if(dir == FORWARD)
+			outputCode = 0b00001;
+		else if(dir == BACKWARD)
+			outputCode = 0b00010;
+		else if(dir == LEFT)
+			outputCode = 0b00011;
+		else if(dir == RIGHT)
+			outputCode = 0b00100;
+	}
+	portaOut += (!!(outputCode & 0b00100)) << 2;// outputCode[2]
+	portbOut += (!!(outputCode & 0b00001));// outputCode[0]
+	portbOut <<= 5;
+	portbOut += (!!(outputCode & 0b00010));// outputCode[1]
+	portbOut <<= 5;
+	portbOut += (!!(outputCode & 0b10000));// outputCode[3]
+	portbOut <<= 1;
+	portbOut += (!!(outputCode & 0b01000));// outputCode[4]
+	portbOut <<= 4;
+	PORTA = (PORTA & 0b011) | portaOut;
+	PORTB = (PORTB & 0b0111101111001111) | portbOut;
+	// PORTB = 0x8000;
 }
 
 void runTouchScreenDisplayTests(){
@@ -231,6 +430,9 @@ void runTouchScreenDisplayTests(){
 	// TabsRefresh();
 	while(1){
 		checkGameover();
+		// checkJoystickDir();
+		// checkButtonsDir();
+		checkDir();
 		buttonIndex = detectTouch();
 		runButtons(buttonIndex);
 	}

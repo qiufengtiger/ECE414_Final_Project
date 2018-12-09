@@ -5,16 +5,22 @@ void runSnakeGame(){
 	snakeSetLED();
 	refresh();
 	while(1){
-
-		//INPUT
-		// uint8_t dir = input - 48;
 		uint8_t dir  = 0;
-
-
+		uint8_t input = decodeFromInputControl();
+        if(input == 7)
+            break;
+        else{
+        	if(input == 1) dir = 8;
+        	else if(input == 2) dir = 2;
+        	else if(input == 3) dir = 4;
+        	else if(input == 4) dir = 6;
+        	else if(input == 5) dir = 7;
+        	else if(input == 6) dir = 1;
+        }
 		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
 			snakeMove(dir);
 			snakeSetLED();
-			refresh();
+			newRefresh();
 		} 
 	}
 }

@@ -11,7 +11,8 @@
 
 void main(int argc, char** argv) {
 	runTouchScreenDisplayTests();
-    
+	// touchScreenParamInit();
+ //    sendToMainControl(0, 0, 2);
 }
 
 
