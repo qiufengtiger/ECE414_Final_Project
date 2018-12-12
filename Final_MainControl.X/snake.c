@@ -1,32 +1,65 @@
 #include "snake.h"
 
 void runSnakeGame(){
+	ledInit();
 	snakeInit();
+	// generateFood();
 	snakeSetLED();
-	refresh();
+	newRefresh();
+	uint8_t dir = 0;
+	// test();
 	while(1){
-		uint8_t dir  = 0;
-		uint8_t input = decodeFromInputControl();
-        if(input == 7)
-            break;
-        else{
-        	if(input == 1) dir = 8;
-        	else if(input == 2) dir = 2;
-        	else if(input == 3) dir = 4;
-        	else if(input == 4) dir = 6;
-        	else if(input == 5) dir = 7;
-        	else if(input == 6) dir = 1;
-        }
+		// if(i == 0)
+		// 	dir = UP;
+		// else if(i == 1)
+		// 	dir = LEFT;
+		// else
+		// 	dir = NOT_AVAILABLE;
+		dir = checkDir();
+		if(dir == FORWARD) dir = 8;
+		else if(dir == BACKWARD) dir = 2;
+		else if(dir == LEFT) dir = 4;
+		else if(dir == RIGHT) dir = 6;
+		else if(dir == UP) dir = 7;
+		else if(dir == DOWN) dir = 1;
+		else dir = 0;
 		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
 			snakeMove(dir);
 			snakeSetLED();
-			newRefresh();
-		} 
+			changed = 1;
+			dir = 0;
+		}
+		newRefresh();	
 	}
+	
+	// while(1){
+	// 	uint8_t dir  = 0;
+	// 	// uint8_t input = decodeFromInputControl();
+ //  //       if(input == 7)
+ //  //           break;
+ //  //       else{
+ //  //       	if(input == 1) dir = 8;
+ //  //       	else if(input == 2) dir = 2;
+ //  //       	else if(input == 3) dir = 4;
+ //  //       	else if(input == 4) dir = 6;
+ //  //       	else if(input == 5) dir = 7;
+ //  //       	else if(input == 6) dir = 1;
+ //  //       }
+	// 	dir = checkDir();
+	// 	if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
+	// 		snakeMove(dir);
+	// 		snakeSetLED();
+	// 		newRefresh();
+	// 	} 
+	// }
 }
 
 void snakeInit(){
+	isMsg = 0;
+	isSnake = 1;
 	//initialize timer for random number
+	ANSELB = 0;
+	TRISB = TRISB | 0x180;
 	T1CON = 0x8010;
 	TMR1 = 0;
 	//initialize array
@@ -48,7 +81,8 @@ void snakeInit(){
 	pushBackSnakeArray(b1);
 	pushBackSnakeArray(b2);
 	refreshSnake();
-	generateFood();
+	changed = 1;
+	// generateFood();
 }
 
 void generateFood(){
@@ -93,7 +127,7 @@ void snakeMove(uint8_t dir){
 		eat(getHeadLev(), getHeadRow(), getHeadCol(), dir, lastLev, lastRow, lastCol);
 		snakeMoveHead(dir);
 		refreshSnake();
-		generateFood();
+		// generateFood();
 	}
 	else{
 		snakeMoveBody();
@@ -285,7 +319,7 @@ void snakeSetLED(){
 	int j = 0;
 	int k = 0;
 	uint8_t thisRow = 0;
-	ledInit(); //clear cuboidArray first
+	resetLed(); //clear cuboidArray first
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			thisRow = 0;

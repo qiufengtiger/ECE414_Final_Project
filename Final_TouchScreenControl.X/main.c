@@ -10,6 +10,8 @@
 
 
 void main(int argc, char** argv) {
+	ANSELA = 0;
+	ANSELB = 0;
 	runTouchScreenDisplayTests();
 	// touchScreenParamInit();
  //    sendToMainControl(0, 0, 2);

@@ -28,12 +28,29 @@ void uart_write(char input){
     
 }
 
+void uart_write_2(char input){
+    while((U2STA & 0x200)){
+        
+    }
+    U2TXREG = input;
+    
+}
+
 char uart_read(){
     char data = 0;
     while((U1STA & 1) == 0){
        
     }
     data = U1RXREG;
+    return data;
+}
+
+char uart_read_2(){
+    char data = 0;
+    while((U2STA & 1) == 0){
+       
+    }
+    data = U2RXREG;
     return data;
 }
 
@@ -48,6 +65,18 @@ char uart_read_nb(){
         data = U1RXREG;
         return data;
         // return U1RXREG;
+    }
+    else
+        return 0;
+        
+}
+
+char uart_read_nb_2(){
+    char data = 0;
+    // if(uart_read_ready){
+    if(U2STAbits.URXDA == 1){
+        data = U2RXREG;
+        return data;
     }
     else
         return 0;
@@ -75,6 +104,16 @@ void uart_write_string(char* input){
     for(i = 0; i < 64 && *c; i++){
 //        delay_ms(50);
         uart_write(*c);
+        c++;
+    }
+}
+
+void uart_write_string_2(char* input){
+    char* c = input;
+    int i = 0;
+    for(i = 0; i < 64 && *c; i++){
+//        delay_ms(50);
+        uart_write_2(*c);
         c++;
     }
 }

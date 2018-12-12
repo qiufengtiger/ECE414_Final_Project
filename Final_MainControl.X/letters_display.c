@@ -10,7 +10,7 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
 
 void runLettersDisplay(){
     ledInit();
-    newRefresh();
+    // newRefresh();
     lettersDisplayInit();
     decodeArray("TEST");
     // decode('A');
@@ -48,11 +48,16 @@ void runLettersDisplay(){
     // ledMapping(27);
     // setLED();
     while(1){
-        uint8_t input = decodeFromInputControl();
-        if(input == 7)
-            break;
+        // uint8_t input = decodeFromInputControl();
+        // uint8_t input = uartDecodeFromInputControl();
+        // uint8_t input = 0;
+        // if(input == 7)
+        //     break;
+        // uint8_t buffer[64];
+        // sprintf(buffer, "not break\n");
+        // uart_write_string_2(buffer);
         setLED();
-        // ledMapping(0);
+        // // ledMapping(0);
         newRefresh();
     }
 }
@@ -74,6 +79,7 @@ void lettersDisplayInit(){
     mT1IntEnable(1);
     timer_ms_count = 0;
     isMsg = 1;
+    isSnake = 0;
 }
 
 void decode(char c){

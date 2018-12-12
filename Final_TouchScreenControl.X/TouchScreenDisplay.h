@@ -38,6 +38,7 @@ uint16_t tabRobotColor;
 uint16_t tabModelColor;
 uint8_t tabSelected;
 uint16_t tabTextColor;
+uint8_t tabLevelToPulse;
 
 uint8_t joystickDirY;
 uint8_t joystickDirX;

@@ -16,6 +16,12 @@
 
 #include "led_control.h"
 
+// volatile uint8_t input;
+// void __ISR(0, ipl1auto) InterruptHandler(void){
+// 	input = 1;
+// 	mINT4ClearIntFlag();
+// }
+
 void delay_us(uint16_t input){
     T3CON = 0x8030;
     TMR3 = 0;
@@ -55,6 +61,15 @@ void ledInit(){
     colIndex = 0;
     isOn = 0;
     isMsg = 0;
+    isSnake = 0;
+    listIndex = 0;
+    changed = 1;
+
+
+    // mINT4SetIntPriority(1);
+    // INTEnableSystemSingleVectoredInt();
+    // mINT4IntEnable(1);
+    // input = 0;
 }
 
 void resetLed(){
@@ -106,11 +121,38 @@ void refresh(){
 	}
 }
 
+void snakeWriteToList(){
+	uint32_t i = 0;
+	for(i = 0; i < TOTAL_LED_NUM; i++){
+		onLEDlist[i] = 0;
+	}
+	// uint32_t listIndex = 0;
+	listIndex = 0;
+	for(i = 0; i < TOTAL_LED_NUM; i++){
+		ledIndex = i;
+		rowIndex = (ledIndex / 8) % 8;
+		colIndex = ledIndex % 8;
+		levIndex = ledIndex / 64;
+		uint8_t thisRow = getArray(levIndex, rowIndex);
+		uint8_t mask = 1 << colIndex;
+		uint8_t on = !!(mask & thisRow);
+		if(on){
+			onLEDlist[listIndex] = ledIndex;
+			listIndex++;
+		}
+	}
+	// onLEDlist[0] = 3;
+	// onLEDlist[1] = 4;
+	// onLEDlist[2] = 5;
+	// listIndex = 3;
+}
+
 void newRefresh(){
 	uint8_t on = 0;
 	uint32_t i = 0;
-	ledIndex = 0;
-	if(isMsg){
+	
+	// ledIndex = 0;
+	if(isMsg == 1){
 		for(i = 0; i < TOTAL_LED_NUM; i++){
 		if(isMsg && i % 64 < 39) continue;
 			ledIndex = i;
@@ -129,25 +171,45 @@ void newRefresh(){
 			on = 0;
 		}
 	}
-	else{
-		for(i = 0; i < TOTAL_LED_NUM; i++){
-			// if(isMsg && (i > TOTAL_LED_NUM >> 1)) continue;
-			ledIndex = i;
+	else if(isSnake == 1){
+		if(changed){
+			// listIndex = 0;
+			// for(i = 0; i < TOTAL_LED_NUM; i++){
+			// 	onLEDlist[i] = 0;
+			// }
+			// for(i = 0; i < TOTAL_LED_NUM; i++){
+			// 	ledIndex = i;
+			// 	rowIndex = (ledIndex / 8) % 8;
+			// 	colIndex = ledIndex % 8;
+			// 	levIndex = ledIndex / 64;
+			// 	uint8_t thisRow = getArray(levIndex, rowIndex);
+			// 	uint8_t mask = 1 << colIndex;
+			// 	uint8_t on = !!(mask & thisRow);
+			// 	if(on){
+			// 		onLEDlist[listIndex] = ledIndex;
+			// 		listIndex++;
+			// 	}
+			// 	on = 0;
+			// }
+			snakeWriteToList();
+			changed = 0;
+		}
+		for(i = 0; i < listIndex; i++){
+			ledIndex = onLEDlist[i];
 			rowIndex = (ledIndex / 8) % 8;
 			colIndex = ledIndex % 8;
 			levIndex = ledIndex / 64;
-			uint8_t thisRow = getArray(levIndex, rowIndex);
-			uint8_t mask = 1 << colIndex;
-			on = !!(mask & thisRow);
-			if(on == 1){
-				refreshRow();
-				refreshCol();
-				refreshLev();
-				writeToPort();
-			}
-			on = 0;
+			refreshRow();
+			refreshCol();
+			refreshLev();
+			writeToPort();
+			// ledIndex = 0;
 		}
 	}
+	
+	// onLEDlist[listIndex] = 0xFFFFFFFF; //end of list
+	
+	
 	
 }
 
@@ -334,34 +396,39 @@ void testPinOutputs(){
 
 void runLedTests(){
 	// uart_init();
-	ledInit();
-	// 	rowOut[0] = 0;
-	// 	rowOut[1] = 0;
-	// 	rowOut[2] = 0;
-	// 	colOut[0] = 0;
-	// 	colOut[1] = 0;
-	// 	colOut[2] = 0;
-	// 	levOut[0] = 0;
-	// 	levOut[1] = 0;
-	// 	levOut[2] = 0;
-	// isOn = 1;
-	int i = 0;
-	int j = 0;
-    for(i = 0; i < LEV_NUM; i++){
-        for(j = 0; j < ROW_NUM; j++){
-        	// if(i % 2 == 1)
-         //    	setArray(0b00000000, i, j);
-         //    else
-            	setArray(0b10000000, i, j);
-        }
-    }
-	// isOn = 1;
-	// setArray(0b11111111, 0, 0);
-	// setArray(0b11001100, 1, 0);
-	// // int i = 0; 
-	while(1){
+	// ledInit();
+	// // // 	rowOut[0] = 0;
+	// // // 	rowOut[1] = 0;
+	// // // 	rowOut[2] = 0;
+	// // // 	colOut[0] = 0;
+	// // // 	colOut[1] = 0;
+	// // // 	colOut[2] = 0;
+	// // // 	levOut[0] = 0;
+	// // // 	levOut[1] = 0;
+	// // // 	levOut[2] = 0;
+	// // // isOn = 1;
+	// // int i = 0;
+	// // int j = 0;
+ // //    for(i = 0; i < LEV_NUM; i++){
+ // //        for(j = 0; j < ROW_NUM; j++){
+ // //        	// if(i % 2 == 1)
+ // //         //    	setArray(0b00000000, i, j);
+ // //         //    else
+ // //            	setArray(0b10000000, i, j);
+ // //        }
+ // //    }
+	// // isOn = 1;
+	// // setArray(0b11111111, 0, 0);
+	// // setArray(0b11001100, 1, 0);
+	// // // int i = 0;
+	// 	uint8_t buffer[64]; 
+	// while(1){
+	// 	if(input == 1){
+	// 		sprintf(buffer, "hhhhhhh");
+	// 		uart_write_string(buffer);
+	// 	}
 		 // refresh();
-		newRefresh();
+		// newRefresh();
 	// 	// writeToPort();
 	// }
 	
@@ -519,7 +586,7 @@ void runLedTests(){
 		// isOn = 1;
 		// writeToPort();
 
-	}
+	// }
 }
 
 

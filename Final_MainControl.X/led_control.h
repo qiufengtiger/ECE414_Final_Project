@@ -26,6 +26,11 @@ uint8_t rowIndex;
 uint8_t colIndex;
 uint8_t isOn;
 uint8_t isMsg;
+uint8_t isSnake;
+
+uint32_t listIndex;
+uint8_t changed;
+uint32_t onLEDlist [TOTAL_LED_NUM];
 
 void ledInit();
 void resetLed();
@@ -39,6 +44,7 @@ void writeToPort();
 void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex);
 uint8_t getArray(uint8_t levIndex, uint8_t rowIndex);
 void delay_us(uint16_t input);
+void snakeWriteToList();
 
 //uint8_t logTwo(uint8_t input);
 

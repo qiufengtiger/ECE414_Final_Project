@@ -152,6 +152,7 @@ cursor_x            0x2               build/default/production/main.o
 wrap                0x2               build/default/production/main.o
 textsize            0x2               build/default/production/main.o
 _height             0x2               build/default/production/main.o
+tabLevelToPulse     0x1               build/default/production/main.o
 downButtonState     0x1               build/default/production/main.o
 upButtonState       0x1               build/default/production/main.o
 textbgcolor         0x2               build/default/production/main.o
@@ -162,29 +163,29 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000000         0x38fc       14588  App's exec code 
-.text                   0x9d0038fc         0x16a8        5800  App's exec code 
-.rodata                 0x9d004fa4          0xa54        2644  Read-only const 
-.rodata                 0x9d0059f8          0x4fc        1276  Read-only const 
-.text                   0x9d005ef4          0x788        1928  App's exec code 
-.text.fpsubadd          0x9d00667c          0x278         632   
-.text.fp32div           0x9d0068f4          0x230         560   
-.text.fp32mul           0x9d006b24          0x1bc         444   
-.text                   0x9d006ce0          0x250         592  App's exec code 
-.text.general_exception 0x9d006f30           0xdc         220   
-.rodata                 0x9d00700c           0xd0         208  Read-only const 
-.text.SpiChnOpen        0x9d0070dc           0x90         144   
-.text.fptoli            0x9d00716c           0x80         128   
-.text.sitofp            0x9d0071ec           0x60          96   
-.text.main_entry        0x9d00724c           0x54          84   
-.text._bootstrap_except 0x9d0072a0           0x48          72   
-.text._general_exceptio 0x9d0072e8           0x48          72   
-.vector_default         0x9d007330           0x48          72   
-.text                   0x9d007378           0x44          68  App's exec code 
-.text.INTSetVectorPrior 0x9d0073bc           0x40          64   
-.text.INTSetVectorSubPr 0x9d0073fc           0x40          64   
-.text.INTEnable         0x9d00743c           0x3c          60   
-.text                   0x9d007478           0x38          56  App's exec code 
+.text                   0x9d000000         0x38ec       14572  App's exec code 
+.text                   0x9d0038ec         0x16a8        5800  App's exec code 
+.rodata                 0x9d004f94          0xa54        2644  Read-only const 
+.rodata                 0x9d0059e8          0x4fc        1276  Read-only const 
+.text                   0x9d005ee4          0x788        1928  App's exec code 
+.text.fpsubadd          0x9d00666c          0x278         632   
+.text.fp32div           0x9d0068e4          0x230         560   
+.text.fp32mul           0x9d006b14          0x1bc         444   
+.text                   0x9d006cd0          0x250         592  App's exec code 
+.text.general_exception 0x9d006f20           0xdc         220   
+.rodata                 0x9d006ffc           0xd0         208  Read-only const 
+.text.SpiChnOpen        0x9d0070cc           0x90         144   
+.text.fptoli            0x9d00715c           0x80         128   
+.text.sitofp            0x9d0071dc           0x60          96   
+.text.main_entry        0x9d00723c           0x54          84   
+.text                   0x9d007290           0x48          72  App's exec code 
+.text._bootstrap_except 0x9d0072d8           0x48          72   
+.text._general_exceptio 0x9d007320           0x48          72   
+.vector_default         0x9d007368           0x48          72   
+.text                   0x9d0073b0           0x44          68  App's exec code 
+.text.INTSetVectorPrior 0x9d0073f4           0x40          64   
+.text.INTSetVectorSubPr 0x9d007434           0x40          64   
+.text.INTEnable         0x9d007474           0x3c          60   
 .text.INTEnableSystemSi 0x9d0074b0           0x34          52   
 .text.INTGetVectorPrior 0x9d0074e4           0x30          48   
 .text.INTGetVectorSubPr 0x9d007514           0x30          48   
@@ -948,7 +949,7 @@ END GROUP
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
  *(.scommon)
- .scommon       0xa0000000       0x28 build/default/production/main.o
+ .scommon       0xa0000000       0x2a build/default/production/main.o
                 0xa0000000                tabMsgColor
                 0xa0000002                joystickDirX
                 0xa0000004                tabSnakeColor
@@ -968,17 +969,18 @@ END GROUP
                 0xa000001c                wrap
                 0xa000001e                textsize
                 0xa0000020                _height
-                0xa0000022                downButtonState
-                0xa0000023                upButtonState
-                0xa0000024                textbgcolor
-                0xa0000026                textcolor
- .scommon       0xa0000028        0x0 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
- .scommon       0xa0000028        0x0 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
- .scommon       0xa0000028        0x1 build/default/production/TouchScreenDisplay.o
-                0xa0000028                gameover
-                0xa0000029                _sbss_end = .
+                0xa0000022                tabLevelToPulse
+                0xa0000023                downButtonState
+                0xa0000024                upButtonState
+                0xa0000026                textbgcolor
+                0xa0000028                textcolor
+ .scommon       0xa000002a        0x0 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
+ .scommon       0xa000002a        0x0 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
+ .scommon       0xa000002a        0x1 build/default/production/TouchScreenDisplay.o
+                0xa000002a                gameover
+                0xa000002b                _sbss_end = .
                 0xa000002c                . = ALIGN (0x4)
- *fill*         0xa0000029        0x3 
+ *fill*         0xa000002b        0x1 
 
 .bss            0xa000002c        0x0
  *(.dynbss)
@@ -1162,30 +1164,30 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x9e43
+.debug_info     0x00000000     0x9ea2
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xfbd build/default/production/TouchScreen.o
  .debug_info    0x00000fbd     0x10b3 build/default/production/adc_intf.o
  .debug_info    0x00002070       0xd0 build/default/production/glcdfont.o
- .debug_info    0x00002140     0x1010 build/default/production/main.o
- .debug_info    0x00003150     0x1990 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
- .debug_info    0x00004ae0     0x1962 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
- .debug_info    0x00006442     0x18d2 build/default/production/TouchScreenDisplay.o
- .debug_info    0x00007d14     0x10ae build/default/production/analog_in.o
- .debug_info    0x00008dc2      0x5b6 build/default/production/uart.o
- .debug_info    0x00009378       0xa8 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(read_core_timer_lib.o)
- .debug_info    0x00009420       0xaa c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(write_core_timer_lib.o)
- .debug_info    0x000094ca       0xb4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_disable_interrupts_lib.o)
- .debug_info    0x0000957e       0xb4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_restore_interrupts_lib.o)
- .debug_info    0x00009632       0xbb c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_sv_int_lib.o)
- .debug_info    0x000096ed       0xa0 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
- .debug_info    0x0000978d       0xb2 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_interrupts_lib.o)
- .debug_info    0x0000983f      0x19c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
- .debug_info    0x000099db       0xf3 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_info    0x00009ace       0xcc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_info    0x00009b9a       0xd4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_info    0x00009c6e       0xef c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_info    0x00009d5d       0xe6 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_info    0x00002140     0x1050 build/default/production/main.o
+ .debug_info    0x00003190     0x1990 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
+ .debug_info    0x00004b20     0x1962 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
+ .debug_info    0x00006482     0x18f1 build/default/production/TouchScreenDisplay.o
+ .debug_info    0x00007d73     0x10ae build/default/production/analog_in.o
+ .debug_info    0x00008e21      0x5b6 build/default/production/uart.o
+ .debug_info    0x000093d7       0xa8 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(read_core_timer_lib.o)
+ .debug_info    0x0000947f       0xaa c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(write_core_timer_lib.o)
+ .debug_info    0x00009529       0xb4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_disable_interrupts_lib.o)
+ .debug_info    0x000095dd       0xb4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_restore_interrupts_lib.o)
+ .debug_info    0x00009691       0xbb c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_sv_int_lib.o)
+ .debug_info    0x0000974c       0xa0 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
+ .debug_info    0x000097ec       0xb2 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_interrupts_lib.o)
+ .debug_info    0x0000989e      0x19c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+ .debug_info    0x00009a3a       0xf3 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_info    0x00009b2d       0xcc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_info    0x00009bf9       0xd4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_info    0x00009ccd       0xef c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_info    0x00009dbc       0xe6 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
 .debug_abbrev   0x00000000     0x113c
  *(.debug_abbrev)
@@ -1212,31 +1214,31 @@ END GROUP
  .debug_abbrev  0x000010ec       0x28 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
  .debug_abbrev  0x00001114       0x28 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_line     0x00000000     0x1e12
+.debug_line     0x00000000     0x1e16
  *(.debug_line)
  .debug_line    0x00000000      0x250 build/default/production/TouchScreen.o
  .debug_line    0x00000250      0x1f9 build/default/production/adc_intf.o
  .debug_line    0x00000449       0x73 build/default/production/glcdfont.o
- .debug_line    0x000004bc      0x27c build/default/production/main.o
- .debug_line    0x00000738      0x46b build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
- .debug_line    0x00000ba3      0x3ca build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
- .debug_line    0x00000f6d      0x4d8 build/default/production/TouchScreenDisplay.o
- .debug_line    0x00001445      0x1f4 build/default/production/analog_in.o
- .debug_line    0x00001639      0x16d build/default/production/uart.o
- .debug_line    0x000017a6       0x6b c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(read_core_timer_lib.o)
- .debug_line    0x00001811       0x6c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(write_core_timer_lib.o)
- .debug_line    0x0000187d       0x70 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_disable_interrupts_lib.o)
- .debug_line    0x000018ed       0x70 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_restore_interrupts_lib.o)
- .debug_line    0x0000195d       0x6b c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_sv_int_lib.o)
- .debug_line    0x000019c8       0x66 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
- .debug_line    0x00001a2e        0x0 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_map_tbl_libp.o)
- .debug_line    0x00001a2e       0x6f c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_interrupts_lib.o)
- .debug_line    0x00001a9d       0x61 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
- .debug_line    0x00001afe       0xa5 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_line    0x00001ba3       0x92 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_line    0x00001c35       0x96 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_line    0x00001ccb       0xa3 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_line    0x00001d6e       0xa4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_line    0x000004bc      0x27e build/default/production/main.o
+ .debug_line    0x0000073a      0x46b build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
+ .debug_line    0x00000ba5      0x3ca build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
+ .debug_line    0x00000f6f      0x4da build/default/production/TouchScreenDisplay.o
+ .debug_line    0x00001449      0x1f4 build/default/production/analog_in.o
+ .debug_line    0x0000163d      0x16d build/default/production/uart.o
+ .debug_line    0x000017aa       0x6b c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(read_core_timer_lib.o)
+ .debug_line    0x00001815       0x6c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral.a(write_core_timer_lib.o)
+ .debug_line    0x00001881       0x70 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_disable_interrupts_lib.o)
+ .debug_line    0x000018f1       0x70 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_restore_interrupts_lib.o)
+ .debug_line    0x00001961       0x6b c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_sv_int_lib.o)
+ .debug_line    0x000019cc       0x66 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
+ .debug_line    0x00001a32        0x0 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_map_tbl_libp.o)
+ .debug_line    0x00001a32       0x6f c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_enable_interrupts_lib.o)
+ .debug_line    0x00001aa1       0x61 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+ .debug_line    0x00001b02       0xa5 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x00001ba7       0x92 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_line    0x00001c39       0x96 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_line    0x00001ccf       0xa3 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_line    0x00001d72       0xa4 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
 .debug_frame    0x00000000      0xc90
  *(.debug_frame)
@@ -1873,7 +1875,7 @@ LOAD data_init
                 0xbfc00480       0x2c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\debug-exception-return.o
                 0xbfc00480                __DbgExecReturn
 
-.text           0x9d000000     0x38fc
+.text           0x9d000000     0x38ec
  .text          0x9d000000     0x20d0 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
                 0x9d000000                tft_drawCircle
                 0x9d0003a0                tft_drawCircleHelper
@@ -1898,177 +1900,177 @@ LOAD data_init
                 0x9d001fcc                tft_gfx_setRotation
                 0x9d002080                tft_width
                 0x9d0020a8                tft_height
- .text          0x9d0020d0     0x182c build/default/production/TouchScreenDisplay.o
+ .text          0x9d0020d0     0x181c build/default/production/TouchScreenDisplay.o
                 0x9d0020d0                InterruptHandler
                 0x9d00217c                touchMappingX
                 0x9d0021ec                touchMappingY
                 0x9d00225c                touchScreenParamInit
-                0x9d0025e4                TabsRefresh
-                0x9d0027d4                selectTab
-                0x9d002988                detectTouch
-                0x9d002b34                runButtons
-                0x9d002cb8                runMsgContent
-                0x9d002d3c                runSnakeContent
-                0x9d002db0                runRobotContent
-                0x9d002e24                runModelContent
-                0x9d002eb0                checkGameover
-                0x9d003014                checkDir
-                0x9d0030bc                checkJoystickDir
-                0x9d003420                checkButtonsDir
-                0x9d003628                sendToMainControl
-                0x9d0038ac                runTouchScreenDisplayTests
+                0x9d0025e8                TabsRefresh
+                0x9d0027d8                selectTab
+                0x9d00298c                detectTouch
+                0x9d002b3c                runButtons
+                0x9d002cc0                runMsgContent
+                0x9d002d44                runSnakeContent
+                0x9d002db8                runRobotContent
+                0x9d002e2c                runModelContent
+                0x9d002eb8                checkGameover
+                0x9d00301c                checkDir
+                0x9d0030c4                checkJoystickDir
+                0x9d003428                checkButtonsDir
+                0x9d003630                sendToMainControl
+                0x9d0038a8                runTouchScreenDisplayTests
 
-.text           0x9d0038fc     0x16a8
- .text          0x9d0038fc     0x16a8 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
-                0x9d0038fc                Mode16
-                0x9d003928                Mode8
-                0x9d003954                tft_init_hw
-                0x9d003990                tft_spiwrite
-                0x9d0039f4                tft_spiwrite8
-                0x9d003a70                tft_spiwrite16
-                0x9d003ad4                tft_writecommand
-                0x9d003b38                tft_writecommand16
-                0x9d003b9c                tft_writedata
-                0x9d003c00                tft_writedata16
-                0x9d003c64                tft_begin
-                0x9d004158                tft_setAddrWindow
-                0x9d004204                tft_pushColor
-                0x9d004268                tft_drawPixel
-                0x9d0048b0                tft_drawFastVLine
-                0x9d0049e0                tft_drawFastHLine
-                0x9d004b10                tft_fillScreen
-                0x9d004b70                tft_fillRect
-                0x9d004d1c                tft_color565
-                0x9d004d94                tft_setRotation
-                0x9d004eb4                delay_ms
-                0x9d004f38                delay_us
+.text           0x9d0038ec     0x16a8
+ .text          0x9d0038ec     0x16a8 build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_master.o
+                0x9d0038ec                Mode16
+                0x9d003918                Mode8
+                0x9d003944                tft_init_hw
+                0x9d003980                tft_spiwrite
+                0x9d0039e4                tft_spiwrite8
+                0x9d003a60                tft_spiwrite16
+                0x9d003ac4                tft_writecommand
+                0x9d003b28                tft_writecommand16
+                0x9d003b8c                tft_writedata
+                0x9d003bf0                tft_writedata16
+                0x9d003c54                tft_begin
+                0x9d004148                tft_setAddrWindow
+                0x9d0041f4                tft_pushColor
+                0x9d004258                tft_drawPixel
+                0x9d0048a0                tft_drawFastVLine
+                0x9d0049d0                tft_drawFastHLine
+                0x9d004b00                tft_fillScreen
+                0x9d004b60                tft_fillRect
+                0x9d004d0c                tft_color565
+                0x9d004d84                tft_setRotation
+                0x9d004ea4                delay_ms
+                0x9d004f28                delay_us
 
-.rodata         0x9d004fa4      0xa54
- .rodata        0x9d004fa4      0x558 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
-                0x9d004fa4                __IntSrcTbl
-                0x9d0052ec                __IntVectorTbl
- .rodata        0x9d0054fc      0x4fc build/default/production/glcdfont.o
+.rodata         0x9d004f94      0xa54
+ .rodata        0x9d004f94      0x558 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+                0x9d004f94                __IntSrcTbl
+                0x9d0052dc                __IntVectorTbl
+ .rodata        0x9d0054ec      0x4fc build/default/production/glcdfont.o
 
-.rodata         0x9d0059f8      0x4fc
- .rodata        0x9d0059f8      0x4fc build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
+.rodata         0x9d0059e8      0x4fc
+ .rodata        0x9d0059e8      0x4fc build/default/production/Adafruit_2_4_LCD_Serial_Library/tft_gfx.o
 
-.text           0x9d005ef4      0x788
- .text          0x9d005ef4      0x4d0 build/default/production/TouchScreen.o
-                0x9d00600c                setTSPoint
-                0x9d00606c                getPoint
- .text          0x9d0063c4      0x2b8 build/default/production/uart.o
-                0x9d0063c4                uart_write_ready
-                0x9d0063f0                uart_read_ready
-                0x9d006434                uart_write
-                0x9d006480                uart_read
-                0x9d0064cc                uart_write_nb
-                0x9d006500                uart_read_nb
-                0x9d006554                uart_init
-                0x9d0065ec                uart_write_string
+.text           0x9d005ee4      0x788
+ .text          0x9d005ee4      0x4d0 build/default/production/TouchScreen.o
+                0x9d005ffc                setTSPoint
+                0x9d00605c                getPoint
+ .text          0x9d0063b4      0x2b8 build/default/production/uart.o
+                0x9d0063b4                uart_write_ready
+                0x9d0063e0                uart_read_ready
+                0x9d006424                uart_write
+                0x9d006470                uart_read
+                0x9d0064bc                uart_write_nb
+                0x9d0064f0                uart_read_nb
+                0x9d006544                uart_init
+                0x9d0065dc                uart_write_string
 
-.text.fpsubadd  0x9d00667c      0x278
+.text.fpsubadd  0x9d00666c      0x278
  .text.fpsubadd
-                0x9d00667c      0x278 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32subadd.o)
-                0x9d00667c                fpsub
-                0x9d00667c                __subsf3
-                0x9d006684                __addsf3
-                0x9d006684                fpadd
+                0x9d00666c      0x278 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32subadd.o)
+                0x9d00666c                fpsub
+                0x9d00666c                __subsf3
+                0x9d006674                __addsf3
+                0x9d006674                fpadd
 
-.text.fp32div   0x9d0068f4      0x230
- .text.fp32div  0x9d0068f4      0x230 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32div.o)
-                0x9d0068f4                fpdiv
-                0x9d0068f4                __divsf3
+.text.fp32div   0x9d0068e4      0x230
+ .text.fp32div  0x9d0068e4      0x230 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32div.o)
+                0x9d0068e4                fpdiv
+                0x9d0068e4                __divsf3
 
-.text.fp32mul   0x9d006b24      0x1bc
- .text.fp32mul  0x9d006b24      0x1bc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32mul.o)
-                0x9d006b24                fpmul
-                0x9d006b24                __mulsf3
+.text.fp32mul   0x9d006b14      0x1bc
+ .text.fp32mul  0x9d006b14      0x1bc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fp32mul.o)
+                0x9d006b14                fpmul
+                0x9d006b14                __mulsf3
 
-.text           0x9d006ce0      0x250
- .text          0x9d006ce0      0x148 build/default/production/adc_intf.o
-                0x9d006ce0                analogRead
-                0x9d006d60                configureADC
-                0x9d006de8                readADC
- .text          0x9d006e28      0x108 build/default/production/analog_in.o
-                0x9d006e28                analog_in_init
-                0x9d006eb0                analog_in_read
+.text           0x9d006cd0      0x250
+ .text          0x9d006cd0      0x148 build/default/production/adc_intf.o
+                0x9d006cd0                analogRead
+                0x9d006d50                configureADC
+                0x9d006dd8                readADC
+ .text          0x9d006e18      0x108 build/default/production/analog_in.o
+                0x9d006e18                analog_in_init
+                0x9d006ea0                analog_in_read
 
 .text.general_exception
-                0x9d006f30       0xdc
+                0x9d006f20       0xdc
  .text.general_exception
-                0x9d006f30       0xdc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(general-exception.o)
-                0x9d006f30                _general_exception_context
+                0x9d006f20       0xdc c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(general-exception.o)
+                0x9d006f20                _general_exception_context
 
-.rodata         0x9d00700c       0xd0
- .rodata        0x9d00700c       0xd0 build/default/production/TouchScreenDisplay.o
+.rodata         0x9d006ffc       0xd0
+ .rodata        0x9d006ffc       0xd0 build/default/production/TouchScreenDisplay.o
 
 .text.SpiChnOpen
-                0x9d0070dc       0x90
+                0x9d0070cc       0x90
  .text.SpiChnOpen
-                0x9d0070dc       0x90 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
-                0x9d0070dc                SpiChnOpen
+                0x9d0070cc       0x90 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(spi_chn_open_lib.o)
+                0x9d0070cc                SpiChnOpen
 
-.text.fptoli    0x9d00716c       0x80
- .text.fptoli   0x9d00716c       0x80 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fptoli.o)
-                0x9d00716c                fptoli
-                0x9d00716c                fptosi
-                0x9d00716c                __fixsfsi
+.text.fptoli    0x9d00715c       0x80
+ .text.fptoli   0x9d00715c       0x80 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(fptoli.o)
+                0x9d00715c                fptoli
+                0x9d00715c                fptosi
+                0x9d00715c                __fixsfsi
 
-.text.sitofp    0x9d0071ec       0x60
- .text.sitofp   0x9d0071ec       0x60 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(sitofp.o)
-                0x9d0071ec                __floatsisf
-                0x9d0071ec                litofp
-                0x9d0071ec                sitofp
+.text.sitofp    0x9d0071dc       0x60
+ .text.sitofp   0x9d0071dc       0x60 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libm.a(sitofp.o)
+                0x9d0071dc                __floatsisf
+                0x9d0071dc                litofp
+                0x9d0071dc                sitofp
 
 .text.main_entry
-                0x9d00724c       0x54
+                0x9d00723c       0x54
  .text.main_entry
-                0x9d00724c       0x54 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/./proc/32MX250F128B/crt0_mips32r2.o
-                0x9d007280                __crt0_exit
+                0x9d00723c       0x54 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/./proc/32MX250F128B/crt0_mips32r2.o
+                0x9d007270                __crt0_exit
+
+.text           0x9d007290       0x48
+ .text          0x9d007290       0x48 build/default/production/main.o
+                0x9d007290                main
 
 .text._bootstrap_exception_handler
-                0x9d0072a0       0x48
+                0x9d0072d8       0x48
  .text._bootstrap_exception_handler
-                0x9d0072a0       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
-                0x9d0072a0                _bootstrap_exception_handler
+                0x9d0072d8       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+                0x9d0072d8                _bootstrap_exception_handler
 
 .text._general_exception_handler
-                0x9d0072e8       0x48
+                0x9d007320       0x48
  .text._general_exception_handler
-                0x9d0072e8       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
-                0x9d0072e8                _general_exception_handler
+                0x9d007320       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+                0x9d007320                _general_exception_handler
 
 .vector_default
-                0x9d007330       0x48
+                0x9d007368       0x48
  .vector_default
-                0x9d007330       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
-                0x9d007330                _DefaultInterrupt
+                0x9d007368       0x48 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+                0x9d007368                _DefaultInterrupt
 
-.text           0x9d007378       0x44
- .text          0x9d007378       0x44 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\pic32_software_reset.o
-                0x9d007378                __pic32_software_reset
+.text           0x9d0073b0       0x44
+ .text          0x9d0073b0       0x44 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\pic32_software_reset.o
+                0x9d0073b0                __pic32_software_reset
 
 .text.INTSetVectorPriority
-                0x9d0073bc       0x40
+                0x9d0073f4       0x40
  .text.INTSetVectorPriority
-                0x9d0073bc       0x40 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
-                0x9d0073bc                INTSetVectorPriority
+                0x9d0073f4       0x40 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+                0x9d0073f4                INTSetVectorPriority
 
 .text.INTSetVectorSubPriority
-                0x9d0073fc       0x40
+                0x9d007434       0x40
  .text.INTSetVectorSubPriority
-                0x9d0073fc       0x40 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
-                0x9d0073fc                INTSetVectorSubPriority
+                0x9d007434       0x40 c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+                0x9d007434                INTSetVectorSubPriority
 
 .text.INTEnable
-                0x9d00743c       0x3c
+                0x9d007474       0x3c
  .text.INTEnable
-                0x9d00743c       0x3c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
-                0x9d00743c                INTEnable
-
-.text           0x9d007478       0x38
- .text          0x9d007478       0x38 build/default/production/main.o
-                0x9d007478                main
+                0x9d007474       0x3c c:/program files (x86)/microchip/xc32/v2.05/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib\libmchp_peripheral_32MX250F128B.a(int_tbl_lib.o)
+                0x9d007474                INTEnable
 
 .text.INTEnableSystemSingleVectoredInt
                 0x9d0074b0       0x34

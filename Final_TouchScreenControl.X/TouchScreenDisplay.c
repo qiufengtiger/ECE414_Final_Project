@@ -64,6 +64,7 @@ void touchScreenParamInit(){
     tabRobotColor = GRAY;
     tabModelColor = GRAY;
     tabSelected = 1;
+    tabLevelToPulse = 0;
     selectTab(tabSelected);
 
     T1CON = 0x8030;
@@ -164,6 +165,9 @@ uint8_t detectTouch(){
     		return 5;
     	}
     	// TabsRefresh();
+    }
+    else{
+    	tabLevelToPulse = 0;
     }
     return 0;
 }
@@ -419,8 +423,15 @@ void sendToMainControl(uint8_t dir, uint8_t isRestart, uint8_t tabSelected){
 	portbOut <<= 1;
 	portbOut += (!!(outputCode & 0b01000));// outputCode[4]
 	portbOut <<= 4;
-	PORTA = (PORTA & 0b011) | portaOut;
-	PORTB = (PORTB & 0b0111101111001111) | portbOut;
+	if(tabLevelToPulse = 0){
+		PORTA = (PORTA & 0b011) | portaOut;
+		PORTB = (PORTB & 0b0111101111001111) | portbOut;
+		tabLevelToPulse = 1;
+	}
+	else{
+		PORTA = PORTA & 0b011;
+		PORTB = PORTB & 0b0111101111001111;
+	}
 	// PORTB = 0x8000;
 }
 
@@ -429,11 +440,12 @@ void runTouchScreenDisplayTests(){
 	touchScreenParamInit();
 	// TabsRefresh();
 	while(1){
-		checkGameover();
+		// checkGameover();
 		// checkJoystickDir();
 		// checkButtonsDir();
-		checkDir();
+		// checkDir();
 		buttonIndex = detectTouch();
 		runButtons(buttonIndex);
+		buttonIndex = 0;
 	}
 }
