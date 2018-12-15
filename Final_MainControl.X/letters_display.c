@@ -48,16 +48,10 @@ void runLettersDisplay(){
     // ledMapping(27);
     // setLED();
     while(1){
-        // uint8_t input = decodeFromInputControl();
-        // uint8_t input = uartDecodeFromInputControl();
-        // uint8_t input = 0;
-        // if(input == 7)
-        //     break;
-        // uint8_t buffer[64];
-        // sprintf(buffer, "not break\n");
-        // uart_write_string_2(buffer);
+        uint8_t input = decodeFromInputControl();
+        if(input == 1)
+            break;
         setLED();
-        // // ledMapping(0);
         newRefresh();
     }
 }

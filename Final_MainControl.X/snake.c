@@ -3,18 +3,15 @@
 void runSnakeGame(){
 	ledInit();
 	snakeInit();
-	// generateFood();
+	generateFood();
 	snakeSetLED();
 	newRefresh();
 	uint8_t dir = 0;
 	// test();
 	while(1){
-		// if(i == 0)
-		// 	dir = UP;
-		// else if(i == 1)
-		// 	dir = LEFT;
-		// else
-		// 	dir = NOT_AVAILABLE;
+		uint8_t input = decodeFromInputControl();
+        if(input == 1)
+            break;
 		dir = checkDir();
 		if(dir == FORWARD) dir = 8;
 		else if(dir == BACKWARD) dir = 2;
@@ -59,7 +56,7 @@ void snakeInit(){
 	isSnake = 1;
 	//initialize timer for random number
 	ANSELB = 0;
-	TRISB = TRISB | 0x180;
+	TRISB = TRISB | 0x2F80;
 	T1CON = 0x8010;
 	TMR1 = 0;
 	//initialize array
@@ -127,7 +124,7 @@ void snakeMove(uint8_t dir){
 		eat(getHeadLev(), getHeadRow(), getHeadCol(), dir, lastLev, lastRow, lastCol);
 		snakeMoveHead(dir);
 		refreshSnake();
-		// generateFood();
+		generateFood();
 	}
 	else{
 		snakeMoveBody();

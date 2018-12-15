@@ -13,46 +13,9 @@
 
 
 void main(){
-	// uart_init();
-	// uint8_t buffer[64];
-	// while(1){
-
-	// 	char input = uart_read_nb();
-	// 	if(input != 0){
-	// 		sprintf(buffer, "hhhhhhh");
-	// 		uart_write_string(buffer);
-	// 	}
-	// 	else{
-	// 		sprintf(buffer, "aaaaaaa");
-	// 		uart_write_string(buffer);
-	// 	}
-	// }
-
-
-	/*UART U2 setup*/
-	// uartDecodeFromInputControlInit();
-	// ANSELA = 0;
- //    ANSELB = 0;
-	// RPB9R = 0x2;
-	// U2RXR = 0x4;
-	// TRISB = TRISB | 0b1100000000;
-
-	// U2BRG = 260; //40000000/(16 * 9600) - 1
- //    U2STA = U2STA | 0x1400;//URXEN
- //    U2MODE = U2MODE & 0b0111; //set slow mode
- //    U2MODE = U2MODE | 0x8000;//ON
-	// uint8_t buffer[64];
-	// while(1){
-	// 	char input = uartDecodeFromInputControl();
-	// 	// char input = uart_read_nb_2();
-	// 	// sprintf(buffer, "%d", input);
-	// 		// uart_write_string_2(buffer);
-	// }
-
-
+	ANSELB = 0;
+	TRISB = TRISB | 0xC000; //for input from touchscreen
 	tabSelected = 2;
-	// // ANSELB = 0;
-	// // TRISB = TRISB | 0xEC00;// for decodeFromInputControl
 	loop:
 	switch(tabSelected){
 		case 1:
@@ -67,6 +30,8 @@ void main(){
 			break;
 		case 4:
 			break;
+		default:
+			runLettersDisplay();
 	}
 	goto loop;
 

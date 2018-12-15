@@ -79,14 +79,33 @@ static void checkJoystickDir(){
 
 static void checkButtonsDir(){
 	uint8_t buffer[64];
-	uint16_t upInput = !!(PORTB & 0x80);
-	uint16_t downInput = !!(PORTB & 0x100);
-	if(upInput == 1)
-		buttonPressed = UP;
-	else if(downInput == 1)
-		buttonPressed = DOWN;
-	else
-		buttonPressed = NOT_AVAILABLE;
+	uint16_t forwardInput = !!(PORTB & 0x80);// RB7, PIN16
+	uint16_t backwardInput = !!(PORTB & 0x100);// RB8, PIN17
+	uint16_t leftInput = !!(PORTB & 0x200);// RB9, PIN18
+	uint16_t rightInput = !!(PORTB & 0x400);// RB10, PIN21
+	uint16_t upInput = !!(PORTB & 0x800);// RB11, PIN22
+	uint16_t downInput = !!(PORTB & 0x2000); //RB13, PIN24 
+	if(forwardInput == 1){
+
+	}
+	else if(backwardInput == 1){
+
+	}
+	else if(leftInput == 1){
+
+	}
+	else if(rightInput == 1){
+
+	}
+	else if(upInput == 1){
+
+	}
+	else if(downInput == 1){
+
+	}
+	else{
+
+	}
 	// if(upInput != upButtonState && buttonPressed == DEFAULT &&  (tabSelected == 2 | tabSelected == 3)){
 	// 	buttonPressed = UP;
 	// 	TMR1 = 0;
@@ -107,37 +126,40 @@ static void checkButtonsDir(){
 	// 		downButtonState = 0;
 	// 	}
 	// }
-	if((tabSelected == 2 | tabSelected == 3) && outputDirLock == 0/* && buttonPressed != NOT_AVAILABLE*/){
+	if((tabSelected == 2 | tabSelected == 3)/* && outputDirLock == 0*//* && buttonPressed != NOT_AVAILABLE*/){
 		outputDir = buttonPressed;
 		outputDirLock = 1;
 	}
 }
 
 static uint8_t checkDir(){
-	// checkJoystickDir();
-	// checkButtonsDir();	
-	// if(outputDirLock == 0){
-	// 	return NOT_AVAILABLE;
-	// }
-	// /*else*/ if(levelToPulse == 1){
-	// 	if(outputDir == NOT_AVAILABLE){
-	// 		levelToPulse == 0;
-	// 	}
-	// 	return NOT_AVAILABLE;
-	// }
-	// else if(/*outputDirLock == 1 && */levelToPulse == 0){
-	// 	// outputDir = DEFAULT;
-	// 	outputDirLock = 0;
-	// 	levelToPulse = 1;
-	// 	uint8_t temp = outputDir;
-	// 	// outputDir = NOT_AVAILABLE;
-	// 	return temp;
-	// }
-	uint16_t upInput = !!(PORTB & 0x80);
-	uint16_t downInput = !!(PORTB & 0x100);
-	if(upInput == 1) outputDir = UP;
-	else if(downInput == 1) outputDir = DOWN;
-	else outputDir = NOT_AVAILABLE; 
+	uint16_t forwardInput = !!(PORTB & 0x80);// RB7, PIN16
+	uint16_t backwardInput = !!(PORTB & 0x100);// RB8, PIN17
+	uint16_t leftInput = !!(PORTB & 0x200);// RB9, PIN18
+	uint16_t rightInput = !!(PORTB & 0x400);// RB10, PIN21
+	uint16_t upInput = !!(PORTB & 0x800);// RB11, PIN22
+	uint16_t downInput = !!(PORTB & 0x2000); //RB13, PIN24 
+	if(forwardInput == 1){
+		outputDir = FORWARD;
+	}
+	else if(backwardInput == 1){
+		outputDir = BACKWARD;	
+	}
+	else if(leftInput == 1){
+		outputDir = LEFT;
+	}
+	else if(rightInput == 1){
+		outputDir = RIGHT;
+	}
+	else if(upInput == 1){
+		outputDir = UP;
+	}
+	else if(downInput == 1){
+		outputDir = DOWN;
+	}
+	else{
+		outputDir = NOT_AVAILABLE;
+	}
 	if(levelToPulse == 0){
 		levelToPulse = 1;
 		return outputDir;
@@ -191,77 +213,22 @@ static uint8_t absolute(uint8_t input){
  * 5 => UP, 6 => DOWN, 7 => restart / selectTabs
  */
 static uint8_t decodeFromInputControl(){
-	uint8_t inputCode = 0;
-	inputCode += !!(PORTB & 0x400);
-	inputCode <<= 1;
-	inputCode += !!(PORTB & 0x800);
-	inputCode <<= 1;
-	inputCode += !!(PORTB & 0x2000);
-	inputCode <<= 1;
-	inputCode += !!(PORTB & 0x4000);
-	inputCode <<= 1;
-	inputCode += !!(PORTB & 0x8000);
-	switch(inputCode){
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 5;
-		case 6:
-			return 6;
-		case 8:
-			return 7;
-		case 9:
-			tabSelected = 1;
-			return 1;
-		case 10:
-			tabSelected = 2;
-			return 2;
-		case 11:
-			tabSelected = 3;
-			return 3;
-		case 12:
-			tabSelected = 4;
-			return 4;
-		// case 10:
-		// 	return 7;
-		default:
-			return 0;
-	}
+	CNPUB = 0xC000;
+	uint8_t inputCode0 = !!(PORTB & 0x4000);
+	uint8_t inputCode1 = !!(PORTB & 0x8000);
+	uint8_t newTabSelected = tabSelected;
+ 	if(inputCode1 == 0 && inputCode0 == 0) newTabSelected = 1;
+ 	else if(inputCode1 == 0 && inputCode0 == 1) newTabSelected = 2;
+ 	else if(inputCode1 == 1 && inputCode0 == 0) newTabSelected = 3;
+ 	else if(inputCode1 == 1 && inputCode0 == 1) newTabSelected = 4;
+ 	else newTabSelected = 0;
+ 	if(newTabSelected != tabSelected){
+ 		tabSelected = newTabSelected;
+ 		return 1;
+ 	}
+ 	else
+ 		return 0;
 }
-
-// static uint8_t uartDecodeFromInputControlInit(){
-// 	ANSELA = 0;
-//     ANSELB = 0;
-// 	RPB9R = 0x2;
-// 	U2RXR = 0x4;
-// 	TRISB = TRISB | 0b1100000000;
-
-// 	U2BRG = 260; //40000000/(16 * 9600) - 1
-//     U2STA = U2STA | 0x1400;//URXEN
-//     U2MODE = U2MODE & 0b0111; //set slow mode
-//     U2MODE = U2MODE | 0x8000;//ON
-// }
-
-// static uint8_t uartDecodeFromInputControl(){
-// 	uint8_t buffer[64];
-// 	char input = uart_read_nb_2();
-	
-// 	if(input != 0){
-// 		sprintf(buffer, "%d", input);
-// 		uart_write_string_2(buffer);
-// 	// 	return 7;
-// 	}
-// 	// return 7;
-// 		return 0;
-// }
 
 #endif	/* UTILITIES_H */
 

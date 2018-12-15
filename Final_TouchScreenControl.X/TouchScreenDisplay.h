@@ -65,7 +65,7 @@ void checkGameover();
 void checkJoystickDir();
 void checkButtonsDir();
 void checkDir();
-void sendToMainControl(uint8_t dir, uint8_t isRestart, uint8_t tabSelected);
+void sendToMainControl(uint8_t tabSelected);
 
 
 /*test methods*/
