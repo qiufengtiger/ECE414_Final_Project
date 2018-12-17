@@ -15,15 +15,11 @@
 
 #define DISPLAY_CHAR_NUM 6
 #define DISPLAY_ROW_NUM (DISPLAY_CHAR_NUM * 6)
-// #define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
 #define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
 #define SCROLL_MSEC 500
 
-//uint8_t ledArray [8][8];
 uint8_t arrayCharIndex;
 uint8_t scrollIndex;
-//#char = row num / 6
-//add additional LEV_NUM for display effect
 uint8_t displayArray[DISPLAY_ARRAY_ROW_NUM]; 
 
 void runLettersDisplay();
