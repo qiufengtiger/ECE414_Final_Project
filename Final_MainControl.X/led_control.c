@@ -1,17 +1,16 @@
 /**
- * If a certain LED is on:
- * ROW = 1, COL = 1, LEV = 1
+ * This module is the LED driver
+ * There are two modes of scanning: Msg and Snake. Model display also uses snake scanning.
  * LEV0 - RA0 - PIN2
  * LEV1 - RA1 - PIN3
  * LEV2 - RB0 - PIN4
- * LEV3 - RB1 - PIN5 - reserved
+ * LEV3 - RB1 - PIN5
  * ROW0 - RB2 - PIN6
  * ROW1 - RB3 - PIN7
  * ROW2 - RA2 - PIN9
  * COL0 - RA3 - PIN10
  * COL1 - RB4 - PIN11
  * COL2 - RA4 - PIN12
- * isOn - RB5 - PIN14
  */
 
 #include "led_control.h"
@@ -26,6 +25,10 @@ void delay_us(uint16_t input){
     TMR3 = 0;
 }
 
+/**
+ * Initialization
+ * setup pins & cuboid array that other modules will write data to.
+ */
 void ledInit(){
 	if(ON_TEST == 0){
 		ANSELA = 0;
@@ -60,6 +63,9 @@ void ledInit(){
     changed = 1;
 }
 
+/**
+ * Clear data in cuboid array. Reset outputs.
+ */ 
 void resetLed(){
 	int i = 0;
     int j = 0;
@@ -92,41 +98,25 @@ uint8_t getArray(uint8_t levIndex, uint8_t rowIndex){
     return cuboidArray[levIndex][rowIndex];
 }
 
-void refresh(){
-	int i = 0;
-	ledIndex = 0;
-	for(i = 0; i < TOTAL_LED_NUM; i++){
-		ledIndex = i;
-		refreshRow();
-		refreshCol();
-		refreshLev();
-		refreshLedStatus();
-		if(ON_TEST == 1)
-			testPinOutputs();			
-		else
-		writeToPort();
-		delay_us(1000);
-	}
-}
-
+/**
+ * Refresh list that stores all "on" LED index. Used in snake scanning
+ */ 
 void snakeWriteToList(){
 	uint32_t i = 0;
 	for(i = 0; i < TOTAL_LED_NUM; i++){
 		onLEDlist[i] = 0;
 	}
-	// uint32_t listIndex = 0;
 	listIndex = 0;
 	for(i = 0; i < TOTAL_LED_NUM; i++){
 		ledIndex = i;
+		//calculate row & col & lev number based on ledIndex
 		rowIndex = (ledIndex / 8) % 8;
-		// rowIndex = ledIndex / 128;
 		colIndex = ledIndex % 8;
 		levIndex = ledIndex / 64;
-		// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 		uint8_t thisRow = getArray(levIndex, rowIndex);
 		uint8_t mask = 1 << colIndex;
+		//check if that bit is 1
 		uint8_t on = !!(mask & thisRow);
-		// on = 1;
 		if(on){
 			onLEDlist[listIndex] = ledIndex;
 			listIndex++;
@@ -134,24 +124,25 @@ void snakeWriteToList(){
 	}
 }
 
+/**
+ * Refresh LEDs based on scanning mode set.
+ */ 
 void newRefresh(){
 	uint8_t on = 0;
 	uint32_t i = 0;
-	
-	// ledIndex = 0;
 	if(isMsg == 1){
 		for(i = 0; i < TOTAL_LED_NUM; i++){
-		if(isMsg && i % 64 < 39) continue;
+		    //skip LEDs that are not the last two rows because we only want to display Msgs on the last two rows. Provides faster scanning.
+		    if(isMsg && i % 64 < 39) continue;
 			ledIndex = i;
 			rowIndex = (ledIndex / 8) % 8;
-			// rowIndex = ledIndex / 128;
 			colIndex = ledIndex % 8;
 			levIndex = ledIndex / 64;
-			// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 			uint8_t thisRow = getArray(levIndex, rowIndex);
 			uint8_t mask = 1 << colIndex;
 			on = !!(mask & thisRow);
 			if(on == 1){
+			    //refresh outputs
 				refreshRow();
 				refreshCol();
 				refreshLev();
@@ -161,17 +152,17 @@ void newRefresh(){
 		}
 	}
 	else if(isSnake == 1){
+	    //refresh "on" LED list only when other modules indicates so (changed set to 1)
 		if(changed){
 			snakeWriteToList();
 			changed = 0;
 		}
+		//go through the "on" LED list
 		for(i = 0; i < listIndex; i++){
 			ledIndex = onLEDlist[i];
 			rowIndex = (ledIndex / 8) % 8;
-			// rowIndex = ledIndex / 128;
 			colIndex = ledIndex % 8;
 			levIndex = ledIndex / 64;
-			// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 			refreshRow();
 			refreshCol();
 			refreshLev();
@@ -180,6 +171,9 @@ void newRefresh(){
 	}
 }
 
+/**
+ * Refresh output arrays
+ */ 
 void refreshRow(){
 	int i = 0;
 	uint8_t mask = 1;
@@ -209,14 +203,12 @@ void refreshLev(){
 		mask <<= 1;
 	}   
 }
-void refreshLedStatus(){
-	uint8_t thisRow = getArray(levIndex, rowIndex);
-	uint8_t mask = 1 << colIndex;
-	isOn = !!(mask & thisRow);
-}
 
+/**
+ * Write outputs to the circuit
+ */ 
 void writeToPort(){
-    //assuming it is 8*8*8
+    //please refer to the pin list at the top
     uint8_t portaOut = 0;
     uint8_t portbOut = 0;
     /*PORTA*/
@@ -238,18 +230,16 @@ void writeToPort(){
     portbOut <<= 1;
     portbOut += rowOut[0];
     portbOut <<= 1;
-    portbOut += levOut[3]; //reserved for LEV3
+    portbOut += levOut[3];
     portbOut <<= 1;
     portbOut += levOut[2];
 
    	PORTA = (PORTA & 0b00000) | portaOut;
-   	delay_us(1);
    	PORTB = (PORTB & 0b000000) | portbOut;
-   	// delay_us(500000);
 }
 
 /**
- * print out cuboid array for testing LED programs
+ * Print out cuboid array for testing LED programs
  */
 void testPrintLedStatus(){
 	//setArray(0b01101101, 2, 2);
