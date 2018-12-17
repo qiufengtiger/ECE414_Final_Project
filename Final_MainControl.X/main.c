@@ -17,6 +17,7 @@ void main(){
 	TRISB = TRISB | 0xC000; //for input from touchscreen
 	tabSelected = 1;
 	loop:
+	//choose module based on tabSelected
 	switch(tabSelected){
 		case 1:
 			runLettersDisplay();
@@ -25,7 +26,7 @@ void main(){
 			runSnakeGame();
 			break;
 		case 3:
-			//remove robot game plan
+			//remove robot game
 			runLettersDisplay();
 			break;
 		case 4:
