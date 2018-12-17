@@ -1,17 +1,28 @@
+/**
+ * Module for model display.
+ * Our original plan was to read a txt file when compiling the program. 
+ * However, fopen() in c cannot access files in PC system from PIC32.
+ * Eventually we have to hardcode the model.
+ * 
+ */ 
 #include "model_display.h"
 
 void runModelDisplay(){
 	ledInit();
 	modelDisplayInit();
+	//read hardcoded model
 	readModelFile();
-	// setModelArray(1, 15, 1, 1);
+	//send to LED driver
 	modelSetLED();
 	uint8_t dir = 0;
 	while(1){
+	    //read input from touchscreen
 		uint8_t input = decodeFromInputControl();
         if(input == 1)
             break;
+        //read input from button
 		dir = checkDir();
+		//perform rotation
 		if(dir == LEFT || dir == RIGHT){
 			rotate(dir);
 			modelSetLED();
@@ -20,6 +31,9 @@ void runModelDisplay(){
 	}
 }
 
+/**
+ * Initialization. This module also uses snake game scanning routine
+ */ 
 void modelDisplayInit(){
 	isMsg = 0;
 	isSnake = 1;
@@ -37,6 +51,10 @@ void modelDisplayInit(){
 	}
 }
 
+/**
+ * Stores hardcoded model
+ * Syntax: LEV, ROW, COL
+ */ 
 void readModelFile(){
 	// FILE *filePtr;
 	uint8_t model[] = 
@@ -57,7 +75,9 @@ void readModelFile(){
 	uint8_t inputRow = 0;
 	uint8_t inputCol = 0;
 	int i = 0;
-	for(i = 0; i < /*(sizeof(model) / sizeof(model[0]))*/11; i++){
+	//loop based on #points in the array
+	//(sizeof(model) / sizeof(model[0])) provides number of items in the array
+	for(i = 0; i < (sizeof(model) / sizeof(model[0])) / 3; i++){
 		uint8_t index = i * 3;
 		inputLev = /*(uint8_t)*/model[index];
 		inputRow = /*(uint8_t)*/model[index + 1];
@@ -66,6 +86,9 @@ void readModelFile(){
 	}
 }
 
+/**
+ * Send data to LED driver
+ */ 
 void modelSetLED(){
 	int i = 0;
 	int j = 0;
@@ -85,7 +108,12 @@ void modelSetLED(){
 	changed = 1;
 }
 
+/**
+ * Calculate new cood of points based on rotate dir
+ * 
+ */ 
 void rotate(uint8_t dir){
+    //clear the temp array that stores new info
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -96,7 +124,8 @@ void rotate(uint8_t dir){
 			}
 		}
 	}
-	
+	//Switch COL & ROW. Also flip ROW / COL at RIGHT / LEFT
+	//Results look good!
 	if(dir == RIGHT){
 		i = 0;
 		j = 0;
@@ -121,7 +150,7 @@ void rotate(uint8_t dir){
 			}
 		}
 	}
-
+    //write back to original array
 	for(i = 0; i < LEV_NUM; i++){
 		for(j = 0; j < ROW_NUM; j++){
 			for(k = 0; k < COL_NUM; k++){
