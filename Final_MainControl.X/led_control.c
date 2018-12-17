@@ -132,7 +132,7 @@ void newRefresh(){
 	uint32_t i = 0;
 	if(isMsg == 1){
 		for(i = 0; i < TOTAL_LED_NUM; i++){
-		    //skip LEDs that are not the last two rows because we only want to display Msgs on the last two rows. Provides faster scanning.
+		    //skip LEDs that are not the last three rows because we only want to display Msgs on the last two rows. Provides faster scanning.
 		    if(isMsg && i % 64 < 39) continue;
 			ledIndex = i;
 			rowIndex = (ledIndex / 8) % 8;
