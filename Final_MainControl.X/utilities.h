@@ -26,111 +26,9 @@ typedef struct point{
 	uint8_t type;
 } pt;
 
-uint8_t joystickDirY;
-uint8_t joystickDirX;
 uint8_t outputDir;
-uint8_t outputDirLock = 0;
 uint8_t levelToPulse = 0;
-
-uint8_t upButtonState;
-uint8_t downButtonState;
-uint8_t buttonPressed;
-
 uint8_t tabSelected;
-
-static void checkJoystickDir(){
-	uint8_t buffer[64];
-	uint8_t inputDirY = NOT_AVAILABLE;
-	uint8_t inputDirX = NOT_AVAILABLE;
-	uint16_t inputY = analog_in_read(9);//AN5, PIN7
-	uint16_t inputX = analog_in_read(11);//AN11, PIN24
-	if(inputY > 700)
-		inputDirY = FORWARD;
-	else if(inputY < 340)
-		inputDirY = BACKWARD;
-	else
-		inputDirY = NOT_AVAILABLE;
-
-	if(inputX > 700)
-		inputDirX = RIGHT;
-	else if(inputX < 340)
-		inputDirX = LEFT;
-	else
-		inputDirX = NOT_AVAILABLE;
-	if(/*!gameover && (*/tabSelected == 2 | tabSelected == 3/*)*/){
-		// if(inputDirY != joystickDirY)
-		// {
-			// joystickDirY = inputDirY;
-			if(outputDirLock == 0 && inputDirY != NOT_AVAILABLE){
-				outputDir = inputDirY;
-				outputDirLock = 1;
-			}
-		// }	
-		// if(inputDirX != joystickDirX)
-		// {
-			// joystickDirX = inputDirX;
-			if(outputDirLock == 0 && inputDirX != NOT_AVAILABLE){
-				outputDir = inputDirX;
-				outputDirLock = 1;
-			}
-		// }	
-	}
-}
-
-static void checkButtonsDir(){
-	uint8_t buffer[64];
-	uint16_t forwardInput = !!(PORTB & 0x80);// RB7, PIN16
-	uint16_t backwardInput = !!(PORTB & 0x100);// RB8, PIN17
-	uint16_t leftInput = !!(PORTB & 0x200);// RB9, PIN18
-	uint16_t rightInput = !!(PORTB & 0x400);// RB10, PIN21
-	uint16_t upInput = !!(PORTB & 0x800);// RB11, PIN22
-	uint16_t downInput = !!(PORTB & 0x2000); //RB13, PIN24 
-	if(forwardInput == 1){
-
-	}
-	else if(backwardInput == 1){
-
-	}
-	else if(leftInput == 1){
-
-	}
-	else if(rightInput == 1){
-
-	}
-	else if(upInput == 1){
-
-	}
-	else if(downInput == 1){
-
-	}
-	else{
-
-	}
-	// if(upInput != upButtonState && buttonPressed == DEFAULT &&  (tabSelected == 2 | tabSelected == 3)){
-	// 	buttonPressed = UP;
-	// 	TMR1 = 0;
-	// }
-	// else if(downInput != downButtonState && buttonPressed == DEFAULT &&  (tabSelected == 2 | tabSelected == 3)){
-	// 	buttonPressed = DOWN;
-	// 	TMR1 = 0;
-	// }
-	// if(/*TMR1 > 5000*//*!gameover && (*/tabSelected == 2 | tabSelected == 3/*)*/){
-	// 	if(buttonPressed == UP){
-	// 		upButtonState = 1;
-	// 	}
-	// 	else if(buttonPressed == DOWN){
-	// 		downButtonState = 1;
-	// 	}
-	// 	else{
-	// 		upButtonState = 0;
-	// 		downButtonState = 0;
-	// 	}
-	// }
-	if((tabSelected == 2 | tabSelected == 3)/* && outputDirLock == 0*//* && buttonPressed != NOT_AVAILABLE*/){
-		outputDir = buttonPressed;
-		outputDirLock = 1;
-	}
-}
 
 static uint8_t checkDir(){
 	// uint16_t portBInput = PORTB;
@@ -169,9 +67,6 @@ static uint8_t checkDir(){
 		levelToPulse = 0;
 		// return ;
 	}
-	// else if(levelToPulse == 1 && outputDir == NOT_AVAILABLE){
-	// 	levelToPulse = 0;
-	// }
 	return 0;
 }
 

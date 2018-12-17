@@ -23,10 +23,10 @@ void main(){
 			break;
 		case 2:
 			runSnakeGame();
-			// runLettersDisplay();
 			break;
 		case 3:
-			// runRobotGame();
+			//remove robot game plan
+			runLettersDisplay();
 			break;
 		case 4:
 			runModelDisplay();

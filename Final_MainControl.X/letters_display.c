@@ -27,7 +27,6 @@ void lettersDisplayInit(){
         displayArray[i] = 0b00000000;
     }
     arrayCharIndex = 0;
-    // scrollIndex = DISPLAY_ARRAY_ROW_NUM - 1;
     scrollIndex = 0;
     T1CON = 0x8010; // interrupt
     TMR1 = 0;
@@ -350,7 +349,6 @@ void decode(char c){
 
 void decodeArray(char c[]){
     int i = 0;
-    // uint8_t numOfChar = sizeof(c) / sizeof(c[0]);
     for(i = 0; i < DISPLAY_CHAR_NUM; i++){
         decode(c[i]);
     }
@@ -371,10 +369,6 @@ void setLED(){
                 scrollIndex = 0;
             else
                 scrollIndex ++;
-            // if(scrollIndex == 0) 
-            //     scrollIndex = DISPLAY_ARRAY_ROW_NUM - 1;
-            // else
-            //     scrollIndex --;
         }
         
     }

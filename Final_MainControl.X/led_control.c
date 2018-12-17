@@ -181,8 +181,6 @@ void newRefresh(){
 }
 
 void refreshRow(){
-	// rowIndex = (ledIndex / 8) % 8;
-	// rowIndex = ledIndex / 128;
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < ROW_PIN_NUM; i++){
@@ -193,7 +191,6 @@ void refreshRow(){
 }
 
 void refreshCol(){
-	// colIndex = ledIndex % 8;
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < COL_PIN_NUM; i++){
@@ -204,8 +201,6 @@ void refreshCol(){
 }
 
 void refreshLev(){
-	// levIndex = ledIndex / 64;
-	// levIndex= ledIndex / (LEV_NUM * COL_NUM);
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < LEV_PIN_NUM; i++){

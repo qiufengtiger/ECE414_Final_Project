@@ -61,10 +61,6 @@ void runRobotContent();
 void runModelContent();
 uint8_t detectTouch();
 void runButtons(uint8_t button);
-void checkGameover();
-void checkJoystickDir();
-void checkButtonsDir();
-void checkDir();
 void sendToMainControl(uint8_t tabSelected);
 
 
