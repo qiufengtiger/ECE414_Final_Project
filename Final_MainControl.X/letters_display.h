@@ -13,10 +13,10 @@
 #include "led_control.h"
 #include "utilities.h"
 
-#define DISPLAY_CHAR_NUM 4
+#define DISPLAY_CHAR_NUM 6
 #define DISPLAY_ROW_NUM (DISPLAY_CHAR_NUM * 6)
 // #define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
-#define DISPLAY_ARRAY_ROW_NUM 32
+#define DISPLAY_ARRAY_ROW_NUM (DISPLAY_ROW_NUM + LEV_NUM)
 #define SCROLL_MSEC 500
 
 //uint8_t ledArray [8][8];

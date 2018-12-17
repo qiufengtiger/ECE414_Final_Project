@@ -10,43 +10,8 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
 
 void runLettersDisplay(){
     ledInit();
-    // newRefresh();
     lettersDisplayInit();
-    decodeArray("TEST");
-    // decode('A');
-    // ledMapping(0);
-    // uint8_t index = 0;
-
-    // uint8_t line = arrayCharIndex * 6 + LEV_NUM;
-    // arrayCharIndex ++;
-    // uint8_t line = 0;
-    // displayArray[line]   = 0b00011100;
-    
-    //         displayArray[++line] = 0b00101000;
-    //         displayArray[++line] = 0b01001000;
-    //         displayArray[++line] = 0b00101000;
-    //         displayArray[++line] = 0b00011100;
-    //         displayArray[++line] = 0b00000000;
-    //  for(index = 0; index < LEV_NUM; index++){
-    //         uint8_t thisRow = displayArray[index];
-    //         setArray(thisRow, index, 2);
-    //         setArray(thisRow, index, 3);
-    //         setArray(thisRow, index, 4);
-    //         setArray(thisRow, index, 5);
-    // }
-    // int i = 0;
-    // int j = 0;
-    // for(i = 0; i < LEV_NUM; i++){
-    //     for(j = 0; j < ROW_NUM; j++){
-    //         setArray(displayArray[0], i, j);
-    //     }
-    // }
-            // setArray(0b00011100, 1, 0);
-            // setArray(displayArray[1], 2, 0);
-            // setArray(displayArray[2], 3, 0);
-            // setArray(displayArray[3], 4, 0); 
-    // ledMapping(27);
-    // setLED();
+    decodeArray("ECE414");
     while(1){
         uint8_t input = decodeFromInputControl();
         if(input == 1)
@@ -62,11 +27,10 @@ void lettersDisplayInit(){
         displayArray[i] = 0b00000000;
     }
     arrayCharIndex = 0;
+    // scrollIndex = DISPLAY_ARRAY_ROW_NUM - 1;
     scrollIndex = 0;
-    // T1CON = 0x8030;
     T1CON = 0x8010; // interrupt
     TMR1 = 0;
-    // uint8_t oneMs = (40000 * 1) / 1;
     PR1 = 0x1000;
     mT1SetIntPriority(1);
     INTEnableSystemSingleVectoredInt();
@@ -386,24 +350,17 @@ void decode(char c){
 
 void decodeArray(char c[]){
     int i = 0;
-    uint8_t numOfChar = sizeof(c) / sizeof(c[0]);
-    for(i = 0; i < numOfChar; i++){
+    // uint8_t numOfChar = sizeof(c) / sizeof(c[0]);
+    for(i = 0; i < DISPLAY_CHAR_NUM; i++){
         decode(c[i]);
     }
 }
 
 void setLED(){
-    // ledInit();
-    // resetLed();
     if(SCROLL_MSEC == 0){
         ledMapping(0);
     }
     else{
-        // uint32_t delay = (40000 * SCROLL_MSEC) / 256;
-        // uint32_t delay = (40000 * 500) / 256;
-        // while(TMR1 < delay){
-        // //wait
-        // }
         if(timer_ms_count < SCROLL_MSEC){
             //wait
         }
@@ -414,8 +371,10 @@ void setLED(){
                 scrollIndex = 0;
             else
                 scrollIndex ++;
-            // ledMapping(2);
-            // TMR1 = 0;
+            // if(scrollIndex == 0) 
+            //     scrollIndex = DISPLAY_ARRAY_ROW_NUM - 1;
+            // else
+            //     scrollIndex --;
         }
         
     }
@@ -425,37 +384,13 @@ void ledMapping(uint8_t scrollIndex){
     uint8_t index = 0;
     for(index = 0; index < LEV_NUM; index++){
         if(index + scrollIndex >= DISPLAY_ARRAY_ROW_NUM){
-        //     // setArray(00000, index);
             uint8_t thisRow = displayArray[index + scrollIndex - DISPLAY_ARRAY_ROW_NUM];
-            // setArray(0b00000000, 0, index);
-            // setArray(0b00000000, 1, index);
-            // setArray(0b00000000, 2, index);
-            // setArray(0b00000000, 3, index);
-            // setArray(0b00000000, 4, index);
-            // setArray(0b00000000, 5, index);
-            // setArray(0b00000000, 6, index);
-            // setArray(0b00000000, 7, index);
-
             setArray(thisRow, index, 5);
             setArray(thisRow, index, 6);
             setArray(thisRow, index, 7);
         }
         else{
             uint8_t thisRow = displayArray[index + scrollIndex];
-            // setArray(thisRow, 0, index);
-            // setArray(thisRow, 1, index);
-            // setArray(thisRow, 2, index);
-
-
-            // setArray(thisRow, 3, index);
-            // setArray(thisRow, 4, index);
-            // setArray(thisRow, 5, index);
-            // setArray(thisRow, 6, index);
-            // setArray(thisRow, 7, index);
-            // setArray(thisRow, index, 2);
-            // setArray(thisRow, index, 3);
-            // setArray(thisRow, index, 4);
-            // setArray(thisRow, index, 5);
             setArray(thisRow, index, 5);
             setArray(thisRow, index, 6);
             setArray(thisRow, index, 7);
@@ -482,7 +417,6 @@ void testDecode(){
     int j = 0;
     for(j = 0; j < DISPLAY_ARRAY_ROW_NUM; j++){
         sprintf(buffer, "%d\r\n", displayArray[j]);
-//        sprintf(buffer, "test\r\n");
         uart_write_string(buffer);
     }
 }

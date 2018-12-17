@@ -133,6 +133,7 @@ static void checkButtonsDir(){
 }
 
 static uint8_t checkDir(){
+	// uint16_t portBInput = PORTB;
 	uint16_t forwardInput = !!(PORTB & 0x80);// RB7, PIN16
 	uint16_t backwardInput = !!(PORTB & 0x100);// RB8, PIN17
 	uint16_t leftInput = !!(PORTB & 0x200);// RB9, PIN18
@@ -164,9 +165,13 @@ static uint8_t checkDir(){
 		levelToPulse = 1;
 		return outputDir;
 	}
-	else if(levelToPulse == 1 && outputDir == NOT_AVAILABLE){
+	else if(outputDir == NOT_AVAILABLE){
 		levelToPulse = 0;
+		// return ;
 	}
+	// else if(levelToPulse == 1 && outputDir == NOT_AVAILABLE){
+	// 	levelToPulse = 0;
+	// }
 	return 0;
 }
 

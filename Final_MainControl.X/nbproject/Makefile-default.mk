@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c letters_display.c led_control.c uart.c snake.c robot.c ../Final_TouchScreenControl.X/analog_in.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c letters_display.c led_control.c uart.c snake.c robot.c ../Final_TouchScreenControl.X/analog_in.c model_display.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o ${OBJECTDIR}/_ext/1833793748/analog_in.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/letters_display.o.d ${OBJECTDIR}/led_control.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/snake.o.d ${OBJECTDIR}/robot.o.d ${OBJECTDIR}/_ext/1833793748/analog_in.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o ${OBJECTDIR}/_ext/1833793748/analog_in.o ${OBJECTDIR}/model_display.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/letters_display.o.d ${OBJECTDIR}/led_control.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/snake.o.d ${OBJECTDIR}/robot.o.d ${OBJECTDIR}/_ext/1833793748/analog_in.o.d ${OBJECTDIR}/model_display.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o ${OBJECTDIR}/_ext/1833793748/analog_in.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/letters_display.o ${OBJECTDIR}/led_control.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/snake.o ${OBJECTDIR}/robot.o ${OBJECTDIR}/_ext/1833793748/analog_in.o ${OBJECTDIR}/model_display.o
 
 # Source Files
-SOURCEFILES=main.c letters_display.c led_control.c uart.c snake.c robot.c ../Final_TouchScreenControl.X/analog_in.c
+SOURCEFILES=main.c letters_display.c led_control.c uart.c snake.c robot.c ../Final_TouchScreenControl.X/analog_in.c model_display.c
 
 
 CFLAGS=
@@ -148,6 +148,12 @@ ${OBJECTDIR}/_ext/1833793748/analog_in.o: ../Final_TouchScreenControl.X/analog_i
 	@${RM} ${OBJECTDIR}/_ext/1833793748/analog_in.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1833793748/analog_in.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPKOBSKDEPlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1833793748/analog_in.o.d" -o ${OBJECTDIR}/_ext/1833793748/analog_in.o ../Final_TouchScreenControl.X/analog_in.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/model_display.o: model_display.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/model_display.o.d 
+	@${RM} ${OBJECTDIR}/model_display.o 
+	@${FIXDEPS} "${OBJECTDIR}/model_display.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -DPKOBSKDEPlatformTool=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/model_display.o.d" -o ${OBJECTDIR}/model_display.o model_display.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -191,6 +197,12 @@ ${OBJECTDIR}/_ext/1833793748/analog_in.o: ../Final_TouchScreenControl.X/analog_i
 	@${RM} ${OBJECTDIR}/_ext/1833793748/analog_in.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1833793748/analog_in.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1833793748/analog_in.o.d" -o ${OBJECTDIR}/_ext/1833793748/analog_in.o ../Final_TouchScreenControl.X/analog_in.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/model_display.o: model_display.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/model_display.o.d 
+	@${RM} ${OBJECTDIR}/model_display.o 
+	@${FIXDEPS} "${OBJECTDIR}/model_display.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/model_display.o.d" -o ${OBJECTDIR}/model_display.o model_display.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -204,12 +216,12 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -g -mdebugger -DPKOBSKDEPlatformTool=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)   -mreserve=data@0x0:0x1FC -mreserve=boot@0x1FC00490:0x1FC00BEF  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,-D=__DEBUG_D,--defsym=PKOBSKDEPlatformTool=1,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
+	${MP_CC} $(MP_EXTRA_LD_PRE) -g -mdebugger -DPKOBSKDEPlatformTool=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)   -mreserve=data@0x0:0x1FC -mreserve=boot@0x1FC00490:0x1FC00BEF  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,-D=__DEBUG_D,--defsym=PKOBSKDEPlatformTool=1,--defsym=_min_heap_size=100,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
 	
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=_min_heap_size=100,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
 	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/Final_MainControl.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 

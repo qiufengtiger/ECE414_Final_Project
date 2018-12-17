@@ -387,16 +387,20 @@ void sendToMainControl(uint8_t tabSelected){
 	uint8_t outputCode = 0;
 	uint16_t portbOut = 0;
 	if(tabSelected == 1){
-		outputCode = 0b00;
+		// outputCode = 0b00;
+		outputCode = 0b11; //inverter
 	}
 	else if(tabSelected == 2){
-		outputCode = 0b01;
-	}
-	else if(tabSelected == 3){
+		// outputCode = 0b01;
 		outputCode = 0b10;
 	}
+	else if(tabSelected == 3){
+		// outputCode = 0b10;
+		outputCode = 0b01;
+	}
 	else if(tabSelected == 4){
-		outputCode = 0b11;
+		// outputCode = 0b11;
+		outputCode = 0b00;
 	}
 	portbOut += (!!(outputCode & 0b10));
 	portbOut <<= 1;

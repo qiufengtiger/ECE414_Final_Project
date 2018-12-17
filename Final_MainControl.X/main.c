@@ -15,7 +15,7 @@
 void main(){
 	ANSELB = 0;
 	TRISB = TRISB | 0xC000; //for input from touchscreen
-	tabSelected = 2;
+	tabSelected = 1;
 	loop:
 	switch(tabSelected){
 		case 1:
@@ -29,18 +29,11 @@ void main(){
 			// runRobotGame();
 			break;
 		case 4:
+			runModelDisplay();
 			break;
 		default:
-			runLettersDisplay();
+			tabSelected = 1;
+			break;
 	}
 	goto loop;
-
-    // testDecode();
-    // INT4R = 0x4;
-    // runLedTests();
-    // runLettersDisplayTests();
-	// runSnakeTests();
-	// runRobotTests();
-	// runLettersDisplay();
-	// runLedTests();
 }

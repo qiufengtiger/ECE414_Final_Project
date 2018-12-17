@@ -16,12 +16,6 @@
 
 #include "led_control.h"
 
-// volatile uint8_t input;
-// void __ISR(0, ipl1auto) InterruptHandler(void){
-// 	input = 1;
-// 	mINT4ClearIntFlag();
-// }
-
 void delay_us(uint16_t input){
     T3CON = 0x8030;
     TMR3 = 0;
@@ -64,12 +58,6 @@ void ledInit(){
     isSnake = 0;
     listIndex = 0;
     changed = 1;
-
-
-    // mINT4SetIntPriority(1);
-    // INTEnableSystemSingleVectoredInt();
-    // mINT4IntEnable(1);
-    // input = 0;
 }
 
 void resetLed(){
@@ -113,9 +101,9 @@ void refresh(){
 		refreshCol();
 		refreshLev();
 		refreshLedStatus();
-		// if(ON_TEST == 1)
-		// 	testPinOutputs();			
-		// else
+		if(ON_TEST == 1)
+			testPinOutputs();			
+		else
 		writeToPort();
 		delay_us(1000);
 	}
@@ -131,20 +119,19 @@ void snakeWriteToList(){
 	for(i = 0; i < TOTAL_LED_NUM; i++){
 		ledIndex = i;
 		rowIndex = (ledIndex / 8) % 8;
+		// rowIndex = ledIndex / 128;
 		colIndex = ledIndex % 8;
 		levIndex = ledIndex / 64;
+		// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 		uint8_t thisRow = getArray(levIndex, rowIndex);
 		uint8_t mask = 1 << colIndex;
 		uint8_t on = !!(mask & thisRow);
+		// on = 1;
 		if(on){
 			onLEDlist[listIndex] = ledIndex;
 			listIndex++;
 		}
 	}
-	// onLEDlist[0] = 3;
-	// onLEDlist[1] = 4;
-	// onLEDlist[2] = 5;
-	// listIndex = 3;
 }
 
 void newRefresh(){
@@ -157,8 +144,10 @@ void newRefresh(){
 		if(isMsg && i % 64 < 39) continue;
 			ledIndex = i;
 			rowIndex = (ledIndex / 8) % 8;
+			// rowIndex = ledIndex / 128;
 			colIndex = ledIndex % 8;
 			levIndex = ledIndex / 64;
+			// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 			uint8_t thisRow = getArray(levIndex, rowIndex);
 			uint8_t mask = 1 << colIndex;
 			on = !!(mask & thisRow);
@@ -173,48 +162,27 @@ void newRefresh(){
 	}
 	else if(isSnake == 1){
 		if(changed){
-			// listIndex = 0;
-			// for(i = 0; i < TOTAL_LED_NUM; i++){
-			// 	onLEDlist[i] = 0;
-			// }
-			// for(i = 0; i < TOTAL_LED_NUM; i++){
-			// 	ledIndex = i;
-			// 	rowIndex = (ledIndex / 8) % 8;
-			// 	colIndex = ledIndex % 8;
-			// 	levIndex = ledIndex / 64;
-			// 	uint8_t thisRow = getArray(levIndex, rowIndex);
-			// 	uint8_t mask = 1 << colIndex;
-			// 	uint8_t on = !!(mask & thisRow);
-			// 	if(on){
-			// 		onLEDlist[listIndex] = ledIndex;
-			// 		listIndex++;
-			// 	}
-			// 	on = 0;
-			// }
 			snakeWriteToList();
 			changed = 0;
 		}
 		for(i = 0; i < listIndex; i++){
 			ledIndex = onLEDlist[i];
 			rowIndex = (ledIndex / 8) % 8;
+			// rowIndex = ledIndex / 128;
 			colIndex = ledIndex % 8;
 			levIndex = ledIndex / 64;
+			// levIndex = ledIndex / (LEV_NUM * COL_NUM);
 			refreshRow();
 			refreshCol();
 			refreshLev();
 			writeToPort();
-			// ledIndex = 0;
 		}
 	}
-	
-	// onLEDlist[listIndex] = 0xFFFFFFFF; //end of list
-	
-	
-	
 }
 
 void refreshRow(){
-	rowIndex = (ledIndex / 8) % 8;
+	// rowIndex = (ledIndex / 8) % 8;
+	// rowIndex = ledIndex / 128;
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < ROW_PIN_NUM; i++){
@@ -225,7 +193,7 @@ void refreshRow(){
 }
 
 void refreshCol(){
-	colIndex = ledIndex % 8;
+	// colIndex = ledIndex % 8;
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < COL_PIN_NUM; i++){
@@ -236,7 +204,8 @@ void refreshCol(){
 }
 
 void refreshLev(){
-	levIndex = ledIndex / 64;
+	// levIndex = ledIndex / 64;
+	// levIndex= ledIndex / (LEV_NUM * COL_NUM);
 	int i = 0;
 	uint8_t mask = 1;
 	for(i = 0; i < LEV_PIN_NUM; i++){
@@ -274,55 +243,9 @@ void writeToPort(){
     portbOut <<= 1;
     portbOut += rowOut[0];
     portbOut <<= 1;
-    portbOut += 0; //reserved for LEV3
+    portbOut += levOut[3]; //reserved for LEV3
     portbOut <<= 1;
     portbOut += levOut[2];
-
-    // /*switch row & col*/ 
-    // portaOut += rowOut[2];
-    // portaOut <<= 1;
-    // portaOut += rowOut[0];
-    // portaOut <<= 1;
-    // portaOut += colOut[2];
-    // portaOut <<= 1;
-    // portaOut += levOut[1];
-    // portaOut <<= 1;
-    // portaOut += levOut[0];
-    // /*PORTB*/
-    // portbOut += isOn;
-    // portbOut <<= 1;
-    // portbOut += rowOut[1];
-    // portbOut <<= 1;
-    // portbOut += colOut[1];
-    // portbOut <<= 1;
-    // portbOut += colOut[0];
-    // portbOut <<= 1;
-    // portbOut += 0; //reserved for LEV3
-    // portbOut <<= 1;
-    // portbOut += levOut[2];
-
-    // portaOut += !!colOut[2];
-    // portaOut <<= 1;
-    // portaOut += !!colOut[0];
-    // portaOut <<= 1;
-    // portaOut += !!rowOut[2];
-    // portaOut <<= 1;
-    // portaOut += levOut[1];
-    // portaOut <<= 1;
-    // portaOut += levOut[0];
-    // /*PORTB*/
-    // portbOut += !!isOn;
-    // portbOut <<= 1;
-    // portbOut += !!colOut[1];
-    // portbOut <<= 1;
-    // portbOut += !!rowOut[1];
-    // portbOut <<= 1;
-    // portbOut += !!rowOut[0];
-    // portbOut <<= 1;
-    // portbOut += !!0; //reserved for LEV3
-    // portbOut <<= 1;
-    // portbOut += levOut[2];
-
 
    	PORTA = (PORTA & 0b00000) | portaOut;
    	delay_us(1);
@@ -396,197 +319,34 @@ void testPinOutputs(){
 
 void runLedTests(){
 	// uart_init();
-	// ledInit();
-	// // // 	rowOut[0] = 0;
-	// // // 	rowOut[1] = 0;
-	// // // 	rowOut[2] = 0;
-	// // // 	colOut[0] = 0;
-	// // // 	colOut[1] = 0;
-	// // // 	colOut[2] = 0;
-	// // // 	levOut[0] = 0;
-	// // // 	levOut[1] = 0;
-	// // // 	levOut[2] = 0;
-	// // // isOn = 1;
-	// // int i = 0;
-	// // int j = 0;
- // //    for(i = 0; i < LEV_NUM; i++){
- // //        for(j = 0; j < ROW_NUM; j++){
- // //        	// if(i % 2 == 1)
- // //         //    	setArray(0b00000000, i, j);
- // //         //    else
- // //            	setArray(0b10000000, i, j);
- // //        }
- // //    }
-	// // isOn = 1;
-	// // setArray(0b11111111, 0, 0);
-	// // setArray(0b11001100, 1, 0);
-	// // // int i = 0;
-	// 	uint8_t buffer[64]; 
-	// while(1){
-	// 	if(input == 1){
-	// 		sprintf(buffer, "hhhhhhh");
-	// 		uart_write_string(buffer);
-	// 	}
-		 // refresh();
-		// newRefresh();
-	// 	// writeToPort();
-	// }
-	
-	
-		// ledIndex = 9;
-		// refreshRow();
-		// refreshLev();
-		// refreshCol();
-	// setArray(11111111, 0, 0);
-	// refreshLedStatus();
-	
+	ledInit();
+	// levIndex = 15;
+	// rowIndex = 7;
+	// colIndex = 0;
+	// ledIndex = 511;
+	isMsg = 0;
+	isSnake = 1;
+	changed = 0;
+	// ledIndex = 1017;
+	// rowIndex = ledIndex / 128;
+	// colIndex = ledIndex % 8;
+	// levIndex = ledIndex / 64;
+	// changed = 1;
+	// onLEDlist[0] = 1016;
+	// onLEDlist[1] = 1018;
+	// setArray(0b00011001, 10, 7);
+	// cuboidArray[15][6] = 0b0001111;
+	// onLEDlist[0] = 999;
+	// listIndex = 1;
+	snakeWriteToList();
+	while(1){
+		newRefresh();
+	}
+	// refreshLev();
+	// refreshRow();
+	// refreshCol();
 	// writeToPort();
-	// refresh();
-	// int n = 0;
-	// while(1){
-		// while(n < 8){
-		// 	refreshRow();
-		// refreshCol();
-		// refreshLev();
-		// refreshLedStatus();
-		// writeToPort();
-		// 	// n++;
-		// // }
-		// // n = 0;
-		// if(ledIndex == TOTAL_LED_NUM){
-		// 	ledIndex = 0;
-		// }
-		// else ledIndex ++;
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 1;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 1;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 1;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 1;
-		// colOut[2] = 0;
-		// levOut[0] = 1;
-		// levOut[1] = 1;
-		// levOut[2] = 0;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 1;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 1;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 1;
-		// isOn = 1;
-		// writeToPort();
 
-		
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// // refresh();
-
-		// refreshLedStatus();
-		// writeToPort();
-
-		// rowOut[0] = 1;
-		// rowOut[1] = 0;
-		// rowOut[2] = 0;
-		// colOut[0] = 1;
-		// colOut[1] = 0;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// refreshLedStatus();
-		// writeToPort();
-		// rowOut[0] = 0;
-		// rowOut[1] = 1;
-		// rowOut[2] = 0;
-		// colOut[0] = 0;
-		// colOut[1] = 1;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// refreshLedStatus();
-		// writeToPort();
-
-
-		// rowOut[0] = 1;
-		// rowOut[1] = 1;
-		// rowOut[2] = 0;
-		// colOut[0] = 1;
-		// colOut[1] = 1;
-		// colOut[2] = 0;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 0;
-		// refreshLedStatus();
-		// writeToPort();
-		// rowOut[0] = 0;
-		// rowOut[1] = 0;
-		// rowOut[2] = 1;
-		// colOut[0] = 0;
-		// colOut[1] = 0;
-		// colOut[2] = 1;
-		// levOut[0] = 0;
-		// levOut[1] = 0;
-		// levOut[2] = 1;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 1;
-		// rowOut[1] = 0;
-		// rowOut[2] = 1;
-		// colOut[0] = 1;
-		// colOut[1] = 0;
-		// colOut[2] = 1;
-		// levOut[0] = 1;
-		// levOut[1] = 0;
-		// levOut[2] = 1;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 0;
-		// rowOut[1] = 1;
-		// rowOut[2] = 1;
-		// colOut[0] = 0;
-		// colOut[1] = 1;
-		// colOut[2] = 1;
-		// levOut[0] = 0;
-		// levOut[1] = 1;
-		// levOut[2] = 1;
-		// isOn = 1;
-		// writeToPort();
-		// rowOut[0] = 1;
-		// rowOut[1] = 1;
-		// rowOut[2] = 1;
-		// colOut[0] = 1;
-		// colOut[1] = 1;
-		// colOut[2] = 1;
-		// levOut[0] = 1;
-		// levOut[1] = 1;
-		// levOut[2] = 1;
-		// isOn = 1;
-		// writeToPort();
-
-	// }
 }
 
 
