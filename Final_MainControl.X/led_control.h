@@ -12,7 +12,7 @@
 #define COL_PIN_NUM 3
 #define LEV_PIN_NUM 4
 
-#define PAUSE_TIME_MSEC 1
+//#define PAUSE_TIME_MSEC 1
 
 #define ON_TEST 0
 
@@ -45,8 +45,6 @@ void setArray(uint8_t thisRow, uint8_t levIndex, uint8_t rowIndex);
 uint8_t getArray(uint8_t levIndex, uint8_t rowIndex);
 void delay_us(uint16_t input);
 void snakeWriteToList();
-
-//uint8_t logTwo(uint8_t input);
 
 /*test methods*/
 void testPrintLedStatus();
