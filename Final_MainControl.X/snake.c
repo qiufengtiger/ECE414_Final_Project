@@ -1,3 +1,6 @@
+/**
+ * Snake game module. Refreshes LED using "snake mode"
+ */ 
 #include "snake.h"
 
 void runSnakeGame(){
@@ -9,9 +12,11 @@ void runSnakeGame(){
 	uint8_t dir = 0;
 	// test();
 	while(1){
+	    //read inputs from the touchscreen
 		uint8_t input = decodeFromInputControl();
         if(input == 1)
             break;
+        //read inputs from buttons
 		dir = checkDir();
 		if(dir == FORWARD) dir = 8;
 		else if(dir == BACKWARD) dir = 2;
@@ -20,9 +25,11 @@ void runSnakeGame(){
 		else if(dir == UP) dir = 7;
 		else if(dir == DOWN) dir = 1;
 		else dir = 0;
+		//move
 		if(dir > 0 && dir < 9 && dir != 3 && dir != 5){
 			snakeMove(dir);
 			snakeSetLED();
+			//tell the refresh method to refresh onLedList
 			changed = 1;
 			dir = 0;
 		}
@@ -30,6 +37,9 @@ void runSnakeGame(){
 	}
 }
 
+/**
+ * Initialization. Generates the initial snake and stores in the array
+ */
 void snakeInit(){
 	isMsg = 0;
 	isSnake = 1;
@@ -50,12 +60,14 @@ void snakeInit(){
 		}
 	}
 	snakeLength = 0;
+	//Initial snake
 	pt head = {.lev = 0, .row = 2, .col = 0, .type = HEAD};
 	pt b1 = {.lev = 0, .row = 1, .col = 0, .type = BODY};
 	pt b2 = {.lev = 0, .row = 0, .col = 0, .type = BODY};
 	pushBackSnakeArray(head);
 	pushBackSnakeArray(b1);
 	pushBackSnakeArray(b2);
+	//refresh the snake from the array to the snake array
 	refreshSnake();
 	changed = 1;
 }
@@ -79,17 +91,23 @@ void generateFood(){
 	setSnakeGameArray(FOOD, foodLev, foodRow, foodCol);	
 }
 
-
-
+/**
+ * Snake move function
+ * Cannot move if the target pos is the border / body
+ * Also eats the food
+ */ 
 void snakeMove(uint8_t dir){
 	uint8_t lastLev = 0;
 	uint8_t lastRow = 0;
 	uint8_t lastCol = 0;
+	//do nothing when it is the border / body
 	if(isBorder(getHeadLev(), getHeadRow(), getHeadCol(), dir) 
 		|| isBody(getHeadLev(), getHeadRow(), getHeadCol(), dir)){
 
 	}
+	//eats food and move
 	else if(isFood(getHeadLev(), getHeadRow(), getHeadCol(), dir)){
+	    //stores pos of the last body. New body will be generated here
 		lastLev = snakeArray[snakeLength].lev;
 		lastRow = snakeArray[snakeLength].row;
 		lastCol = snakeArray[snakeLength].col;
@@ -97,8 +115,10 @@ void snakeMove(uint8_t dir){
 		eat(getHeadLev(), getHeadRow(), getHeadCol(), dir, lastLev, lastRow, lastCol);
 		snakeMoveHead(dir);
 		refreshSnake();
+		//new food
 		generateFood();
 	}
+	//move
 	else{
 		snakeMoveBody();
 		snakeMoveHead(dir);
@@ -107,6 +127,9 @@ void snakeMove(uint8_t dir){
 	
 }
 
+/**
+ * Moves head based on dir
+ */ 
 void snakeMoveHead(uint8_t dir){
 	switch(dir){
 		//back
@@ -136,6 +159,9 @@ void snakeMoveHead(uint8_t dir){
 	}
 }
 
+/**
+ * Moves each body to the pos of the previous body segment
+ */ 
 void snakeMoveBody(){
 	int i = 0;
 	for(i = snakeLength; i > 1; i--){
@@ -145,6 +171,9 @@ void snakeMoveBody(){
 	}
 }
 
+/**
+ * Eats food and generates new body.
+ */ 
 void eat(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir, uint8_t lastLev, uint8_t lastRow, uint8_t lastCol){
 	uint8_t targetLev = levIndex;
 	uint8_t targetRow = rowIndex;
@@ -174,6 +203,9 @@ void eat(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir, uint
 	pushBackSnakeArray(new);
 }
 
+/**
+ * Check if the target pos is the body
+ */ 
 uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
 	uint8_t targetLev = levIndex;
 	uint8_t targetRow = rowIndex;
@@ -202,6 +234,9 @@ uint8_t isBody(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir
 	return 0;
 }
 
+/**
+ * Check if the target pos is the body
+ */ 
 uint8_t isFood(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
 	uint8_t targetLev = levIndex;
 	uint8_t targetRow = rowIndex;
