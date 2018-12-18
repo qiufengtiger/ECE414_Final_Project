@@ -1,3 +1,11 @@
+/**
+ * Robot game
+ * Worked well in UART testing but on real LED it looked not as we expected. Hard to distinguish between players and enemies.
+ * Also the random function behavied weird with LED scaning.
+ * So this game was not demonstrated in the presentation
+ * For specific rules of this game, please refer to 
+ * http://139.147.9.182/~pfaffmaj/courses/s18/cs205l/labs/lab05/ by Professor Pfaffmann in CS Department, Lafayette College
+ */ 
 #include "robot.h"
 
 volatile uint32_t timer_ms_count;
@@ -6,6 +14,10 @@ void __ISR(0, ipl1auto) InterruptHandler(void){
     mT1ClearIntFlag();
 }
 
+/**
+ * Initialization. 
+ * TMR1 is for player flashing. TMR2 is for random number generation
+ */ 
 void robotInit(){
 	//initialize timer for random number
 	T1CON = 0x8010;
@@ -36,6 +48,9 @@ void robotInit(){
     playerIsOn = 1;
 }
 
+/**
+ * Move the player
+ */ 
 void playerMove(uint8_t dir){
 	if(!isBorder(player.lev, player.row, player.col, dir) && !isEnemy(player.lev, player.row, player.col, dir)){
 		setRobotGameArray(EMPTY, player.lev, player.row, player.col);
@@ -65,6 +80,9 @@ void playerMove(uint8_t dir){
 	}
 }
 
+/**
+ * Move the enemies toward the player
+ */ 
 uint8_t enemiesMove(){
 	uint8_t i = 0;
 	uint8_t j = 0;
@@ -86,6 +104,7 @@ uint8_t enemiesMove(){
 					rowDistance = absolute(j - newEnemyRow);
 					colDistance = absolute(k - newEnemyCol);
 					setRobotGameArray(EMPTY, i, j, k);
+					//Move one of the three directions first based on whichever is the longest distance
 					if(levDistance >= rowDistance && levDistance >= colDistance){
 						if(player.lev > i) newEnemyLev++;
 						else if(player.lev < i) newEnemyLev--;
@@ -112,6 +131,9 @@ uint8_t enemiesMove(){
 	return 0;
 }
 
+/**
+ * Check if the target pos is the enemy
+ */ 
 uint8_t isEnemy(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
 	uint8_t targetLev = player.lev;
 	uint8_t targetRow = player.row;
@@ -141,6 +163,9 @@ uint8_t isEnemy(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t di
 	return 0;
 }
 
+/**
+ * Randomly generates enemies based on TMR2. Generate a new one if that pos has already occupied
+ */ 
 void generateEnemies(){
 	int i = 0;
 	int isEmpty = 0;
@@ -161,6 +186,9 @@ void generateEnemies(){
 	}
 }
 
+/**
+ * Send data to LED driver
+ */ 
 void robotSetLED(){
 	int i = 0;
 	int j = 0;
