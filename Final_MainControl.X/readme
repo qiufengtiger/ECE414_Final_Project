@@ -1,0 +1,3 @@
+This is the main control software.
+It reads inputs for touchscreen PIC32, buttons, and outputs to LED hardware.
+All main softwares, including Msg display, games and model, are here.
