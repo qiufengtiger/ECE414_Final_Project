@@ -1,5 +1,6 @@
 /**
- * Functions shared by snake and robot
+ * Functions shared by different modules
+ * Also contains methods that reads data from touchscreen module
  */
 #ifndef UTILITIES_H
 #define	UTILITIES_H
@@ -71,9 +72,6 @@ static uint8_t checkDir(){
 }
 
 
-
-
-
 static uint8_t isBorder(uint8_t levIndex, uint8_t rowIndex, uint8_t colIndex, uint8_t dir){
 	switch(dir){
 		case 2: 
@@ -103,14 +101,12 @@ static uint8_t absolute(uint8_t input){
 }
 
 /**
- * outputCode is from another PIC32 that controls all inputs
- * outputCode[0]: RB15, PIN26
- * outputCode[1]: RB14, PIN25
- * outputCode[2]: RB13, PIN24
- * outputCode[3]: RB11, PIN22
- * outputCode[4]: RB10, PIN21
- * return values: 0 => default, 1 => FORWARD, 2 => BACKWARD, 3 => LEFT, 4 => RIGHT
- * 5 => UP, 6 => DOWN, 7 => restart / selectTabs
+ * outputCode is from another touchscreen PIC32
+ * 00 => Msg display
+ * 01 => Snake
+ * 10 => Robot
+ * 11 => Model
+ * If new module is selected, tells the current module to break and changes tabSelected
  */
 static uint8_t decodeFromInputControl(){
 	CNPUB = 0xC000;
