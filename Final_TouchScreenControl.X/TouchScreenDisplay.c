@@ -1,17 +1,29 @@
+/**
+ * This is the touchscreen module running on a sperate PIC32
+ */ 
 #include "TouchScreenDisplay.h"
 
+/**
+ * Not used in actual presentation
+ * Worked in testing
+ */ 
 volatile uint8_t gameover;
 void __ISR(0, ipl1auto) InterruptHandler(void){
     gameover = 1;
     mINT4ClearIntFlag();
 }
 
+/**
+ * x cood mapping 
+ */
 uint16_t touchMappingX(uint16_t y){
     double temp = (y - 960)*(-0.372);
     return (int)temp;
 }
 
-//y cood mapping
+/**
+ * y cood mapping 
+ */
 uint16_t touchMappingY(uint16_t x){
     double temp = (x - 140)*(0.324); 
     return (int)temp;
@@ -46,15 +58,6 @@ void touchScreenParamInit(){
     INTEnableSystemSingleVectoredInt();
     mINT4IntEnable(1);
 
-    joystickDirY = DEFAULT;
-    joystickDirX = DEFAULT;
-    upButtonState = 0;
-    downButtonState = 0;
-    buttonPressed = DEFAULT;
-    outputDir = DEFAULT;
-    outputDirLock = 0;
-    levelToPulse = 0;
-
     tabMsgColor = GRAY;
     tabSnakeColor = GRAY;
     tabRobotColor = GRAY;
@@ -62,13 +65,12 @@ void touchScreenParamInit(){
     tabSelected = 1;
     tabLevelToPulse = 0;
     selectTab(tabSelected);
-
-    T1CON = 0x8030;
-    TMR1 = 0;
 }
 
 void TabsRefresh(){
 	uint8_t buffer[64];
+	//selected tab: white
+	//unselected tab: grey
 	tft_fillRect(0, 0, 80, 60, tabMsgColor);
 	tft_fillRect(0, 60, 80, 60, tabSnakeColor);
 	tft_fillRect(0, 120, 80, 60, tabRobotColor);
@@ -91,6 +93,9 @@ void TabsRefresh(){
 	tft_writeString(buffer); 	
 }
 
+/**
+ * Change tab color, refresh contents and send to main control
+ */ 
 void selectTab(uint8_t index){
 	tft_fillRect(81, 0, 240, 240, WHITE);
 	switch(index){
@@ -157,10 +162,6 @@ uint8_t detectTouch(){
     		else if(p.y > 180 && p.y < 240)
     			return 4;
     	}
-    	// if(p.x > 160 && p.x < 240 && p.y > 120 && p.y < 180){
-    	// 	return 5;
-    	// }
-    	// TabsRefresh();
     }
     else{
     	tabLevelToPulse = 0;
@@ -176,25 +177,21 @@ void runButtons(uint8_t button) {
 		gameover = 0;
 		tabSelected = 1;
 		selectTab(tabSelected);
-		// TabsRefresh();
 	} 
 	else if(button == 2 && tabSelected != 2){
 		gameover = 0;
 		tabSelected = 2;
 		selectTab(tabSelected);
-		// TabsRefresh();
 	}
 	else if(button == 3 && tabSelected != 3){
 		gameover = 0;
 		tabSelected = 3;
 		selectTab(tabSelected);
-		// TabsRefresh();
 	}
 	else if(button == 4 && tabSelected != 4){
 		gameover = 0;
 		tabSelected = 4;
 		selectTab(tabSelected);
-		// TabsRefresh();
 	}
 }
 
@@ -241,23 +238,24 @@ void checkGameover(){
 	}
 }
 
+/**
+ * Send signal to main control
+ * All signals are flipped because we used an inverter between PIC32s
+ * This is because for some reason the other PIC32 cannot detect the signal if they are connected directly
+ */ 
 void sendToMainControl(uint8_t tabSelected){
 	uint8_t outputCode = 0;
 	uint16_t portbOut = 0;
 	if(tabSelected == 1){
-		// outputCode = 0b00;
 		outputCode = 0b11; //inverter
 	}
 	else if(tabSelected == 2){
-		// outputCode = 0b01;
 		outputCode = 0b10;
 	}
 	else if(tabSelected == 3){
-		// outputCode = 0b10;
 		outputCode = 0b01;
 	}
 	else if(tabSelected == 4){
-		// outputCode = 0b11;
 		outputCode = 0b00;
 	}
 	portbOut += (!!(outputCode & 0b10));
