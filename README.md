@@ -1,15 +1,14 @@
 # ECE414_Final_Project
-**Original repository**
-```
-https://git.lafayette.edu/qiuf/ECE414_Final_Project
-```
+Original repository can be accessed [here](https://git.lafayette.edu/qiuf/ECE414_Final_Project).
+
 This is the final project we created in Fall 2018 ECE 414 embedded systems in Lafayette College. The goal of this project is to design and build an 8 * 8 * 16 LED cuboid. It is very suitable for people with a low budget and still contains three powerful features that
 facilitate entertainment, business and education scenarios. The balance between price and performance make this product more competitive than other existed 3D display
 implementations.
 
 ## Software
 The entire system is composed of multiple modules. Separating these modules allows an easier debugging. Also future developers can add their new functions to it.
-A Highlight of Important Software Methods and Designs
+
+A Highlight of Important Software Methods and Designs:
 
 ### LED driver
 Write the LED on information to the cuboid array and then write this array to the hardware: generate control signals going to the control circuit. This method was improved so that instead of looping through all of the LEDs, only the LED that are known to be on will be refreshed. This way the on LEDs get more time during the scanning and will appear brighter.
@@ -23,7 +22,7 @@ Using this module, users can display their own message on the LEDs. We have hard
 ### Snake game
 Similar to a regular snake game, the game is the system allows users to play in a 3D way. Users can control the snake with 6 buttons in order to eat foods that are randomly generated. It is really fantastic to play the classic snake game in 3D. This function is tested and demonstrated in the presentation.
 
-### ##Model display
+### Model display
 This module allows users to see their model in the system. First, users can code their model in this module that contains multiple points. Using the buttons, users can rotate the module either clockwise or counterclockwise. This function is tested and demonstrated in the presentation.
 
 ## Hardware
