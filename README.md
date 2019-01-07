@@ -7,19 +7,19 @@ implementations.
 The entire system is composed of multiple modules. Separating these modules allows an easier debugging. Also future developers can add their new functions to it.
 A Highlight of Important Software Methods and Designs
 
-###LED driver
+### LED driver
 Write the LED on information to the cuboid array and then write this array to the hardware: generate control signals going to the control circuit. This method was improved so that instead of looping through all of the LEDs, only the LED that are known to be on will be refreshed. This way the on LEDs get more time during the scanning and will appear brighter.
 
-###UART test methods
+### UART test methods
 These methods print out current LED status to UART when the LED cuboid gets refreshed. In this way, developers do not need to build the real circuit in order to see the display effect. Besides, it also allows developers to build hardware and software at the same time.
 
-###Letters Display
+### Letters Display
 Using this module, users can display their own message on the LEDs. We have hardcoded decode function for each input letter, which will be shown in coordination with the scrollIndex variable to create the scrolling effect. Users can also specify the time period it scrolls in the header. This function is tested and demonstrated in the presentation.
 
-###Snake game
+### Snake game
 Similar to a regular snake game, the game is the system allows users to play in a 3D way. Users can control the snake with 6 buttons in order to eat foods that are randomly generated. It is really fantastic to play the classic snake game in 3D. This function is tested and demonstrated in the presentation.
 
-###Model display
+### ##Model display
 This module allows users to see their model in the system. First, users can code their model in this module that contains multiple points. Using the buttons, users can rotate the module either clockwise or counterclockwise. This function is tested and demonstrated in the presentation.
 
 ## Hardware
@@ -36,3 +36,5 @@ The touchscreen module receives input from the user and sends the signal to the 
 ## Authors
 Feng Qiu
 Zhengxie Hu
+## Note
+This introduction is originally from https://sites.lafayette.edu/ece414-fa18/led-matrix/conclusion/ that we created at the end of this project.
