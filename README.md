@@ -40,4 +40,4 @@ The touchscreen module receives input from the user and sends the signal to the 
 * Feng Qiu
 * Zhengxie Hu
 ## Note
-This introduction is originally from https://sites.lafayette.edu/ece414-fa18/led-matrix/conclusion/ that we created at the end of this project.
+This introduction is originally from https://sites.lafayette.edu/ece414-fa18/led-matrix that we created at the end of this project.
