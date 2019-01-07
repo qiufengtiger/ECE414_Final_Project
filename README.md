@@ -1,4 +1,8 @@
 # ECE414_Final_Project
+**Original repository**
+```
+https://git.lafayette.edu/qiuf/ECE414_Final_Project
+```
 This is the final project we created in Fall 2018 ECE 414 embedded systems in Lafayette College. The goal of this project is to design and build an 8 * 8 * 16 LED cuboid. It is very suitable for people with a low budget and still contains three powerful features that
 facilitate entertainment, business and education scenarios. The balance between price and performance make this product more competitive than other existed 3D display
 implementations.
