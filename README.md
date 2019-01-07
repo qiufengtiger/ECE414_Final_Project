@@ -34,7 +34,7 @@ We used six buttons because in the snake game we want to control it in six diffe
 ### Touchscreen
 The touchscreen module receives input from the user and sends the signal to the main control.
 ## Authors
-Feng Qiu
-Zhengxie Hu
+* Feng Qiu
+* Zhengxie Hu
 ## Note
 This introduction is originally from https://sites.lafayette.edu/ece414-fa18/led-matrix/conclusion/ that we created at the end of this project.
